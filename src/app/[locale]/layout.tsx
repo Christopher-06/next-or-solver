@@ -1,4 +1,4 @@
-import { NextIntlClientProvider, useMessages } from "next-intl";
+import { NextIntlClientProvider, useMessages, useLocale } from "next-intl";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -9,11 +9,11 @@ import NavBar from "@/components/NavBar/NavBar";
 
 export default function RootLayout({
   children,
-  params: { locale },
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const messages = useMessages();
+  const locale = useLocale();
 
   return (
     <html lang={locale}>
