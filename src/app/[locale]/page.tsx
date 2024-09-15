@@ -1,6 +1,6 @@
 import Constraint from "@/components/Constraint/Constraint";
 import Variable from "@/components/Variable/Variable";
-import { Box, Card, Container, Grid2, MenuItem, Select, TextField } from "@mui/material";
+import { Card, Container, Grid2, MenuItem, Select, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import React from "react";
 
