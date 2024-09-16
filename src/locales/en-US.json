@@ -1,6 +1,18 @@
 {
   "navbar": {
     "title": "Next OR Solver",
-    "description": "An online tool for solving operations research problems"
+    "description": "An online tool for solving operations research problems",
+    "settings": {
+      "tooltip": "Open Settings"
+    }
+  },
+  "locale_switch": {
+    "helptext": "Choose Language"
+  },
+  "colormode_selection": {
+    "tooltip": "Change Color Mode",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
   }
 }
