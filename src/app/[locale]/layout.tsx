@@ -1,5 +1,6 @@
 import { NextIntlClientProvider, useMessages, useLocale } from "next-intl";
 import CssBaseline from "@mui/material/CssBaseline";
+import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -18,25 +19,29 @@ export default function RootLayout({
   const locale = useLocale();
 
   return (
-    <html lang={locale}>
-      <NextIntlClientProvider messages={messages}>
-        <Theme>
-          <CssBaseline />
-          <body>
-            <header>
-              {/* MUI Mobile First */}
-              <meta
-                name="viewport"
-                content="initial-scale=1, width=device-width"
-              />
-            </header>
+    <html lang={locale} suppressHydrationWarning>
+      <body>
+        <NextIntlClientProvider messages={messages}>
+          <InitColorSchemeScript attribute="class" />
 
-            <NavBar />
+          <main>
+            <Theme>
+              <CssBaseline />
+              <header>
+                {/* MUI Mobile First */}
+                <meta
+                  name="viewport"
+                  content="initial-scale=1, width=device-width"
+                />
+              </header>
 
-            {children}
-          </body>
-        </Theme>
-      </NextIntlClientProvider>
+              <NavBar />
+
+              {children}
+            </Theme>
+          </main>
+        </NextIntlClientProvider>
+      </body>
     </html>
   );
 }
