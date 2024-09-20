@@ -9,6 +9,7 @@ import "@fontsource/roboto/700.css";
 
 import NavBar from "@/components/NavBar/NavBar";
 import Theme from "@/components/Theme/Theme";
+import StoreProvider from "@/store/StoreProvider";
 
 export default function RootLayout({
   children,
@@ -19,29 +20,32 @@ export default function RootLayout({
   const locale = useLocale();
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body>
-        <NextIntlClientProvider messages={messages}>
-          <InitColorSchemeScript attribute="class" />
+    <StoreProvider>
+      <html lang={locale} suppressHydrationWarning>
+        <body>
+          <NextIntlClientProvider messages={messages}>
+            <InitColorSchemeScript attribute="class" />
 
-          <main>
-            <Theme>
-              <CssBaseline />
-              <header>
-                {/* MUI Mobile First */}
-                <meta
-                  name="viewport"
-                  content="initial-scale=1, width=device-width"
-                />
-              </header>
+            <main>
+              <Theme>
+                <header>
+                  {/* MUI Mobile First */}
+                  <meta
+                    name="viewport"
+                    content="initial-scale=1, width=device-width"
+                  />
+                </header>
 
-              <NavBar />
+                <CssBaseline />
 
-              {children}
-            </Theme>
-          </main>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+                <NavBar />
+
+                {children}
+              </Theme>
+            </main>
+          </NextIntlClientProvider>
+        </body>
+      </html>
+    </StoreProvider>
   );
 }

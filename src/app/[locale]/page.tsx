@@ -1,11 +1,10 @@
-// import Constraint from "@/components/Constraint/Constraint";
-// import Variable from "@/components/Variable/Variable";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { Button, Container, Grid2, Stack } from "@mui/material";
 import { useTranslations } from "next-intl";
 import React from "react";
 import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
+import VariableContainer from "@/components/VariableContainer/VariableContainer";
 
 export default function Home() {
   const t = useTranslations();
@@ -15,7 +14,8 @@ export default function Home() {
     <Container maxWidth={false}>
       {/* Variablen Feld */}
       <Paper sx={{ m: 3, p: 3 }}>
-        <Typography variant="h5">Variablen</Typography>
+        <Typography variant="h5" sx={{mb : 3}}>Variablen</Typography>
+        <VariableContainer />
       </Paper>
 
       {/* Modell Feld */}
@@ -29,11 +29,11 @@ export default function Home() {
       </Paper>
 
       {/* Actions Bar */}
-      <Grid2 container sx={{ px: 3 }}>
-        <Grid2 size={6}>
+      <Grid2 container sx={{ px: 3 }} spacing={2}>
+        <Grid2 size={{ xs: 12, sm: 6 }}>
           <Stack direction="row" spacing={2} justifyContent="start">
             <Button variant="contained" color="primary">
-              <SystemUpdateAltIcon sx={{ mr: 1 }} />
+              <SystemUpdateAltIcon sx={{ mr: { xs: 0, sm: 1 } }} />
               Export GMLP
             </Button>
             <Button variant="contained" color="primary">
@@ -46,7 +46,7 @@ export default function Home() {
             </Button>
           </Stack>
         </Grid2>
-        <Grid2 size={6}>
+        <Grid2 size={{ xs: 12, sm: 6 }}>
           <Stack direction="row" spacing={2} justifyContent="end">
             <Button variant="contained" color="warning">
               Alles Löschen
@@ -58,30 +58,10 @@ export default function Home() {
         </Grid2>
       </Grid2>
 
- {/* Lösungs Feld */}
- <Paper sx={{ m: 3, p: 3 }}>
+      {/* Lösungs Feld */}
+      <Paper sx={{ m: 3, p: 3 }}>
         <Typography variant="h5">Lösung</Typography>
       </Paper>
-
-      {/* <Grid2 container rowSpacing={3} columnSpacing={{xs: 1, sm: 2, md: 3 }}>
-        <Card variant="outlined">
-          <Variable/>
-          <Variable/>
-        </Card>
-        <Card variant="outlined">
-          <Grid2 container rowSpacing={3} columnSpacing={{xs: 1, sm: 2, md: 3 }}>
-            <Select labelId="demo-simple-select-standard-label" id="function_type" label={t("input.function_type")} autoWidth defaultValue={0}>
-              <MenuItem value={0}>{t("input.function_type.min")}</MenuItem>
-              <MenuItem value={1}>{t("input.function_type.max")}</MenuItem>
-            </Select>
-            <TextField id="function" label={t("input.function")}/>
-          </Grid2>
-        </Card>
-        <Card variant="outlined">
-          <Constraint/>
-          <Constraint/>
-        </Card>
-      </Grid2> */}
     </Container>
   );
 }
