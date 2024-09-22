@@ -1,5 +1,5 @@
 export enum FileFormat {
     GMPL = 'GMPL',
-    CPLEX_LP = 'CLEX_LP',
+    CPLEX_LP = 'CLEX LP',
     MPS = 'MPS',
 }

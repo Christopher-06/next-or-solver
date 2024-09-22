@@ -2,7 +2,7 @@
 // import Variable from "@/components/Variable/Variable";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import { Button, Container, Grid2, Stack } from "@mui/material";
+import { Button, Grid2, Stack } from "@mui/material";
 import { useTranslations } from "next-intl";
 import React from "react";
 import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";

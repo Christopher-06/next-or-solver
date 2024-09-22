@@ -12,7 +12,7 @@ import MpsInput from "@/components/Inputs/MpsInput";
 export default function Home() {
   const [value, setValue] = useState("1");
 
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+  const handleChange = (event: React.ChangeEvent<object>, newValue: string) => {
     setValue(newValue);
   };
 

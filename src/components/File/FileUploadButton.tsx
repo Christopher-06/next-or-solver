@@ -16,6 +16,7 @@ interface FileUploadButtonProps {
 const FileUploadButton: React.FC<FileUploadButtonProps> = ({ targetFormat }) => {
     const [fileContent, setFileContent] = useState<string | null>(null);
     const [fileFormat, setFileFormat] = useState<FileFormat | null>(null);
+    const [value, setValue] = useState("");
 
     // Bestimme das Format basierend auf der Dateiendung
     const getFileFormat = (fileName: string | null): FileFormat | null => {
@@ -56,6 +57,7 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ targetFormat }) => 
                 const format = getFileFormat(file.name);
                 setFileContent(content); // Setze den Inhalt der Datei
                 setFileFormat(format);
+                setValue(convertedContent || '');
             };
             reader.readAsText(file);
         }
@@ -66,6 +68,13 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ targetFormat }) => 
         if (convertedContent) {
             saveFile(convertedContent, targetFormat); // Datei speichern
         }
+    };
+
+    const edit = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        if (e.target.value == "") {
+            console.log("Test");
+        };
+        setValue(e.target.value);
     };
 
     return (
@@ -89,7 +98,9 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ targetFormat }) => 
             <TextareaAutosize
                 minRows={30}
                 style={{ width: '100%', marginTop: '20px', resize: 'none' }}
-                value={convertedContent || ''}
+                value={value || ''}
+                onChange={edit} // Aktualisiere den State bei Änderungen
+                placeholder={`${targetFormat} Model...`}
             />
 
             {/* Solve */}
