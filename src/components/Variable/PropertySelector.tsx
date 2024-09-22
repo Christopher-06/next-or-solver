@@ -2,8 +2,8 @@ import { Chip, InputAdornment, MenuItem, Select } from "@mui/material";
 import { useMouseContext } from "../MouseProvider/MouseProvider";
 import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
 import SurroundSoundIcon from "@mui/icons-material/SurroundSound";
+import { VarPropertyType } from "@/lib/Variable";
 
-export type VarPropertyType = "DECISION" | "PARAMETER";
 const ALL_PROPERTY_TYPES: VarPropertyType[] = ["DECISION", "PARAMETER"];
 
 const PROPERTY_ICON: { [key in VarPropertyType]: JSX.Element } = {

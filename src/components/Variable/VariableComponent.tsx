@@ -7,27 +7,89 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { useState } from "react";
 import MouseProvider from "../MouseProvider/MouseProvider";
 import NameInput from "./NameInput";
 import BoundInput from "./BoundInput";
 import ClearIcon from "@mui/icons-material/Clear";
-import ValueTypeSelector, { VarValueType } from "./ValueTypeSelector";
-import PropertySelector, { VarPropertyType } from "./PropertySelector";
-import DimensionsSelector, { VarDimensionType } from "./DimensionsSelector";
+import ValueTypeSelector from "./ValueTypeSelector";
+import PropertySelector from "./PropertySelector";
+import DimensionsSelector from "./DimensionsSelector";
 import ArrayDimensionsInput from "./ArrayDimensionsInput";
+import {
+  VarDimensionType,
+  Variable,
+  VarPropertyType,
+  VarValueType,
+} from "@/lib/Variable";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import {
+  setValueType,
+  setDimensionType,
+  setDimList,
+  setLowerBound,
+  setPropertyType,
+  setUpperBound,
+  setName,
+  removeVariable,
+} from "@/store/slices/Variables";
 
-export default function Variable() {
+export default function VariableComponent({
+  var_idx,
+
+  showDeleteButton = true,
+}: {
+  var_idx: number;
+  showDeleteButton?: boolean;
+}) {
   const isSM = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
-  const [name, setName] = useState<string>("");
-  const [lowerBound, setLowerBound] = useState<string>("");
-  const [upperBound, setUpperBound] = useState<string>("");
-  const [dataType, setDataType] = useState<VarValueType>("CONTINUOUS");
-  const [propertyType, setPropertyType] = useState<VarPropertyType>("DECISION");
-  const [dimensionType, setDimensionType] =
-    useState<VarDimensionType>("SKALAR");
-  const [dimList, setDimList] = useState<string[]>([]);
+  const dispatch = useDispatch();
+  const variable: Variable = useSelector(
+    (state: RootState) => state.variables[var_idx]
+  );
+
+  const {
+    name,
+    lowerBound,
+    upperBound,
+    valueType,
+    propertyType,
+    dimensionType,
+    dimList,
+  } = variable;
+
+  const setNameDispatched = (name: string) => {
+    dispatch(setName({ index: var_idx, name }));
+  };
+
+  const setLowerBoundDispatched = (lowerBound: string) => {
+    dispatch(setLowerBound({ index: var_idx, lowerBound }));
+  };
+
+  const setUpperBoundDispatched = (upperBound: string) => {
+    dispatch(setUpperBound({ index: var_idx, upperBound }));
+  };
+
+  const setValueTypeDispatched = (valueType: VarValueType) => {
+    dispatch(setValueType({ index: var_idx, valueType }));
+  };
+
+  const setPropertyTypeDispatched = (propertyType: VarPropertyType) => {
+    dispatch(setPropertyType({ index: var_idx, propertyType }));
+  };
+
+  const setDimensionTypeDispatched = (dimensionType: VarDimensionType) => {
+    dispatch(setDimensionType({ index: var_idx, dimensionType }));
+  };
+
+  const setDimListDispatched = (dimList: string[]) => {
+    dispatch(setDimList({ index: var_idx, dimList }));
+  };
+
+  const removeVariableDispatched = () => {
+    dispatch(removeVariable(var_idx));
+  };
 
   return (
     <MouseProvider>
@@ -43,13 +105,13 @@ export default function Variable() {
         >
           <PropertySelector
             propertyType={propertyType}
-            setPropertyType={setPropertyType}
+            setPropertyType={setPropertyTypeDispatched}
             keepTextFields={name === ""}
           />
 
           <DimensionsSelector
             dimensionType={dimensionType}
-            setDimensionType={setDimensionType}
+            setDimensionType={setDimensionTypeDispatched}
             keepTextFields={name === ""}
           />
         </Grid2>
@@ -61,7 +123,7 @@ export default function Variable() {
         >
           <BoundInput
             bound={lowerBound}
-            setBound={setLowerBound}
+            setBound={setLowerBoundDispatched}
             type="LB"
             keepTextFields={name === ""}
           />
@@ -77,13 +139,13 @@ export default function Variable() {
           }}
         >
           {dimensionType === "SKALAR" ? (
-            <NameInput name={name} setName={setName} />
+            <NameInput name={name} setName={setNameDispatched} />
           ) : (
             <ArrayDimensionsInput
               name={name}
-              setName={setName}
+              setName={setNameDispatched}
               dimList={dimList}
-              setDimList={setDimList}
+              setDimList={setDimListDispatched}
             />
           )}
         </Grid2>
@@ -92,7 +154,7 @@ export default function Variable() {
         <Grid2 size={{ sm: 3, md: 1 }} sx={{ display: "flex" }}>
           <BoundInput
             bound={upperBound}
-            setBound={setUpperBound}
+            setBound={setUpperBoundDispatched}
             type="UB"
             keepTextFields={name === ""}
           />
@@ -111,8 +173,8 @@ export default function Variable() {
             &isin;{" "}
           </Typography>
           <ValueTypeSelector
-            valueType={dataType}
-            setValueType={setDataType}
+            valueType={valueType}
+            setValueType={setValueTypeDispatched}
             keepTextFields={name === ""}
           />
         </Grid2>
@@ -125,11 +187,18 @@ export default function Variable() {
           size={{ sm: 1, md: 1 }}
           sx={{ display: "flex", alignItems: "center" }}
         >
-          <Tooltip title="Löschen">
-            <Button variant="contained" color="error" sx={{ m: 1 }}>
-              <ClearIcon fontSize="small" />
-            </Button>
-          </Tooltip>
+          {showDeleteButton && (
+            <Tooltip title="Löschen">
+              <Button
+                variant="contained"
+                color="error"
+                sx={{ m: 1 }}
+                onClick={removeVariableDispatched}
+              >
+                <ClearIcon fontSize="small" />
+              </Button>
+            </Tooltip>
+          )}
         </Grid2>
       </Grid2>
     </MouseProvider>

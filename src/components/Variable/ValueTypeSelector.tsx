@@ -2,7 +2,8 @@ import { Chip, InputAdornment, MenuItem, Select } from "@mui/material";
 import { useMouseContext } from "../MouseProvider/MouseProvider";
 import PatternIcon from "@mui/icons-material/Pattern";
 import PinIcon from "@mui/icons-material/Pin";
-export type VarValueType = "CONTINUOUS" | "INTEGER";
+import { VarValueType } from "@/lib/Variable";
+
 const ALL_VALUE_TYPES: VarValueType[] = ["CONTINUOUS", "INTEGER"];
 
 const TYPE_ICON: { [key in VarValueType]: JSX.Element } = {

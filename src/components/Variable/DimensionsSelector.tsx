@@ -2,7 +2,8 @@ import { Chip, InputAdornment, MenuItem, Select } from "@mui/material";
 import { useMouseContext } from "../MouseProvider/MouseProvider";
 import BackupTableIcon from "@mui/icons-material/BackupTable";
 import LooksOneIcon from "@mui/icons-material/LooksOne";
-export type VarDimensionType = "SKALAR" | "ARRAY";
+import { VarDimensionType } from "@/lib/Variable";
+
 const ALL_DIMENSION_TYPES: VarDimensionType[] = ["SKALAR", "ARRAY"];
 
 const DIMENSION_ICON: { [key in VarDimensionType]: JSX.Element } = {
