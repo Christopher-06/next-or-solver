@@ -1,4 +1,5 @@
 import { NextIntlClientProvider, useMessages, useLocale } from "next-intl";
+import CssBaseline from "@mui/material/CssBaseline";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -6,6 +7,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 import NavBar from "@/components/NavBar/NavBar";
+import Theme from "@/components/Theme/Theme";
 
 export default function RootLayout({
   children,
@@ -17,18 +19,24 @@ export default function RootLayout({
 
   return (
     <html lang={locale}>
-      <body>
-        <header>
-          {/* MUI Mobile First */}
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-        </header>
+      <NextIntlClientProvider messages={messages}>
+        <Theme>
+          <CssBaseline />
+          <body>
+            <header>
+              {/* MUI Mobile First */}
+              <meta
+                name="viewport"
+                content="initial-scale=1, width=device-width"
+              />
+            </header>
 
-        <NextIntlClientProvider messages={messages}>
-          <NavBar />
+            <NavBar />
 
-          {children}
-        </NextIntlClientProvider>
-      </body>
+            {children}
+          </body>
+        </Theme>
+      </NextIntlClientProvider>
     </html>
   );
 }
