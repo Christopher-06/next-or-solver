@@ -79,7 +79,8 @@ const ModelEditor: React.FC<ModelEditor> = ({ targetFormat }) => {
             {/* Textarea mit dem konvertierten Inhalt */}
             <TextareaAutosize
                 minRows={30}
-                style={{ width: '100%', marginTop: '20px', resize: 'none' }}
+                maxRows={30}
+                style={{ width: '100%', marginTop: '20px', resize: 'none', fontSize: '16px' }}
                 value={value || ''}
                 onChange={edit} // Aktualisiere den State bei Änderungen
                 placeholder={`${targetFormat} Model...`}
