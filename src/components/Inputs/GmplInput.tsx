@@ -1,13 +1,12 @@
 import React from 'react';
-import FileUploadButton from '../File/FileUploadButton';
+import ModelEditor from '../File/ModelEditor';
 import { FileFormat } from '../File/FileFormat';
-import SolverPage from '../File/TestHighs'
 
 const GmplInput: React.FC = () => {
     return (
         <div>
-            <FileUploadButton targetFormat={FileFormat.GMPL} />
-            <SolverPage />
+            <ModelEditor targetFormat={FileFormat.GMPL} />
+            {/* <SolverPage /> */}
         </div>
     );
 };

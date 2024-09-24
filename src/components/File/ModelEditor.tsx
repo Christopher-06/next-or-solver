@@ -1,0 +1,153 @@
+// FileUploadButton.tsx
+"use client";
+
+import React, { useState } from "react";
+import { Button, TextareaAutosize } from "@mui/material";
+import { FileFormat } from "./FileFormat";
+import useGlpk from "./useGlpk";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
+import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { setTextFieldValue } from "@/store/slices/TextFieldInputs";
+
+interface ModelEditorProps {
+  targetFormat: FileFormat; // Enum für das Ziel-Format
+}
+
+const ModelEditor: React.FC<ModelEditorProps> = ({
+  targetFormat,
+}) => {
+  const [fileContent, setFileContent] = useState<string | null>(null);
+  const [fileFormat, setFileFormat] = useState<FileFormat | null>(null);
+
+  const inputType = useSelector((state: RootState) => state.inputType);
+  const textFieldInputs = useSelector(
+    (state: RootState) => state.textFieldInputs
+  );
+  const value = textFieldInputs[inputType].textFieldValue;
+  const dispatch = useDispatch();
+  const setValue = (value: string) => {
+    dispatch(setTextFieldValue({ value, key: inputType }));
+  };
+
+  // Bestimme das Format basierend auf der Dateiendung
+  const getFileFormat = (fileName: string | null): FileFormat | null => {
+    if (fileName) {
+      if (fileName.endsWith(".mod")) return FileFormat.GMPL;
+      if (fileName.endsWith(".lp")) return FileFormat.CPLEX_LP;
+      if (fileName.endsWith(".mps")) return FileFormat.MPS;
+    }
+    return null;
+  };
+
+  const convertedContent = useGlpk(fileContent || "", fileFormat, targetFormat); // Konvertierter Inhalt
+
+  const saveFile = (content: string, format: FileFormat) => {
+    const fileExtension =
+      format === FileFormat.GMPL
+        ? ".mod"
+        : format === FileFormat.CPLEX_LP
+        ? ".lp"
+        : ".mps"; // Standardmäßig .mps für MPS Format
+
+    const blob = new Blob([content], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `converted-file${fileExtension}`;
+    link.click();
+
+    // Optional: URL wieder freigeben
+    URL.revokeObjectURL(url);
+  };
+
+  // Handle File Upload
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = e.target?.result as string;
+        const format = getFileFormat(file.name);
+        setFileContent(content); // Setze den Inhalt der Datei
+        setFileFormat(format);
+        setValue(convertedContent || "");
+      };
+      reader.readAsText(file);
+    }
+  };
+
+  // Handle File Save
+  const handleSaveFile = () => {
+    if (convertedContent) {
+      saveFile(convertedContent, targetFormat); // Datei speichern
+    }
+  };
+
+  const edit = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (e.target.value == "") {
+      console.log("Test");
+    }
+    setValue(e.target.value);
+  };
+
+  return (
+    <div style={{ overflow: "auto" }}>
+      {/* Datei hochladen */}
+      <input
+        type="file"
+        accept=".mod,.lp,.mps" // Unterstützte Formate
+        style={{ display: "none" }}
+        id="file-upload"
+        onChange={handleFileChange}
+      />
+      <label htmlFor="file-upload">
+        <Button variant="contained" component="span">
+          <FileUploadIcon sx={{ mr: 1 }} />
+          Import
+        </Button>
+      </label>
+
+      {/* Textarea mit dem konvertierten Inhalt */}
+      <TextareaAutosize
+        minRows={30}
+        style={{ width: "100%", marginTop: "20px", resize: "none" }}
+        value={value || ""}
+        onChange={edit} // Aktualisiere den State bei Änderungen
+        placeholder={`${targetFormat} Model...`}
+      />
+
+      {/* Solve */}
+      <Button
+        variant="contained"
+        // onClick={}
+        style={{ marginTop: "10px" }}
+      >
+        <PlayCircleOutlineIcon sx={{ mr: 1 }} />
+        Solve
+      </Button>
+
+      {/* Datei speichern */}
+      <Button
+        variant="contained"
+        onClick={handleSaveFile}
+        style={{ marginTop: "10px", float: "right" }}
+      >
+        <FileDownloadIcon sx={{ mr: 1 }} />
+        Export
+      </Button>
+    </div>
+  );
+};
+
+export default ModelEditor;
+function setMpsInput(value: string): any {
+  throw new Error("Function not implemented.");
+}
+
+function setLpInput(value: string): any {
+  throw new Error("Function not implemented.");
+}

@@ -1,11 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import variablesReducer from "@/store/slices/Variables";
-import solutionReducer from "@/store/slices/Solution";
+import solveResultsReducer from "@/store/slices/SolveResults";
+import inputTypeReducer from "@/store/slices/InputType";
+import textFieldInputReducer from "@/store/slices/TextFieldInputs";
+
 
 export const store = configureStore({
   reducer: {
     variables: variablesReducer,
-    solution: solutionReducer,
+    solveResults: solveResultsReducer,
+    inputType: inputTypeReducer,
+    textFieldInputs: textFieldInputReducer,
   },
 });
 
