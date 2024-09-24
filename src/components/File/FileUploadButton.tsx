@@ -1,7 +1,7 @@
 // FileUploadButton.tsx
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, TextareaAutosize } from '@mui/material';
 import { FileFormat } from './FileFormat';
 import useGlpk from './useGlpk';
@@ -29,6 +29,11 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ targetFormat }) => 
     };
 
     const convertedContent = useGlpk(fileContent || '', fileFormat, targetFormat); // Konvertierter Inhalt
+    useEffect(() => {
+        if (convertedContent) {
+            setValue(convertedContent);
+        }
+    }, [convertedContent]);
 
     const saveFile = (content: string, format: FileFormat) => {
         const fileExtension = format === FileFormat.GMPL ? '.mod' : 
@@ -65,8 +70,8 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ targetFormat }) => 
 
     // Handle File Save
     const handleSaveFile = () => {
-        if (convertedContent) {
-            saveFile(convertedContent, targetFormat); // Datei speichern
+        if (value) {
+            saveFile(value, targetFormat); // Datei speichern
         }
     };
 
