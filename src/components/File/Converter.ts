@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useEffect, useState } from 'react';
 import { FileFormat } from './FileFormat';
@@ -37,10 +39,10 @@ const convertLP = (fileContent: string, currentFormat: FileFormat | null, target
             try {
                 if (!fileContent) return;
 
-                var newContent = fileContent; // Standardinhalt
+                let newContent = fileContent; // Standardinhalt
                 // Konvertierung basierend auf den Formaten
                 if (currentFormat !== targetFormat) {
-                    const lp = window.glp_create_prob();
+                    // const lp = window.glp_create_prob();
                     switch (currentFormat) {
                         case FileFormat.GMPL:
                             // window.glp_mpl_read_model_from_string(lp, null, fileContent);

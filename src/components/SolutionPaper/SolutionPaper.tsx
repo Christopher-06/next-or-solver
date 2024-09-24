@@ -16,6 +16,7 @@ import VariableTable from "./VariableTable";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { HighsSolution } from "highs";
+import { ConstraintRow } from "@/lib/types/Solution";
 
 export const renderValue = (value: number) => {
   if (value === Infinity) {
@@ -53,6 +54,13 @@ export default function SolutionContainer() {
   const result = allSolveResults[inputType];
 
   if (result.solution !== undefined) {
+
+    const constraintRows : ConstraintRow[] = [];
+    for (const constraint of Object.values(result.solution.Rows)) {
+      constraintRows.push(constraint as ConstraintRow);
+    }
+    const VariableColumns = Object.values(result.solution.Columns);
+
     return (
       <>
         {/* Lösungs Feld */}
@@ -76,7 +84,7 @@ export default function SolutionContainer() {
               <TableBody>
                 {/* Variablen Table */}
                 <VariableTable
-                  VariableColumns={Object.values(result.solution.Columns)}
+                  VariableColumns={VariableColumns}
                 />
 
                 {/* Show Divider */}
@@ -89,7 +97,7 @@ export default function SolutionContainer() {
                 </TableRow>
 
                 {/* Constraints Table */}
-                <ConstraintTable constraintsRows={result.solution.Rows} />
+                <ConstraintTable constraintsRows={constraintRows} />
               </TableBody>
             </Table>
           </TableContainer>
