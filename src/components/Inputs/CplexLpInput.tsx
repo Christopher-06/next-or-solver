@@ -1,12 +1,12 @@
 import React from 'react';
-import FileUploadButton from '../File/FileUploadButton';
+import ModelEditor from '../File/ModelEditor';
 import { FileFormat } from '../File/FileFormat';
 
 const CplexLpInput: React.FC = () => {
 
     return (
         <div>
-            <FileUploadButton targetFormat={FileFormat.CPLEX_LP} />
+            <ModelEditor targetFormat={FileFormat.CPLEX_LP} />
         </div>
     );
 };

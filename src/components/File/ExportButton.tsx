@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
 import { FileFormat } from './FileFormat';
-import useGlpk from './useGlpk';
+import useGlpk from './Converter';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 interface ExportButtonProps {

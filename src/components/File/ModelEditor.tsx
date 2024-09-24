@@ -4,17 +4,16 @@
 import React, { useEffect, useState } from 'react';
 import { Button, TextareaAutosize } from '@mui/material';
 import { FileFormat } from './FileFormat';
-import useGlpk from './useGlpk';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import convertLP from './Converter';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import ExportButton from './ExportButton';
 
-interface FileUploadButtonProps {
+interface ModelEditor {
     targetFormat: FileFormat; // Enum für das Ziel-Format
 }
 
-const FileUploadButton: React.FC<FileUploadButtonProps> = ({ targetFormat }) => {
+const ModelEditor: React.FC<ModelEditor> = ({ targetFormat }) => {
     const [fileContent, setFileContent] = useState<string | null>(null);
     const [fileFormat, setFileFormat] = useState<FileFormat | null>(null);
     const [value, setValue] = useState("");
@@ -29,7 +28,7 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ targetFormat }) => 
         return null;
     };
 
-    const convertedContent = useGlpk(fileContent || '', fileFormat, targetFormat); // Konvertierter Inhalt
+    const convertedContent = convertLP(fileContent || '', fileFormat, targetFormat); // Konvertierter Inhalt
     useEffect(() => {
         if (convertedContent) {
             setValue(convertedContent);
@@ -62,6 +61,7 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ targetFormat }) => 
     return (
         <div style={{ overflow: 'auto'}}>
             {/* Datei hochladen */}
+            {/* TODO: Import outsourcen */}
             <input
                 type="file"
                 accept=".mod,.lp,.mps" // Unterstützte Formate
@@ -103,4 +103,4 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ targetFormat }) => 
     );
 };
 
-export default FileUploadButton;
+export default ModelEditor;

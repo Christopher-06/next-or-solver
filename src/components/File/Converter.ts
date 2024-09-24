@@ -19,7 +19,7 @@ declare global {
     }
 }
 
-const useGlpk = (fileContent: string, currentFormat: FileFormat | null, targetFormat: FileFormat) => {
+const convertLP = (fileContent: string, currentFormat: FileFormat | null, targetFormat: FileFormat) => {
     const [convertedContent, setConvertedContent] = useState<string | null>(null);
 
     useEffect(() => {
@@ -96,4 +96,4 @@ const useGlpk = (fileContent: string, currentFormat: FileFormat | null, targetFo
     return convertedContent;
 };
 
-export default useGlpk;
+export default convertLP;
