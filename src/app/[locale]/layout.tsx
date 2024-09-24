@@ -24,25 +24,25 @@ export default function RootLayout({
       <html lang={locale} suppressHydrationWarning>
         <body>
           <NextIntlClientProvider messages={messages}>
-            <InitColorSchemeScript attribute="class" />
+              <InitColorSchemeScript attribute="class" />
 
-            <main>
-              <Theme>
-                <header>
-                  {/* MUI Mobile First */}
-                  <meta
-                    name="viewport"
-                    content="initial-scale=1, width=device-width"
-                  />
-                </header>
+              <main>
+                <Theme>
+                  <header>
+                    {/* MUI Mobile First */}
+                    <meta
+                      name="viewport"
+                      content="initial-scale=1, width=device-width"
+                    />
+                  </header>
 
-                <CssBaseline />
+                  <CssBaseline />
 
-                <NavBar />
+                  <NavBar />
 
-                {children}
-              </Theme>
-            </main>
+                  {children}
+                </Theme>
+              </main>
           </NextIntlClientProvider>
         </body>
       </html>

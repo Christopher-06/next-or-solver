@@ -18,12 +18,3 @@ export type VariableColumn = {
   Dual: number;
   Name: string;
 };
-
-export type Solution = {
-  Status: "Optimal" | "Infeasible" | "Unbounded" | "Unknown";
-  ObjectiveValue?: number;
-  Columns: {
-    [key: string]: VariableColumn;
-  };
-  Rows: ConstraintRow[];
-};

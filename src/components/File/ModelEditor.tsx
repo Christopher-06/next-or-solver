@@ -8,7 +8,10 @@ import convertLP from './Converter';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import ExportButton from './ExportButton';
-
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { setTextFieldValue } from "@/store/slices/TextFieldInputs";
+        
 interface ModelEditor {
     targetFormat: FileFormat; // Enum für das Ziel-Format
 }
@@ -16,8 +19,18 @@ interface ModelEditor {
 const ModelEditor: React.FC<ModelEditor> = ({ targetFormat }) => {
     const [fileContent, setFileContent] = useState<string | null>(null);
     const [fileFormat, setFileFormat] = useState<FileFormat | null>(null);
-    const [value, setValue] = useState("");
 
+    
+  const inputType = useSelector((state: RootState) => state.inputType);
+  const textFieldInputs = useSelector(
+    (state: RootState) => state.textFieldInputs
+  );
+  const value = textFieldInputs[inputType].textFieldValue;
+  const dispatch = useDispatch();
+  const setValue = (value: string) => {
+    dispatch(setTextFieldValue({ value, key: inputType }));
+  };
+    
     // Bestimme das Format basierend auf der Dateiendung
     const getFileFormat = (fileName: string | null): FileFormat | null => {
         if (fileName) {
@@ -103,5 +116,5 @@ const ModelEditor: React.FC<ModelEditor> = ({ targetFormat }) => {
         </div>
     );
 };
-
-export default ModelEditor;
+  
+  export default ModelEditor;
