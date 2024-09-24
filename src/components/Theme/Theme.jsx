@@ -5,6 +5,9 @@ const myTheme = createTheme({
     colorSchemes: {
         dark: true,
     },
+    cssVariables: {
+        colorSchemeSelector: 'class'
+      }
 });
 
 export default function Theme({ children }) {
