@@ -2,7 +2,7 @@ import { Chip, InputAdornment, MenuItem, Select } from "@mui/material";
 import { useMouseContext } from "../MouseProvider/MouseProvider";
 import BackupTableIcon from "@mui/icons-material/BackupTable";
 import LooksOneIcon from "@mui/icons-material/LooksOne";
-import { VarDimensionType } from "@/lib/Variable";
+import { VarDimensionType } from "@/lib/types/Variable";
 
 const ALL_DIMENSION_TYPES: VarDimensionType[] = ["SKALAR", "ARRAY"];
 

@@ -4,7 +4,7 @@ import {
   VarDimensionType,
   VarPropertyType,
   VarValueType,
-} from "@/lib/Variable";
+} from "@/lib/types/Variable";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
@@ -62,6 +62,9 @@ export const variablesSlice = createSlice({
     ) => {
       state[action.payload.index].dimList = action.payload.dimList;
     },
+    clearAllVariables: (state) => {
+      state.splice(0, state.length);
+    },
     validate: (state) => {
       // TODO: Implement validation
       console.log("Validating variables state", state);
@@ -80,6 +83,7 @@ export const {
   setPropertyType,
   setDimensionType,
   setDimList,
+  clearAllVariables,
   validate,
 } = variablesSlice.actions;
 

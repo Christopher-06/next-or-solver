@@ -8,6 +8,7 @@ import { IconButton, Tooltip } from "@mui/material";
 const TOGGLE_MAPPING: { [key: string]: JSX.Element } = {
   // current mode : icon to next mode
   dark: <LightModeIcon />,
+  system : <LightModeIcon />,
   light: <DarkModeIcon />,
 };
 

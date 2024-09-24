@@ -20,7 +20,7 @@ import {
   Variable,
   VarPropertyType,
   VarValueType,
-} from "@/lib/Variable";
+} from "@/lib/types/Variable";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import {

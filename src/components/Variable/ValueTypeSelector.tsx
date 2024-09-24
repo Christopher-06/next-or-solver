@@ -2,7 +2,7 @@ import { Chip, InputAdornment, MenuItem, Select } from "@mui/material";
 import { useMouseContext } from "../MouseProvider/MouseProvider";
 import PatternIcon from "@mui/icons-material/Pattern";
 import PinIcon from "@mui/icons-material/Pin";
-import { VarValueType } from "@/lib/Variable";
+import { VarValueType } from "@/lib/types/Variable";
 
 const ALL_VALUE_TYPES: VarValueType[] = ["CONTINUOUS", "INTEGER"];
 
