@@ -7,7 +7,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import AdbIcon from "@mui/icons-material/Adb";
 
-import Settings from "@/components/NavBar/Settings";
+import ThemeToggle from "./ThemeToggle";
+import LocaleSwitcher from "@/components/NavBar/LocaleSwitcher";
+import { Divider } from "@mui/material";
 
 export default function NavBar() {
   const t = useTranslations();
@@ -60,13 +62,16 @@ export default function NavBar() {
           </Typography>
 
           {/* Big Navbar Links left */}
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }}}>
+            <Divider orientation="vertical" flexItem sx={{mr : 1}}/>
             <Typography variant="caption">{t("navbar.description")}</Typography>
           </Box>
 
-          {/* Right Element (Settings) */}
-          <Box sx={{ flexGrow: 0 }}>
-            <Settings />
+          {/* Right Elements */}
+          <Box sx={{ flexGrow: 0, display : "flex", alignItems : "center" }}>
+            <ThemeToggle />
+            <Box sx={{ width: 10 }} />
+            <LocaleSwitcher />
           </Box>
         </Toolbar>
       </Container>

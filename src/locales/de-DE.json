@@ -2,12 +2,8 @@
   "navbar": {
     "title": "Next OR Solver",
     "description": "Ein Online-Tool zur Lösung von Operation Research Problemen",
-    "settings" : {
-      "tooltip" : "Öffne Einstellungen"
-    }
-  },
-  "locale_switch" : {
-    "helptext" : "Wähle Sprache"
+    "theme_toggle" : "Wechsle Farbmodus",
+    "locale_switch" : "Wähle Sprache"
   },
   "colormode_selection": {
     "tooltip": "Ändere Farbmodus",
@@ -22,5 +18,19 @@
       "max": "max"
     },
     "function": "Zielfunktion"
+  },
+  "variable": {
+    "name" : {
+      "label" : "Name"
+    },
+    "type": {
+      "system" : "System",
+      "decision": "Entscheidung",
+      "label": "Typ",
+      "helper" : "Wähle den Typen der Variable",
+      "continuous": "Kontinuierlich",
+      "integer": "Ganzzahlig",
+      "binary": "Binär"      
+    }
   }
 }

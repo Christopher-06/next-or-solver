@@ -7,7 +7,9 @@ import { TabContext, TabPanel } from "@mui/lab";
 import GmplInput from "@/components/Inputs/GmplInput";
 import CplexLpInput from "@/components/Inputs/CplexLpInput";
 import MpsInput from "@/components/Inputs/MpsInput";
-// import { useTranslations } from "next-intl";
+import SolutionContainer from "@/components/SolutionPaper/SolutionPaper";
+import EasyInput from "@/components/EasyInput/EasyInput";
+import ActionsBar from "@/components/ActionsBar/ActionsBar";
 
 export default function Home() {
   const [value, setValue] = useState("1");
@@ -26,7 +28,7 @@ export default function Home() {
           <Tab label="MPS" value="4" />
         </Tabs>
         <TabPanel value="1">
-          <CustomInput />
+         <EasyInput />
         </TabPanel>
         <TabPanel value="2">
           <GmplInput />
@@ -38,6 +40,10 @@ export default function Home() {
           <MpsInput />
         </TabPanel>
       </TabContext>
+
+      <ActionsBar />
+
+      <SolutionContainer />
     </Container>
   );
 }
