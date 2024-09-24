@@ -8,6 +8,7 @@ import useGlpk from './useGlpk';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import ExportButton from './ExportButton';
 
 interface FileUploadButtonProps {
     targetFormat: FileFormat; // Enum für das Ziel-Format
@@ -35,23 +36,6 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ targetFormat }) => 
         }
     }, [convertedContent]);
 
-    const saveFile = (content: string, format: FileFormat) => {
-        const fileExtension = format === FileFormat.GMPL ? '.mod' : 
-                              format === FileFormat.CPLEX_LP ? '.lp' : 
-                              '.mps'; // Standardmäßig .mps für MPS Format
-    
-        const blob = new Blob([content], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-    
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `converted-file${fileExtension}`;
-        link.click();
-        
-        // Optional: URL wieder freigeben
-        URL.revokeObjectURL(url);
-    };
-
     // Handle File Upload
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -65,13 +49,6 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ targetFormat }) => 
                 setValue(convertedContent || '');
             };
             reader.readAsText(file);
-        }
-    };
-
-    // Handle File Save
-    const handleSaveFile = () => {
-        if (value) {
-            saveFile(value, targetFormat); // Datei speichern
         }
     };
 
@@ -119,14 +96,9 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ targetFormat }) => 
             </Button>
 
             {/* Datei speichern */}
-            <Button 
-                variant="contained" 
-                onClick={handleSaveFile} 
-                style={{ marginTop: '10px', float: 'right' }}
-            >
-                <FileDownloadIcon sx={{ mr: 1 }} />
-                Export
-            </Button>
+            <ExportButton content={value} currentFormat={targetFormat} targetFormat={FileFormat.MPS} />
+            <ExportButton content={value} currentFormat={targetFormat} targetFormat={FileFormat.CPLEX_LP} />
+            <ExportButton content={value} currentFormat={targetFormat} targetFormat={FileFormat.GMPL} />
         </div>
     );
 };
