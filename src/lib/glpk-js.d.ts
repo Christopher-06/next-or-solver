@@ -1,5 +1,5 @@
 declare module 'glpk.js' {
-    const glpk: object;
+    const glpk: any;
     export default glpk;
 }
   
