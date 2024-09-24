@@ -1,4 +1,6 @@
 import { NextIntlClientProvider, useMessages, useLocale } from "next-intl";
+import CssBaseline from "@mui/material/CssBaseline";
+import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -6,6 +8,8 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 import NavBar from "@/components/NavBar/NavBar";
+import Theme from "@/components/Theme/Theme";
+import StoreProvider from "@/store/StoreProvider";
 
 export default function RootLayout({
   children,
@@ -16,19 +20,32 @@ export default function RootLayout({
   const locale = useLocale();
 
   return (
-    <html lang={locale}>
-      <body>
-        <header>
-          {/* MUI Mobile First */}
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-        </header>
+    <StoreProvider>
+      <html lang={locale} suppressHydrationWarning>
+        <body>
+          <NextIntlClientProvider messages={messages}>
+              <InitColorSchemeScript attribute="class" />
 
-        <NextIntlClientProvider messages={messages}>
-          <NavBar />
+              <main>
+                <Theme>
+                  <header>
+                    {/* MUI Mobile First */}
+                    <meta
+                      name="viewport"
+                      content="initial-scale=1, width=device-width"
+                    />
+                  </header>
 
-          {children}
-        </NextIntlClientProvider>
-      </body>
-    </html>
+                  <CssBaseline />
+
+                  <NavBar />
+
+                  {children}
+                </Theme>
+              </main>
+          </NextIntlClientProvider>
+        </body>
+      </html>
+    </StoreProvider>
   );
 }
