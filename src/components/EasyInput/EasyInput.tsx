@@ -8,7 +8,7 @@ export default function EasyInput() {
   return (
     <>
       {/* Variablen Feld */}
-      <Paper sx={{ mb: 3, p: 3 }}>
+      <Paper sx={{ my: 3, p: 3 }}>
         <Typography variant="h5" sx={{ mb: 3 }}>
           Variablen
         </Typography>
@@ -16,7 +16,7 @@ export default function EasyInput() {
       </Paper>
 
       {/* Modell Feld */}
-      <Paper sx={{ mb: 3, p: 3 }}>
+      <Paper sx={{ my: 3, p: 3 }}>
         <Typography variant="h5" sx={{ mb: 3 }}>
           Modell
         </Typography>
@@ -24,7 +24,7 @@ export default function EasyInput() {
       </Paper>
 
       {/* Daten Feld */}
-      <Paper sx={{ mb: 3, p: 3 }}>
+      <Paper sx={{ my: 3, p: 3 }}>
         <Typography variant="h5">Daten</Typography>
       </Paper>
     </>

@@ -6,7 +6,6 @@ const GmplInput: React.FC = () => {
     return (
         <div>
             <ModelEditor targetFormat={FileFormat.GMPL} />
-            {/* <SolverPage /> */}
         </div>
     );
 };
