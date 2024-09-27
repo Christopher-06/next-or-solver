@@ -2,7 +2,7 @@ export type VarPropertyType = "DECISION" | "PARAMETER";
 
 export type VarValueType = "CONTINUOUS" | "INTEGER";
 
-export type VarDimensionType = "SKALAR" | "ARRAY";
+export type VarDimensionType = "SKALAR" | "ARRAY" | "SET";
 
 export interface Variable {
   name: string;

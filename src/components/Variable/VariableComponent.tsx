@@ -116,17 +116,19 @@ export default function VariableComponent({
           />
         </Grid2>
 
-        {/* Choose lower bound */}
+        {/* Choose lower bound (not with SET) */}
         <Grid2
           size={{ sm: 3, md: 1 }}
           sx={{ display: "flex", justifyContent: "end" }}
         >
-          <BoundInput
-            bound={lowerBound}
-            setBound={setLowerBoundDispatched}
-            type="LB"
-            keepTextFields={name === ""}
-          />
+          {dimensionType !== "SET" && (
+            <BoundInput
+              bound={lowerBound}
+              setBound={setLowerBoundDispatched}
+              type="LB"
+              keepTextFields={name === ""}
+            />
+          )}
         </Grid2>
 
         {/* Choose Var Name + (optional) Array Dimensions */}
@@ -138,7 +140,7 @@ export default function VariableComponent({
             justifyContent: "center",
           }}
         >
-          {dimensionType === "SKALAR" ? (
+          {dimensionType === "SKALAR" || dimensionType === "SET" ? (
             <NameInput name={name} setName={setNameDispatched} />
           ) : (
             <ArrayDimensionsInput
@@ -150,17 +152,19 @@ export default function VariableComponent({
           )}
         </Grid2>
 
-        {/* Choose Upper Bound */}
+        {/* Choose Upper Bound (not with SET) */}
         <Grid2 size={{ sm: 3, md: 1 }} sx={{ display: "flex" }}>
-          <BoundInput
-            bound={upperBound}
-            setBound={setUpperBoundDispatched}
-            type="UB"
-            keepTextFields={name === ""}
-          />
+          {dimensionType !== "SET" && (
+            <BoundInput
+              bound={upperBound}
+              setBound={setUpperBoundDispatched}
+              type="UB"
+              keepTextFields={name === ""}
+            />
+          )}
         </Grid2>
 
-        {/* Choose Value Type */}
+        {/* Choose Value Type (not with SET) */}
         <Grid2
           size={{ sm: 4, md: 2 }}
           sx={{
@@ -169,14 +173,18 @@ export default function VariableComponent({
             justifyContent: "center",
           }}
         >
-          <Typography variant="h4" sx={{ mx: 2 }}>
-            &isin;{" "}
-          </Typography>
-          <ValueTypeSelector
-            valueType={valueType}
-            setValueType={setValueTypeDispatched}
-            keepTextFields={name === ""}
-          />
+          {dimensionType !== "SET" && (
+            <>
+              <Typography variant="h4" sx={{ mx: 2 }}>
+                &isin;{" "}
+              </Typography>
+              <ValueTypeSelector
+                valueType={valueType}
+                setValueType={setValueTypeDispatched}
+                keepTextFields={name === ""}
+              />
+            </>
+          )}
         </Grid2>
 
         {/* Space between the value type and the delete button (only SM in next row) */}

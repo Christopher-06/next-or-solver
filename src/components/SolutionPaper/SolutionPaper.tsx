@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { HighsSolution } from "highs";
 import { ConstraintRow } from "@/lib/types/Solution";
+import React from "react";
 
 export const renderValue = (value: number) => {
   if (value === Infinity) {
@@ -48,72 +49,70 @@ const renderAlert = (solution: HighsSolution) => {
   }
 };
 
+const renderinPaper = (children: React.ReactNode) => {
+  return (
+    <Paper sx={{ m: 3, p: 3 }}>
+      <Typography variant="h5">Lösung</Typography>
+      {children}
+    </Paper>
+  );
+};
+
 export default function SolutionContainer() {
   const inputType = useSelector((state: RootState) => state.inputType);
   const allSolveResults = useSelector((state: RootState) => state.solveResults);
   const result = allSolveResults[inputType];
 
-  if (result.solution !== undefined) {
+  if (result.solution === undefined) {
+    // Show loading message
+    if (result.startTime !== undefined) {
+      return <Alert severity="info">Berechnung läuft...</Alert>;
+    }
 
-    const constraintRows : ConstraintRow[] = [];
+    // No solution available
+    return <></>;
+  } else {
+    // prepare data for tables
+    const constraintRows: ConstraintRow[] = [];
     for (const constraint of Object.values(result.solution.Rows)) {
       constraintRows.push(constraint as ConstraintRow);
     }
     const VariableColumns = Object.values(result.solution.Columns);
 
-    return (
-      <>
-        {/* Lösungs Feld */}
-        <Paper sx={{ m: 3, p: 3 }}>
-          <Typography variant="h5">Lösung</Typography>
+    return renderinPaper(<>
+      {renderAlert(result.solution)}
+      <TableContainer>
+        <Table sx={{ minWidth: 650 }}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell align="right">Upper</TableCell>
+              <TableCell align="right">Lower</TableCell>
+              <TableCell align="right">Type</TableCell>
+              <TableCell align="right">Primal</TableCell>
+              <TableCell align="right">Dual</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {/* Variablen Table */}
+            <VariableTable VariableColumns={VariableColumns} />
 
-          {renderAlert(result.solution as HighsSolution)}
+            {/* Show Divider */}
+            {VariableColumns.length > 0 && constraintRows.length > 0 && (
+              <TableRow>
+                {
+                  <TableCell colSpan={6}>
+                    <hr />
+                  </TableCell>
+                }
+              </TableRow>
+            )}
 
-          <TableContainer>
-            <Table sx={{ minWidth: 650 }}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell align="right">Upper</TableCell>
-                  <TableCell align="right">Lower</TableCell>
-                  <TableCell align="right">Type</TableCell>
-                  <TableCell align="right">Primal</TableCell>
-                  <TableCell align="right">Dual</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {/* Variablen Table */}
-                <VariableTable
-                  VariableColumns={VariableColumns}
-                />
-
-                {/* Show Divider */}
-                <TableRow>
-                  {
-                    <TableCell colSpan={6}>
-                      <hr />
-                    </TableCell>
-                  }
-                </TableRow>
-
-                {/* Constraints Table */}
-                <ConstraintTable constraintsRows={constraintRows} />
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-      </>
-    );
-  } else if (result.solution === undefined && result.startTime !== undefined) {
-    // Calculation is running
-    return (
-      <Paper sx={{ m: 3, p: 3 }}>
-        <Typography variant="h5">Lösung</Typography>
-        <Alert severity="info">Berechnung läuft...</Alert>
-      </Paper>
-    );
-  } else {
-    // No solution available
-    return <></>;
+            {/* Constraints Table */}
+            <ConstraintTable constraintsRows={constraintRows} />
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>);
   }
 }

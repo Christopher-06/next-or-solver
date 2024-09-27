@@ -2,13 +2,15 @@ import { Chip, InputAdornment, MenuItem, Select } from "@mui/material";
 import { useMouseContext } from "../MouseProvider/MouseProvider";
 import BackupTableIcon from "@mui/icons-material/BackupTable";
 import LooksOneIcon from "@mui/icons-material/LooksOne";
+import CategoryIcon from "@mui/icons-material/Category";
 import { VarDimensionType } from "@/lib/types/Variable";
 
-const ALL_DIMENSION_TYPES: VarDimensionType[] = ["SKALAR", "ARRAY"];
+const ALL_DIMENSION_TYPES: VarDimensionType[] = ["SKALAR", "ARRAY", "SET"];
 
 const DIMENSION_ICON: { [key in VarDimensionType]: JSX.Element } = {
   SKALAR: <LooksOneIcon />,
   ARRAY: <BackupTableIcon />,
+  SET: <CategoryIcon />,
 };
 
 export default function DataTypeSelector({
@@ -20,7 +22,7 @@ export default function DataTypeSelector({
   setDimensionType: (dataType: VarDimensionType) => void;
   keepTextFields?: boolean;
 }) {
-  const { isInside } = useMouseContext();
+  const { isInside, setIsInside } = useMouseContext();
 
   const onChange = (e: { target: { value: string } }) => {
     setDimensionType(ALL_DIMENSION_TYPES[parseInt(e.target.value)]);
@@ -52,6 +54,9 @@ export default function DataTypeSelector({
           </InputAdornment>
         }
         fullWidth
+        onClose={() => {
+          setIsInside(false);
+        }}
       >
         {ALL_DIMENSION_TYPES.map((dimensionType, index) => (
           <MenuItem key={index} value={index}>

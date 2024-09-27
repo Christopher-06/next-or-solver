@@ -15,19 +15,20 @@ export default function NameInput({
   // Draw TextField when name is choosen and mouse is inside
 
   if (!isInside && name !== "") {
-    return (
-      <Typography variant="h6">
-        {name}
-      </Typography>
-    );
+    return <Typography variant="h6">{name}</Typography>;
   } else {
     return (
       <TextField
-      sx={{mx : 1}}
+        sx={{ mx: 1 }}
         size="small"
         label={label}
         variant="outlined"
         value={name}
+        slotProps={{
+          htmlInput: {
+            style: { textAlign: "center" },
+          },
+        }}
         onChange={(e: { target: { value: string } }) => setName(e.target.value)}
         fullWidth
       />
