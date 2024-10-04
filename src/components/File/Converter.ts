@@ -3,59 +3,44 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { FileFormat } from './FileFormat';
-
-declare global {
-    interface Window {
-        glp_create_prob: any;
-        glp_read_lp_from_string: any;
-        glp_scale_prob: any;
-        GLP_SF_AUTO: any;
-        SMCP: any;
-        glp_simplex: any;
-        glp_get_num_cols: any;
-        glp_get_col_name: any;
-        glp_get_col_prim: any;
-        glp_get_obj_val: any;
-        glp_mpl_read_model_from_string: any;
-        glp_write_lp: any;
-    }
-}
+import glpk from "glpk.js";
 
 const convertLP = (fileContent: string, currentFormat: FileFormat | null, targetFormat: FileFormat) => {
     const [convertedContent, setConvertedContent] = useState<string | null>(null);
+    console.log("convert");
 
     useEffect(() => {
-        // Dynamisch das GLPK-Skript laden
-        const loadGLPK = async () => {
-            const script = document.createElement('script');
-                script.src = '/glpk.min.js'; // Pfad zu deiner glpk.min.js im public-Verzeichnis
-                script.onload = () => {
-                    convertFile();
-                };
-            document.body.appendChild(script);
-        };
 
         const convertFile = async () => {
             try {
                 if (!fileContent) return;
 
-                let newContent = fileContent; // Standardinhalt
+                let newContent = fileContent; // ursprünglicher Inhalt
+                console.log(currentFormat + " => " + targetFormat);
                 // Konvertierung basierend auf den Formaten
                 if (currentFormat !== targetFormat) {
-                    // const lp = window.glp_create_prob();
+
                     switch (currentFormat) {
                         case FileFormat.GMPL:
-                            // window.glp_mpl_read_model_from_string(lp, null, fileContent);
                             if (targetFormat === FileFormat.CPLEX_LP) {
-                                // const outputBuffer = {
-                                //     data: '',
-                                //     write: function (text: string) {
-                                //       this.data += text;
-                                //     },
-                                // };
-                                // window.glp_write_lp(lp, null, (chunk: string) => outputBuffer.write(chunk));
-                                // newContent = outputBuffer.data;
-                                newContent = "GMPL to LP_CPLEX conversion";
+                                const lp = glpk.glp_create_prob();
+                                const tran = glpk.glp_mpl_alloc_wksp();
+
+                                let pos = 0;
+                                glpk.glp_mpl_read_model(tran, null, () => {
+                                    if (pos < fileContent.length){
+                                        return fileContent[pos++];
+                                    }
+                                        return -1;
+                                }, false);
+
+                                glpk.glp_mpl_generate(tran, null, console.log);
+                                glpk.glp_mpl_build_prob(tran, lp);
+
+                                newContent = "";
+                                glpk.glp_write_lp(lp, null, (chunk: string) => {
+                                    newContent += chunk + "\n";
+                                });
                             } else if (targetFormat === FileFormat.MPS) {
                                 newContent = "GMPL to MPS conversion";
                             } else {
@@ -63,8 +48,6 @@ const convertLP = (fileContent: string, currentFormat: FileFormat | null, target
                             }
                             break;
                         case FileFormat.CPLEX_LP:
-                            // window.glp_read_lp_from_string(lp, null, fileContent);
-                            // console.log(lp);
                             if (targetFormat === FileFormat.GMPL) {
                                 newContent = "LP_CPLEX to GMPL conversion";
                             } else if (targetFormat === FileFormat.MPS) {
@@ -86,13 +69,13 @@ const convertLP = (fileContent: string, currentFormat: FileFormat | null, target
                             throw new Error("Unsupported format or conversion.");
                     }
                 }
-                setConvertedContent(newContent); // Setze den konvertierten Inhalt
+                setConvertedContent(newContent);
             } catch (error) {
                 console.error('Fehler bei der Konvertierung: ', error);
             }
         };
 
-        loadGLPK();
+        convertFile();
     }, [fileContent, currentFormat, targetFormat]);
 
     return convertedContent;
