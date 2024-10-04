@@ -1,9 +1,8 @@
 import { RootState } from "@/store/store";
-import { Stack, Typography } from "@mui/material";
+import { Grid2, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import SkalarInput from "./SkalarInput/SkalarInput";
 import SetInput from "./SetInput/SetInput";
-import MouseProvider from "../MouseProvider/MouseProvider";
 import { Variable } from "@/lib/types/Variable";
 import React from "react";
 import ArrayInput from "./ArrayInput/ArrayInput";
@@ -44,13 +43,42 @@ export default function DataInputContainer() {
     }
   };
 
+  // get skalar input in row (3 in a row)
+  const SkalarTriplets = variables
+    .filter((v) => v.dimensionType === "SKALAR")
+    .reduce((acc, variable, idx) => {
+      if (idx % 3 === 0) {
+        acc.push([variable]);
+      } else {
+        acc[acc.length - 1].push(variable);
+      }
+      return acc;
+    }, [] as Variable[][]);
+
+  const ArraySingles = variables.filter((v) => v.dimensionType === "ARRAY");
+  const SetSingles = variables.filter((v) => v.dimensionType === "SET");
+
+  // pack 3 skalar variables in a row and then one array / set and repeat
+  const orderedVariables: Variable[] = [];
+  while (
+    SkalarTriplets.length > 0 ||
+    ArraySingles.length > 0 ||
+    SetSingles.length > 0
+  ) {
+    if (SkalarTriplets.length > 0) {
+      orderedVariables.push(...SkalarTriplets.shift()!);
+    }
+    if (ArraySingles.length > 0) {
+      orderedVariables.push(ArraySingles.shift()!);
+    }
+    if (SetSingles.length > 0) {
+      orderedVariables.push(SetSingles.shift()!);
+    }
+  }
+
   return (
-    <Stack spacing={2} sx={{ m: 2 }}>
-      {variables.map((variable) => (
-        <MouseProvider key={variable._id}>
-          {renderInput(variable)}
-        </MouseProvider>
-      ))}
-    </Stack>
+    <Grid2 container spacing={3} sx={{ m: 2 }}>
+      {orderedVariables.map((variable) => renderInput(variable))}
+    </Grid2>
   );
 }

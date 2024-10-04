@@ -1,6 +1,6 @@
 "use client";
 import { VarValueDataType, VarValueType } from "@/lib/types/Variable";
-import { TextField } from "@mui/material";
+import { TextField, Tooltip } from "@mui/material";
 import React from "react";
 import { useEffect, useState } from "react";
 
@@ -12,14 +12,18 @@ export default function NumericInput({
   lowerBound = undefined,
   upperBound = undefined,
   valueType = "CONTINUOUS",
+  showHelperText = true,
+  showHelperTextInTooltip = false,
 }: {
   value: VarValueDataType;
   setValue: (value: number) => void;
   label?: string;
   centered?: boolean;
-  lowerBound: undefined | number;
-  upperBound: undefined | number;
+  lowerBound?: undefined | number;
+  upperBound?: undefined | number;
   valueType: VarValueType;
+  showHelperText?: boolean;
+  showHelperTextInTooltip ?: boolean;
 }) {
   const [text, setText] = useState("");
   const [helperText, setHelperText] = useState("");
@@ -61,13 +65,13 @@ export default function NumericInput({
 
   return (
     <>
+    <Tooltip title={showHelperTextInTooltip && helperText}>
       <TextField
         label={label}
         variant="outlined"
         error={helperText !== ""}
-        helperText={helperText}
+        helperText={showHelperText ? helperText : ""}
         size="small"
-        sx={{ w: 1 }}
         slotProps={{
           htmlInput: {
             style: (centered
@@ -79,6 +83,7 @@ export default function NumericInput({
         onChange={(e: { target: { value: string } }) => setText(e.target.value)}
         onBlur={validateInput}
       />
+      </Tooltip>
     </>
   );
 }

@@ -15,7 +15,7 @@ export default function NameInput({
   // Draw TextField when name is choosen and mouse is inside
 
   if (!isInside && name !== "") {
-    return <Typography variant="h6">{name}</Typography>;
+    return <Typography variant="h6" noWrap sx={{mx : 3}}>{name}:</Typography>;
   } else {
     return (
       <TextField

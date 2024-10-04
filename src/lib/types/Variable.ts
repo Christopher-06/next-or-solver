@@ -6,7 +6,7 @@ export type VarValueType = "CONTINUOUS" | "INTEGER";
 
 export type VarDimensionType = "SKALAR" | "ARRAY" | "SET";
 
-export type VarValueDataType = undefined | number | number[] | Set<string>;
+export type VarValueDataType = undefined | number | (number|undefined)[] | Set<string>;
 
 export interface Variable {
   _id: string;

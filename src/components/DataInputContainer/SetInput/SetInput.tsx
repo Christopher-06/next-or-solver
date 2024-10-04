@@ -1,6 +1,6 @@
 "use client";
 import { RootState } from "@/store/store";
-import { Stack, Typography } from "@mui/material";
+import { Grid2, Stack, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setVariableValue } from "@/store/slices/Variables";
@@ -41,27 +41,29 @@ export default function SetInput({ variable_id }: { variable_id: string }) {
   const entries = Array.from(variable.dataValue);
 
   return (
-    <Stack direction="row" alignContent="center" justifyContent="center">
-      <Typography variant="h5" alignContent="center">
-        {variable.name} =
-      </Typography>
+    <Grid2 size={{ md: 12, lg: 12 }}>
+      <Stack direction="row" alignContent="center" justifyContent="center">
+        <Typography variant="h5" alignContent="center">
+          {variable.name} =
+        </Typography>
 
-      <Typography
-        variant="h5"
-        alignContent="center"
-        justifyContent="center"
-        sx={{ px: 1 }}
-      >
-        {"{"}
-      </Typography>
+        <Typography
+          variant="h5"
+          alignContent="center"
+          justifyContent="center"
+          sx={{ px: 1 }}
+        >
+          {"{"}
+        </Typography>
 
-      <ItemsChipArray entries={entries} variable={variable} />
+        <ItemsChipArray entries={entries} variable={variable} />
 
-      <Typography variant="h5" alignContent="center" sx={{ px: 1 }}>
-        {"}"}
-      </Typography>
+        <Typography variant="h5" alignContent="center" sx={{ px: 1 }}>
+          {"}"}
+        </Typography>
 
-      <AddItemField variable={variable} />
-    </Stack>
+        <AddItemField variable={variable} />
+      </Stack>
+    </Grid2>
   );
 }

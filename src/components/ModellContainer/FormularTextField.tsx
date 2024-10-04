@@ -21,6 +21,7 @@ export default function FormularTextField({
         textAlign="center"
         justifyContent="center"
         alignItems="center"
+        sx={{flex : 1}}
       >
         {text.replace("<=", " ≤ ").replace(">=", " ≥ ")}
       </Typography>
@@ -32,6 +33,7 @@ export default function FormularTextField({
       fullWidth
       label={label}
       variant="outlined"
+      sx={{flex : 1}}
       size="small"
       slotProps={{
         htmlInput: {
