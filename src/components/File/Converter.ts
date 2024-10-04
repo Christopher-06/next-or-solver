@@ -15,7 +15,7 @@ const convertLP = (fileContent: string, currentFormat: FileFormat | null, target
             try {
                 if (!fileContent) return;
 
-                var newContent = fileContent; // ursprünglicher Inhalt
+                let newContent = fileContent; // ursprünglicher Inhalt
                 console.log(currentFormat + " => " + targetFormat);
                 // Konvertierung basierend auf den Formaten
                 if (currentFormat !== targetFormat) {
@@ -41,7 +41,6 @@ const convertLP = (fileContent: string, currentFormat: FileFormat | null, target
                                 glpk.glp_write_lp(lp, null, (chunk: string) => {
                                     newContent += chunk + "\n";
                                 });
-                                console.log(newContent);
                             } else if (targetFormat === FileFormat.MPS) {
                                 newContent = "GMPL to MPS conversion";
                             } else {
