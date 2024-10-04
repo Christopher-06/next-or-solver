@@ -1,8 +1,9 @@
 "use client";
 import { Grid2 } from "@mui/material";
-import SenseSelector, { Sense } from "./SenseSelector";
+import SenseSelector from "./SenseSelector";
 import { useState } from "react";
 import FormularTextField from "../FormularTextField";
+import { Sense } from "@/lib/types/Modell";
 
 export default function Objective() {
   const [sense, setSense] = useState<Sense>("MAX");
