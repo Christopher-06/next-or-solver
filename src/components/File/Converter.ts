@@ -39,8 +39,9 @@ const convertLP = (fileContent: string, currentFormat: FileFormat | null, target
 
                                 newContent = "";
                                 glpk.glp_write_lp(lp, null, (chunk: string) => {
-                                    newContent += chunk;
+                                    newContent += chunk + "\n";
                                 });
+                                console.log(newContent);
                             } else if (targetFormat === FileFormat.MPS) {
                                 newContent = "GMPL to MPS conversion";
                             } else {
