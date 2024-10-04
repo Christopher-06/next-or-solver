@@ -63,11 +63,11 @@ export default function VariableComponent({
     dispatch(setName({ index: var_idx, name }));
   };
 
-  const setLowerBoundDispatched = (lowerBound: string) => {
+  const setLowerBoundDispatched = (lowerBound: number | undefined) => {
     dispatch(setLowerBound({ index: var_idx, lowerBound }));
   };
 
-  const setUpperBoundDispatched = (upperBound: string) => {
+  const setUpperBoundDispatched = (upperBound: number | undefined) => {
     dispatch(setUpperBound({ index: var_idx, upperBound }));
   };
 
@@ -113,6 +113,7 @@ export default function VariableComponent({
             dimensionType={dimensionType}
             setDimensionType={setDimensionTypeDispatched}
             keepTextFields={name === ""}
+            allowSet={propertyType === "PARAMETER"}
           />
         </Grid2>
 
@@ -121,7 +122,7 @@ export default function VariableComponent({
           size={{ sm: 3, md: 1 }}
           sx={{ display: "flex", justifyContent: "end" }}
         >
-          {dimensionType !== "SET" && (
+          {propertyType === "DECISION" && (
             <BoundInput
               bound={lowerBound}
               setBound={setLowerBoundDispatched}
@@ -154,7 +155,7 @@ export default function VariableComponent({
 
         {/* Choose Upper Bound (not with SET) */}
         <Grid2 size={{ sm: 3, md: 1 }} sx={{ display: "flex" }}>
-          {dimensionType !== "SET" && (
+          {propertyType === "DECISION" && (
             <BoundInput
               bound={upperBound}
               setBound={setUpperBoundDispatched}

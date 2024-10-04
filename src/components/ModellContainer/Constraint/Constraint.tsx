@@ -1,7 +1,6 @@
 "use client";
 import NameInput from "@/components/Variable/NameInput";
-import { Button, Grid2, Theme, Tooltip, useMediaQuery } from "@mui/material";
-import { useState } from "react";
+import { Button, Grid2, Tooltip } from "@mui/material";
 import FormularTextField from "../FormularTextField";
 import MouseProvider from "@/components/MouseProvider/MouseProvider";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -22,8 +21,6 @@ export default function Constraint({
   constraintIndex: number;
   showDeleteButton?: boolean;
 }) {
-
-  const isSM = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const constraint = useSelector((state: RootState) => state.modell.constraints[constraintIndex]);
   const dispatch = useDispatch();
 

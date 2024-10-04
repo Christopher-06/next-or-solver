@@ -3,8 +3,7 @@ import { Chip, InputAdornment, MenuItem, Select } from "@mui/material";
 import { useMouseContext } from "@/components/MouseProvider/MouseProvider";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
-
-export type Sense = "MAX" | "MIN";
+import { Sense } from "@/lib/types/Modell";
 
 const ALL_SENSE_TYPES: Sense[] = ["MAX", "MIN"];
 
