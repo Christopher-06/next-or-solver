@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Container, Tab, Tabs } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 import GmplInput from "@/components/Inputs/GmplInput";

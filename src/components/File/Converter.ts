@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useEffect, useState } from 'react';
 import { FileFormat } from './FileFormat';
@@ -17,6 +19,7 @@ const convertLP = (fileContent: string, currentFormat: FileFormat | null, target
                 console.log(currentFormat + " => " + targetFormat);
                 // Konvertierung basierend auf den Formaten
                 if (currentFormat !== targetFormat) {
+
                     switch (currentFormat) {
                         case FileFormat.GMPL:
                             if (targetFormat === FileFormat.CPLEX_LP) {

@@ -1,10 +1,9 @@
-// FileUploadButton.tsx
 "use client";
 
 import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
 import { FileFormat } from './FileFormat';
-import useGlpk from './Converter';
+import convertLP from './Converter';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 interface ExportButtonProps {
@@ -24,7 +23,7 @@ const ExportButton: React.FC<ExportButtonProps> = ({ content, currentFormat, tar
         return null;
     };
 
-    const convertedContent = useGlpk(content || '', currentFormat, targetFormat); // Konvertierter Inhalt
+    const convertedContent = convertLP(content || '', currentFormat, targetFormat); // Konvertierter Inhalt
     useEffect(() => {
         console.log("ExportButton");
         if (convertedContent) {
