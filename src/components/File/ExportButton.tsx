@@ -26,6 +26,7 @@ const ExportButton: React.FC<ExportButtonProps> = ({ content, currentFormat, tar
 
     const convertedContent = useGlpk(content || '', currentFormat, targetFormat); // Konvertierter Inhalt
     useEffect(() => {
+        console.log("ExportButton");
         if (convertedContent) {
             setValue(convertedContent);
         }
