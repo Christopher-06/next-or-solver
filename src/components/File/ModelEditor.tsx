@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import React, { useEffect, useState } from "react";
 import { Button, TextareaAutosize } from "@mui/material";
 import { FileFormat } from "./FileFormat";
 import convertLP from "./Converter";
@@ -15,8 +14,6 @@ interface ModelEditor {
 }
 
 const ModelEditor: React.FC<ModelEditor> = ({ targetFormat }) => {
-  const [fileContent, setFileContent] = useState<string | null>(null);
-  const [fileFormat, setFileFormat] = useState<FileFormat | null>(null);
 
   const inputType = useSelector((state: RootState) => state.inputType);
   const textFieldInputs = useSelector(
@@ -38,17 +35,6 @@ const ModelEditor: React.FC<ModelEditor> = ({ targetFormat }) => {
     return null;
   };
 
-  const convertedContent = convertLP(
-    fileContent || "",
-    fileFormat,
-    targetFormat
-  ); // Konvertierter Inhalt
-  useEffect(() => {
-    if (convertedContent) {
-      setValue(convertedContent);
-    }
-  }, [convertedContent]);
-
   // Handle File Upload
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -57,8 +43,7 @@ const ModelEditor: React.FC<ModelEditor> = ({ targetFormat }) => {
       reader.onload = (e) => {
         const content = e.target?.result as string;
         const format = getFileFormat(file.name);
-        setFileContent(content); // Setze den Inhalt der Datei
-        setFileFormat(format);
+        const convertedContent = convertLP(content || "", format, targetFormat);
         setValue(convertedContent || "");
       };
       reader.readAsText(file);
@@ -66,9 +51,6 @@ const ModelEditor: React.FC<ModelEditor> = ({ targetFormat }) => {
   };
 
   const edit = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.target.value == "") {
-      console.log("Test");
-    }
     setValue(e.target.value);
   };
 

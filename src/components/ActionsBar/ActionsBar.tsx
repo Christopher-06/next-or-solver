@@ -80,7 +80,7 @@ export default function ActionsBar() {
               color="primary"
               onClick={async () => {
                 dispatch(startSolving(inputType));
-                solve(textFieldValue).then((solution) => {
+                solve(textFieldValue, currentFormat).then((solution) => {
                   dispatch(setSolution({ key: inputType, solution }));
                 });
               }}
