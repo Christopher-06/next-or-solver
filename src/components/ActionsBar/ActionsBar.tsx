@@ -1,5 +1,6 @@
 "use client";
 import { Button, Grid2, Stack } from "@mui/material";
+import { Select, MenuItem } from "@mui/material";
 import React from "react";
 import {
   clearSolution,
@@ -29,8 +30,9 @@ export default function ActionsBar() {
   );
   const textFieldValue = textFieldInputs[inputType].textFieldValue;
   const dispatch = useDispatch();
-
   const currentFormat = FILEFORMAT_MAP[inputType];
+  const [selectedSolver, setSelectedSolver] = React.useState("HIGHS");
+
 
   return (
     <>
@@ -80,12 +82,24 @@ export default function ActionsBar() {
               color="primary"
               onClick={async () => {
                 dispatch(startSolving(inputType));
-                solve(textFieldValue, currentFormat).then((solution) => {
-                  dispatch(setSolution({ key: inputType, solution }));
-                });
-              }}
+                let solution;
+                if (selectedSolver === "HIGHS") {
+                  solution = await solve(textFieldValue, currentFormat); 
+                } else if (selectedSolver === "GLPK") {
+                  solution=null;
+                  //solution = await solveGLPK(textFieldValue, currentFormat);  // GLPK-Solver Header
+                }
+                dispatch(setSolution({ key: inputType, solution }));
+              }
+            }
             >
-              Lösen
+              Lösen mit
+              <Select 
+  value={selectedSolver} onChange={(e) => setSelectedSolver(e.target.value)} >
+  <MenuItem color="primary" value="HIGHS">HIGHS Solver</MenuItem>
+  <MenuItem value="GLPK">GLPK Solver</MenuItem>
+</Select>
+
             </Button>
           </Stack>
         </Grid2>
