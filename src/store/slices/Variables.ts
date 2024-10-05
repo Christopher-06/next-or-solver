@@ -48,7 +48,7 @@ const initialState: Variable[] = [
     propertyType: "PARAMETER",
     dimensionType: "SET",
     dimList: [],
-    dataValue: new Set<string>(["Meppen", "Hamburg", "Lingen"]),
+    dataValue: new Set<string>(["Meppen", "Hamburg", "Lingen", "Groß Hesepe", "Apeldorn", "Twist"]),
   }
 ];
 

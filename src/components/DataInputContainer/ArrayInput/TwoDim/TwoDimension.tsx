@@ -1,7 +1,8 @@
+/* eslint-disable react/display-name */
 import { Variable } from "@/lib/types/Variable";
 import { RootState } from "@/store/store";
 import {
-  Button,
+  Paper,
   Table,
   TableBody,
   TableCell,
@@ -9,17 +10,34 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NumericInput from "../../NumericInput/NumericInput";
 import { setVariableValue } from "@/store/slices/Variables";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownIcon from "@mui/icons-material/ArrowDownward";
+import { TableComponents, TableVirtuoso } from "react-virtuoso";
+
+const VirtuosoTableComponents: TableComponents<string> = {
+  Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
+    <TableContainer component={Paper} {...props} ref={ref} />
+  )),
+  Table: (props) => (
+    <Table
+      {...props}
+      sx={{ borderCollapse: "separate", tableLayout: "fixed" }}
+    />
+  ),
+  TableHead: React.forwardRef<HTMLTableSectionElement>((props, ref) => (
+    <TableHead {...props} ref={ref} />
+  )),
+  TableRow,
+  TableBody: React.forwardRef<HTMLTableSectionElement>((props, ref) => (
+    <TableBody {...props} ref={ref} />
+  )),
+};
 
 export default function TwoDimension({ variable }: { variable: Variable }) {
   const dispatch = useDispatch();
 
-  const [collapsed, setCollapsed] = useState(false);
   const dataArray = variable.dataValue as (number | undefined)[];
 
   // Get column index variable
@@ -66,61 +84,61 @@ export default function TwoDimension({ variable }: { variable: Variable }) {
     };
   };
 
-  return (
-    <TableContainer sx={{ maxHeight: collapsed ? "25vh" : "75vh" }}>
-      <Table size="small" stickyHeader>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  setCollapsed(!collapsed);
-                }}
-              >
-                {collapsed ? (
-                  <ArrowDownIcon sx={{ mr: 1 }} />
-                ) : (
-                  <ArrowUpwardIcon sx={{ mr: 1 }} />
-                )}
-                {variable.name}
-              </Button>
-            </TableCell>
-            {col_index_values.map((col_name, col_idx) => (
-              <TableCell key={col_idx}>{col_name}</TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {
-            row_index_values.map((row_name, row_idx) => (
-              <TableRow key={row_idx}>
-                <TableCell>{row_name}</TableCell>
-                {col_index_values.map((_, col_idx) => {
-                  const data_idx = row_idx * col_index_values.length + col_idx;
+  const fixedHeaderContent = () => {
+    return (
+      <TableRow>
+        <TableCell align="center" sx={{ backgroundColor: "background.paper" }}>
+          {variable.name}
+        </TableCell>
+        {col_index_values.map((col_name, col_idx) => (
+          <TableCell
+            align="center"
+            sx={{ backgroundColor: "background.paper" }}
+            key={col_idx}
+          >
+            {col_name}
+          </TableCell>
+        ))}
+      </TableRow>
+    );
+  };
 
-                  return (
-                    <TableCell key={col_idx} sx={{ minWidth: "150px" }}>
-                      <NumericInput
-                        label=""
-                        showHelperTextInTooltip={true}
-                        showHelperText={false}
-                        value={
-                          dataArray.length < data_idx
-                            ? dataArray[data_idx]
-                            : undefined
-                        }
-                        valueType={variable.valueType}
-                        setValue={valueSetter(data_idx)}
-                      />
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+  const rowContent = (row_idx: number, row_name: string) => {
+    return (
+      <>
+        <TableCell>{row_name}</TableCell>
+        {col_index_values.map((_, col_idx) => {
+          const data_idx = row_idx * col_index_values.length + col_idx;
+
+          return (
+            <TableCell key={col_idx} sx={{ minWidth: "150px" }}>
+              <NumericInput
+                label=""
+                showHelperTextInTooltip={true}
+                showHelperText={false}
+                value={
+                  dataArray.length < data_idx ? dataArray[data_idx] : undefined
+                }
+                valueType={variable.valueType}
+                setValue={valueSetter(data_idx)}
+              />
+            </TableCell>
+          );
+        })}
+      </>
+    );
+  };
+
+  const rows = row_index_values;
+
+  return (
+    <Paper style={{ height: 400, maxHeight: "65vh", width: "100%" }}>
+      <TableVirtuoso
+        data={rows}
+        components={VirtuosoTableComponents}
+        fixedHeaderContent={fixedHeaderContent}
+        itemContent={rowContent}
+      />
+    </Paper>
   );
 }
