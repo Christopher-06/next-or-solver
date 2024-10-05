@@ -5,17 +5,24 @@ export default function NameInput({
   name,
   setName,
   label = "Name",
+  viewingSuffix = "",
 }: {
   name: string;
   setName: (name: string) => void;
   label?: string;
+  viewingSuffix?: string;
 }) {
   const { isInside } = useMouseContext();
 
   // Draw TextField when name is choosen and mouse is inside
 
   if (!isInside && name !== "") {
-    return <Typography variant="h6" noWrap sx={{mx : 3}}>{name}:</Typography>;
+    return (
+      <Typography variant="h6" noWrap sx={{ mx: 3 }}>
+        {name}
+        {viewingSuffix}
+      </Typography>
+    );
   } else {
     return (
       <TextField

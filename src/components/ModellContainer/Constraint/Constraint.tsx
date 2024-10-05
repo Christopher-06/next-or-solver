@@ -43,7 +43,7 @@ export default function Constraint({
       >
         {/* Name Field */}
         <Box sx={{ display: "flex" }}>
-          <NameInput name={constraint.name} setName={setNameDispatched} />
+          <NameInput name={constraint.name} setName={setNameDispatched} viewingSuffix=":"/>
         </Box>
 
         {/* Formular */}
