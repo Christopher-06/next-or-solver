@@ -1,12 +1,32 @@
 import { createUniqueID } from "@/lib/helper";
-import { Modell, Sense } from "@/lib/types/Modell";
+import { ForAllType, Modell, Sense } from "@/lib/types/Modell";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: Modell = {
   objective_formular: "",
   sense: "MAX",
-  constraints: [],
+  constraints: [
+    {
+      _id: createUniqueID(),
+      name: "c1",
+      formular : "x[i] + y[j] <= 1",
+      for_all : [
+        {
+          set_name : "I",
+          index_name : "i"
+        },
+        {
+          set_name : "J",
+          index_name : "j"
+        },
+        {
+          set_name : "Cities",
+          index_name : "City"
+        }
+      ]
+    }
+  ],
 };
 
 export const modellSlice = createSlice({
@@ -25,6 +45,7 @@ export const modellSlice = createSlice({
         _id : createUniqueID(),
         name: constraintName,
         formular: "",
+        for_all: []
       });
     },
     removeConstraint: (state, action: PayloadAction<number>) => {
@@ -53,6 +74,9 @@ export const modellSlice = createSlice({
       state.objective_formular = "";
       state.constraints.splice(0, state.constraints.length);
     },
+    setConstraintForAll : (state, action : PayloadAction<{index : number, value: ForAllType[]}>) => {
+      state.constraints[action.payload.index].for_all = [...action.payload.value];
+    },
     validate: (state) => {
       // TODO: Implement validation
       console.log("Validating variables state", state);
@@ -69,6 +93,7 @@ export const {
   setObjectiveFormular,
   setObjectiveSense,
   clearAllModell,
+  setConstraintForAll,
   validate,
 } = modellSlice.actions;
 

@@ -8,9 +8,11 @@ import { RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import {
   removeConstraint,
+  setConstraintForAll,
   setConstraintFormular,
   setConstraintName,
 } from "@/store/slices/Modell";
+import ForAllView from "./ForAllView";
 
 export default function Constraint({
   constraintIndex,
@@ -39,11 +41,21 @@ export default function Constraint({
   return (
     <MouseProvider>
       <Box
-        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          maxWidth: "100%",
+          flexWrap: "wrap",
+        }}
       >
         {/* Name Field */}
-        <Box sx={{ display: "flex" }}>
-          <NameInput name={constraint.name} setName={setNameDispatched} viewingSuffix=":"/>
+        <Box sx={{ display: "flex", width: "120px" }}>
+          <NameInput
+            name={constraint.name}
+            setName={setNameDispatched}
+            viewingSuffix=":"
+          />
         </Box>
 
         {/* Formular */}
@@ -53,9 +65,19 @@ export default function Constraint({
           label="Formular"
         />
 
+        {/* For All View */}
+        <ForAllView
+          forAll={constraint.for_all}
+          SetForAll={(forAll) => {
+            dispatch(
+              setConstraintForAll({ index: constraintIndex, value: forAll })
+            );
+          }}
+        />
+
         {/* Show delete button */}
         {showDeleteButton && (
-          <Tooltip title="Löschen">
+          <Tooltip title="Löschen" sx={{ minWidth: "50px", mr: "auto" }}>
             <Button
               variant="contained"
               color="error"
