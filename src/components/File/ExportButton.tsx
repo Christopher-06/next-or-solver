@@ -50,7 +50,7 @@ const ExportButton: React.FC<ExportButtonProps> = ({ content, currentFormat, tar
             <Button 
                 variant="contained" 
                 onClick={handleSaveFile} 
-                style={{ marginTop: '10px', float: 'right', marginRight: 3, marginLeft: 3 }}
+                style={{ float: 'right', marginRight: 3, marginLeft: 3 }}
             >
                 <FileDownloadIcon sx={{ mr: 1 }} />
                 Export {targetFormat}

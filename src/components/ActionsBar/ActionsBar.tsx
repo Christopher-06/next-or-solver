@@ -34,7 +34,7 @@ export default function ActionsBar() {
 
   return (
     <>
-      <Grid2 container sx={{ px: 3 }} spacing={2}>
+      <Grid2 container sx={{ p: 3 }} spacing={2}>
         <Grid2 size={{ xs: 12, sm: 6 }}>
           <Stack direction="row" spacing={2} justifyContent="start">
             <ExportButton
