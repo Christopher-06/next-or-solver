@@ -8,6 +8,5 @@ const LOAD_CONFIG = {
 export default async function solve(problem: string) {
   const highs = await highsLoader(LOAD_CONFIG);
   const solution: HighsSolution = highs.solve(problem);
-  await new Promise((resolve) => setTimeout(resolve, 30000));
   return solution;
 }
