@@ -1,0 +1,13 @@
+name: Run Unit Tests
+
+on:[push, pull_request]
+
+jobs:
+  Jest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Tests
+        run: |
+          npm install 
+          npm run test
