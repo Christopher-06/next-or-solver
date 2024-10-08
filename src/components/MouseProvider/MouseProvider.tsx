@@ -4,10 +4,14 @@ import { createContext, useContext, useState } from "react";
 
 export type MouseValue = {
   isInside: boolean;
+  setIsInside: (value: boolean) => void;
+  setKeepInside: (value: boolean) => void;
 };
 
 const INITIAL_MOUSE_VALUE: MouseValue = {
   isInside: false,
+  setIsInside: () => {},
+  setKeepInside: () => {},
 };
 
 const MouseContext = createContext<MouseValue>(INITIAL_MOUSE_VALUE);
@@ -22,6 +26,7 @@ export default function MouseProvider({
   children: React.ReactNode;
 }) {
   const [isInside, setIsInside] = useState(false);
+  const [keepInside, setKeepInside] = useState(false);
 
   const onMouseOver = () => {
     if (!isInside) {
@@ -30,13 +35,13 @@ export default function MouseProvider({
   };
 
   const onMouseOut = () => {
-    if (isInside) {
+    if (isInside && !keepInside) {
       setIsInside(false);
     }
   };
 
   return (
-    <MouseContext.Provider value={{ isInside }}>
+    <MouseContext.Provider value={{ isInside, setIsInside, setKeepInside }}>
       <ClickAwayListener onClickAway={onMouseOut}>
         <div
           onMouseEnter={onMouseOver}

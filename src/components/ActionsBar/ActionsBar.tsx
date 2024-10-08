@@ -14,6 +14,7 @@ import ExportButton from "../File/ExportButton";
 import { FileFormat } from "../File/FileFormat";
 import { InputType } from "@/store/slices/InputType";
 import { setTextFieldValue } from "@/store/slices/TextFieldInputs";
+import { clearAllModell } from "@/store/slices/Modell";
 
 const FILEFORMAT_MAP: { [key in InputType]: FileFormat } = {
   GMPL: FileFormat.GMPL,
@@ -63,6 +64,7 @@ export default function ActionsBar() {
                 dispatch(clearSolution(inputType));
                 if (inputType == "EASY_UI") {
                   dispatch(clearAllVariables());
+                  dispatch(clearAllModell())
                 } else {
                   dispatch(
                     setTextFieldValue({

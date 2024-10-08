@@ -15,7 +15,6 @@ export default function ArrayDimensionsInput({
 }) {
   const { isInside } = useMouseContext();
 
-  console.log(dimList)
   let dimInput = <></>;
 
   if (name !== "" && !isInside) {

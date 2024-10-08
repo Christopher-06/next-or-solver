@@ -25,7 +25,7 @@ export default function PropertySelector({
   setPropertyType: (dataType: VarPropertyType) => void;
   keepTextFields?: boolean;
 }) {
-  const { isInside } = useMouseContext();
+  const { isInside, setIsInside } = useMouseContext();
 
   const onChange = (e: { target: { value: string } }) => {
     setPropertyType(ALL_PROPERTY_TYPES[parseInt(e.target.value)]);
@@ -57,6 +57,9 @@ export default function PropertySelector({
           </InputAdornment>
         }
         fullWidth
+        onClose={() => {
+          setIsInside(false);
+        }}
       >
         {ALL_PROPERTY_TYPES.map((propertyType, index) => (
           <MenuItem key={index} value={index}>

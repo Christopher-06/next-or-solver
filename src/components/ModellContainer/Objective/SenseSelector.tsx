@@ -1,10 +1,9 @@
 "use client";
 import { Chip, InputAdornment, MenuItem, Select } from "@mui/material";
-import { useMouseContext } from "../MouseProvider/MouseProvider";
+import { useMouseContext } from "@/components/MouseProvider/MouseProvider";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
-
-export type Sense = "MAX" | "MIN";
+import { Sense } from "@/lib/types/Modell";
 
 const ALL_SENSE_TYPES: Sense[] = ["MAX", "MIN"];
 
@@ -20,7 +19,7 @@ export default function SenseSelector({
   sense: Sense;
   setSense: (sense: Sense) => void;
 }) {
-  const { isInside } = useMouseContext();
+  const { isInside, setIsInside } = useMouseContext();
 
   const onChange = (e: { target: { value: string } }) => {
     setSense(ALL_SENSE_TYPES[parseInt(e.target.value)]);
@@ -50,6 +49,9 @@ export default function SenseSelector({
           <InputAdornment position="start">{SENSE_ICON[sense]}</InputAdornment>
         }
         fullWidth
+        onClose={() => {
+          setIsInside(false);
+        }}
       >
         {ALL_SENSE_TYPES.map((sense, index) => (
           <MenuItem key={index} value={index}>

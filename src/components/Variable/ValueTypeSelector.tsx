@@ -20,7 +20,7 @@ export default function DataTypeSelector({
   setValueType: (dataType: VarValueType) => void;
   keepTextFields?: boolean;
 }) {
-  const { isInside } = useMouseContext();
+  const { isInside, setIsInside } = useMouseContext();
 
   const onChange = (e: { target: { value: string } }) => {
     setValueType(ALL_VALUE_TYPES[parseInt(e.target.value)]);
@@ -51,6 +51,9 @@ export default function DataTypeSelector({
         }
         size="small"
         fullWidth
+        onClose={() => {
+          setIsInside(false);
+        }}
       >
         {ALL_VALUE_TYPES.map((valueType, index) => (
           <MenuItem key={index} value={index}>

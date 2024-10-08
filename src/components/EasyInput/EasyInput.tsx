@@ -3,6 +3,7 @@ import Paper from "@mui/material/Paper";
 import React from "react";
 import VariableContainer from "@/components/VariableContainer/VariableContainer";
 import ModellContainer from "@/components/ModellContainer/ModellContainer";
+import DataInputContainer from "@/components/DataInputContainer/DataInputContainer";
 
 export default function EasyInput() {
   return (
@@ -26,6 +27,8 @@ export default function EasyInput() {
       {/* Daten Feld */}
       <Paper sx={{ my: 3, p: 3 }}>
         <Typography variant="h5">Daten</Typography>
+
+        <DataInputContainer />
       </Paper>
     </>
   );

@@ -18,7 +18,7 @@ export default function VariableContainer() {
   }, [variables, dispatch]);
 
   return (
-    <Stack spacing={3} direction="column">
+    <Stack spacing={5} direction="column">
       {variables.map((_, index) => (
         <VariableComponent
           key={index}

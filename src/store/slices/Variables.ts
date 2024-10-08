@@ -4,11 +4,53 @@ import {
   VarDimensionType,
   VarPropertyType,
   VarValueType,
+  VarValueDataType,
 } from "@/lib/types/Variable";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: Variable[] = [GetDefaultVariable()];
+const initialState: Variable[] = [
+  {
+    _id: "2345tgd",
+    name: "x",
+    lowerBound: 0,
+    upperBound: 10,
+    valueType: "CONTINUOUS",
+    propertyType: "DECISION",
+    dimensionType: "SKALAR",
+    dimList: [],
+    dataValue: undefined,
+  },
+  {
+    _id: "tzwrhgbs",
+    name: "z",
+    lowerBound: 0,
+    upperBound: 1,
+    valueType: "INTEGER",
+    propertyType: "PARAMETER",
+    dimensionType: "SKALAR",
+    dimList: [],
+    dataValue: undefined,
+  },
+  {
+    _id: "sfghfgh",
+    name: "c",
+    valueType: "CONTINUOUS",
+    propertyType: "PARAMETER",
+    dimensionType: "ARRAY",
+    dimList: ["p", "p"],
+    dataValue: undefined,
+  },
+  {
+    _id: "hsfhsh",
+    name: "p",
+    valueType: "CONTINUOUS",
+    propertyType: "PARAMETER",
+    dimensionType: "SET",
+    dimList: [],
+    dataValue: new Set<string>(["Meppen", "Hamburg", "Lingen", "Groß Hesepe", "Apeldorn", "Twist"]),
+  }
+];
 
 export const variablesSlice = createSlice({
   name: "variables",
@@ -28,13 +70,13 @@ export const variablesSlice = createSlice({
     },
     setLowerBound: (
       state,
-      action: PayloadAction<{ index: number; lowerBound: string }>
+      action: PayloadAction<{ index: number; lowerBound: number | undefined }>
     ) => {
       state[action.payload.index].lowerBound = action.payload.lowerBound;
     },
     setUpperBound: (
       state,
-      action: PayloadAction<{ index: number; upperBound: string }>
+      action: PayloadAction<{ index: number; upperBound: number | undefined }>
     ) => {
       state[action.payload.index].upperBound = action.payload.upperBound;
     },
@@ -54,6 +96,15 @@ export const variablesSlice = createSlice({
       state,
       action: PayloadAction<{ index: number; dimensionType: VarDimensionType }>
     ) => {
+      // clear data when switching dimension type
+      if (
+        state[action.payload.index].dimensionType !==
+        action.payload.dimensionType
+      ) {
+        state[action.payload.index].dimList = [];
+        state[action.payload.index].dataValue = undefined;
+      }
+
       state[action.payload.index].dimensionType = action.payload.dimensionType;
     },
     setDimList: (
@@ -64,6 +115,15 @@ export const variablesSlice = createSlice({
     },
     clearAllVariables: (state) => {
       state.splice(0, state.length);
+    },
+    setVariableValue: (
+      state,
+      action: PayloadAction<{ _id: string; value: VarValueDataType }>
+    ) => {
+      const variable = state.find((v) => v._id === action.payload._id);
+      if (variable) {
+        variable.dataValue = action.payload.value;
+      }
     },
     validate: (state) => {
       // TODO: Implement validation
@@ -84,6 +144,7 @@ export const {
   setDimensionType,
   setDimList,
   clearAllVariables,
+  setVariableValue,
   validate,
 } = variablesSlice.actions;
 
