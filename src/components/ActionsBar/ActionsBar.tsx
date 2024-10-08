@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 import { Button, Grid2, Stack } from "@mui/material";
 import React from "react";
 import {
@@ -23,6 +24,7 @@ const FILEFORMAT_MAP: { [key in InputType]: FileFormat } = {
 };
 
 export default function ActionsBar() {
+  const t = useTranslations();
   const inputType = useSelector((state: RootState) => state.inputType);
   const textFieldInputs = useSelector(
     (state: RootState) => state.textFieldInputs
@@ -73,7 +75,7 @@ export default function ActionsBar() {
                 }
               }}
             >
-              Alles Löschen
+              {t("actions_bar.actions_bar.btn_delete_all")}
             </Button>
             <Button
               variant="contained"
@@ -85,7 +87,7 @@ export default function ActionsBar() {
                 });
               }}
             >
-              Lösen
+              {t("actions_bar.actions_bar.btn_solve")}
             </Button>
           </Stack>
         </Grid2>

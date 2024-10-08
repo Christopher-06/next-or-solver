@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 import {
   Typography,
   Paper,
@@ -28,30 +29,31 @@ export const renderValue = (value: number) => {
   return value;
 };
 
-const renderAlert = (solution: HighsSolution) => {
-  if (solution.Status === "Optimal") {
-    return (
-      <Alert severity="success" sx={{ pt: 2 }}>
-        <AlertTitle>
-          Optimaler Zielfunktionswert von {solution.ObjectiveValue}
-        </AlertTitle>
-      </Alert>
-    );
-  } else {
-    // TODO: Implement other cases for better user feedback
-    return (
-      <Alert severity="error" sx={{ pt: 2 }}>
-        <AlertTitle>Keine optimale Lösung gefunden</AlertTitle>
-        <Typography>{solution.Status}</Typography>
-      </Alert>
-    );
-  }
-};
-
 export default function SolutionContainer() {
+  const t = useTranslations();
   const inputType = useSelector((state: RootState) => state.inputType);
   const allSolveResults = useSelector((state: RootState) => state.solveResults);
   const result = allSolveResults[inputType];
+
+  const renderAlert = (solution: HighsSolution) => {
+    if (solution.Status === "Optimal") {
+      return (
+        <Alert severity="success" sx={{ pt: 2 }}>
+          <AlertTitle>
+          {t("solution_paper.solution_paper.solution_found")} {solution.ObjectiveValue}
+          </AlertTitle>
+        </Alert>
+      );
+    } else {
+      // TODO: Implement other cases for better user feedback
+      return (
+        <Alert severity="error" sx={{ pt: 2 }}>
+          <AlertTitle>{t("solution_paper.solution_paper.no_solution")}</AlertTitle>
+          <Typography>{solution.Status}</Typography>
+        </Alert>
+      );
+    }
+  };
 
   if (result.solution !== undefined) {
 
@@ -73,12 +75,12 @@ export default function SolutionContainer() {
             <Table sx={{ minWidth: 650 }}>
               <TableHead>
                 <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell align="right">Upper</TableCell>
-                  <TableCell align="right">Lower</TableCell>
-                  <TableCell align="right">Type</TableCell>
-                  <TableCell align="right">Primal</TableCell>
-                  <TableCell align="right">Dual</TableCell>
+                  <TableCell>{t("solution_paper.solution_paper.name")}</TableCell>
+                  <TableCell align="right">{t("solution_paper.solution_paper.upper")}</TableCell>
+                  <TableCell align="right">{t("solution_paper.solution_paper.lower")}</TableCell>
+                  <TableCell align="right">{t("solution_paper.solution_paper.type")}</TableCell>
+                  <TableCell align="right">{t("solution_paper.solution_paper.primal")}</TableCell>
+                  <TableCell align="right">{t("solution_paper.solution_paper.dual")}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -108,8 +110,8 @@ export default function SolutionContainer() {
     // Calculation is running
     return (
       <Paper sx={{ m: 3, p: 3 }}>
-        <Typography variant="h5">Lösung</Typography>
-        <Alert severity="info">Berechnung läuft...</Alert>
+        <Typography variant="h5">{t("solution_paper.solution_paper.solution")}</Typography>
+        <Alert severity="info">{t("solution_paper.solution_paper.calculation_running")}</Alert>
       </Paper>
     );
   } else {

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl"; //Sprache
 import NameInput from "./NameInput";
 import { Typography } from "@mui/material";
 import { useMouseContext } from "../MouseProvider/MouseProvider";
@@ -14,6 +15,7 @@ export default function ArrayDimensionsInput({
   setDimList: (dimList: string[]) => void;
 }) {
   const { isInside } = useMouseContext();
+  const t = useTranslations(); //Sprache
 
   console.log(dimList)
   let dimInput = <></>;
@@ -47,7 +49,7 @@ export default function ArrayDimensionsInput({
     dimInput = (
       <NameInput
         name={dimList.join(", ")}
-        label="Dimensions"
+        label={t("variable.arraydimension.label")}  //Sprache
         setName={(dimList: string) => {
           setDimList([dimList]);
         }}

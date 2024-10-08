@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 import { Grid2, TextField } from "@mui/material";
 import SenseSelector, { Sense } from "./SenseSelector";
 import { useState } from "react";
@@ -6,6 +7,7 @@ import MouseProvider from "../MouseProvider/MouseProvider";
 
 export default function ModellContainer() {
   const [sense, setSense] = useState<Sense>("MAX");
+  const t = useTranslations();
 
   return (
     <MouseProvider>
@@ -27,7 +29,7 @@ export default function ModellContainer() {
             alignItems: "center",
           }}
         >
-          <TextField fullWidth label="Objective" variant="outlined" />
+          <TextField fullWidth label={t("modell_container.modell_container.label")} variant="outlined" />
         </Grid2>
       </Grid2>
 
