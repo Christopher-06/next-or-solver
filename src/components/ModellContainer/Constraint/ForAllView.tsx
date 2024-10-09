@@ -47,7 +47,7 @@ export default function ForAllView({
           {/* List all variables and their corresponding sets */}
           <Stack direction="column" spacing={0} sx={{ ml: 1 }}>
             {forAll.map((row, index) => (
-              <Typography variant="h6" key={index} textAlign="center">
+              <Typography variant="h6" key={index} textAlign="center" textTransform="none">
                 {row.index_name} ∈ {row.set_name}
               </Typography>
             ))}

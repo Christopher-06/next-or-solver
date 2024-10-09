@@ -4,11 +4,23 @@ import SenseSelector from "./SenseSelector";
 import { useState } from "react";
 import FormularTextField from "../FormularTextField";
 import { Sense } from "@/lib/types/Modell";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { setObjectiveFormular, setObjectiveSense } from "@/store/slices/Modell";
 
 export default function Objective() {
-  const [sense, setSense] = useState<Sense>("MAX");
 
-  const [objective, setObjective] = useState<string>("");
+  const dispatch = useDispatch();
+  const modell_objective = useSelector((state : RootState) => state.modell.objective_formular);
+  const modell_sense = useSelector((state : RootState) => state.modell.sense);
+
+  const setSense = (sense: Sense) => {
+    dispatch(setObjectiveSense(sense));  
+  }
+  const setObjective = (objective: string) => {
+    dispatch(setObjectiveFormular(objective));
+  }
+  
   return (
     <Grid2 container spacing={2} alignItems="center">
       {/* Sense Selection */}
@@ -16,7 +28,7 @@ export default function Objective() {
         size={{ sm: 12, md: 2 }}
         sx={{ display: "flex", justifyContent: "center" }}
       >
-        <SenseSelector sense={sense} setSense={setSense} />
+        <SenseSelector sense={modell_sense} setSense={setSense} />
       </Grid2>
 
       {/* Objective Input */}
@@ -29,7 +41,7 @@ export default function Objective() {
         }}
       >
         <FormularTextField
-          text={objective}
+          text={modell_objective}
           setText={setObjective}
           centered={false}
           label="Objective"

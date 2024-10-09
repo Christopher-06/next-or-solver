@@ -7,6 +7,9 @@ export type VarValueType = "CONTINUOUS" | "INTEGER";
 export type VarDimensionType = "SKALAR" | "ARRAY" | "SET";
 
 export type VarValueDataType = undefined | number | (number|undefined)[] | Set<string>;
+export function isNumber(val: VarValueDataType): val is number {
+  return (val as number).valueOf !== undefined;
+}
 
 export interface Variable {
   _id: string;

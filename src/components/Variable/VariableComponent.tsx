@@ -8,7 +8,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import MouseProvider from "../MouseProvider/MouseProvider";
-import NameInput from "./NameInput";
+import NameInput from "../NameInput/NameInput";
 import BoundInput from "./BoundInput";
 import ClearIcon from "@mui/icons-material/Clear";
 import ValueTypeSelector from "./ValueTypeSelector";
@@ -26,13 +26,12 @@ import { RootState } from "@/store/store";
 import {
   setValueType,
   setDimensionType,
-  setDimList,
   setLowerBound,
   setPropertyType,
   setUpperBound,
-  setName,
   removeVariable,
 } from "@/store/slices/Variables";
+import VariableName from "./VarName";
 
 export default function VariableComponent({
   var_idx,
@@ -56,12 +55,7 @@ export default function VariableComponent({
     valueType,
     propertyType,
     dimensionType,
-    dimList,
   } = variable;
-
-  const setNameDispatched = (name: string) => {
-    dispatch(setName({ index: var_idx, name }));
-  };
 
   const setLowerBoundDispatched = (lowerBound: number | undefined) => {
     dispatch(setLowerBound({ index: var_idx, lowerBound }));
@@ -81,10 +75,6 @@ export default function VariableComponent({
 
   const setDimensionTypeDispatched = (dimensionType: VarDimensionType) => {
     dispatch(setDimensionType({ index: var_idx, dimensionType }));
-  };
-
-  const setDimListDispatched = (dimList: string[]) => {
-    dispatch(setDimList({ index: var_idx, dimList }));
   };
 
   const removeVariableDispatched = () => {
@@ -142,13 +132,10 @@ export default function VariableComponent({
           }}
         >
           {dimensionType === "SKALAR" || dimensionType === "SET" ? (
-            <NameInput name={name} setName={setNameDispatched} />
+            <VariableName var_idx={var_idx} />
           ) : (
             <ArrayDimensionsInput
-              name={name}
-              setName={setNameDispatched}
-              dimList={dimList}
-              setDimList={setDimListDispatched}
+              var_idx={var_idx}
             />
           )}
         </Grid2>
