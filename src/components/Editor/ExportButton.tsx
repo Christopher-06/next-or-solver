@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from '@mui/material';
-import { FileFormat } from './FileFormat';
-import convertLP from './Converter';
+import { FileFormat } from '../Converter/FileFormat';
+import convertLP from '../Converter/Converter';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 interface ExportButtonProps {
@@ -50,7 +50,7 @@ const ExportButton: React.FC<ExportButtonProps> = ({ content, currentFormat, tar
             <Button 
                 variant="contained" 
                 onClick={handleSaveFile} 
-                style={{ float: 'right', marginRight: 3, marginLeft: 3 }}
+                style={{ marginTop: '10px', float: 'right', marginRight: 3, marginLeft: 3 }}
             >
                 <FileDownloadIcon sx={{ mr: 1 }} />
                 Export {targetFormat}
