@@ -5,6 +5,13 @@
       "btn_delete_all": "Alles Löschen"
     }
   },
+  "easy_input": {
+    "easy_input": {
+      "variables": "Variablen",
+      "modell": "Modell",
+      "data": "Daten"
+    }
+  },
   "navbar": {
     "title": "Next OR Solver",
     "description": "Ein Online-Tool zur Lösung von Operation Research Problemen",
@@ -40,7 +47,7 @@
     "function": "Zielfunktion"
   },
   "modell_container": {
-    "modell_container":{
+    "modell_container": {
       "label": "Zielfunktion"
     }
   },

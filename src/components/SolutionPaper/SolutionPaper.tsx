@@ -67,7 +67,7 @@ export default function SolutionContainer() {
       <>
         {/* Lösungs Feld */}
         <Paper sx={{ m: 3, p: 3 }}>
-          <Typography variant="h5">Lösung</Typography>
+          <Typography variant="h5">{t("solution_paper.solution_paper.solution")}</Typography>
 
           {renderAlert(result.solution as HighsSolution)}
 
