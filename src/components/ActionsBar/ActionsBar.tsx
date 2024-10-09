@@ -82,9 +82,9 @@ export default function ActionsBar() {
               color="primary"
               onClick={async () => {
                 dispatch(startSolving(inputType));
-                let solution;
+                // let solution;
                 // if (selectedSolver === "HIGHS") {
-                  solution = await solve(textFieldValue, currentFormat); 
+                const solution = await solve(textFieldValue, currentFormat); 
                 // } else if (selectedSolver === "GLPK") {
                 //   solution = {};
                   // solution = await solveGLPK(textFieldValue, currentFormat);  // GLPK-Solver Header
