@@ -11,6 +11,11 @@ import {
   TableHead,
   TableRow,
   LinearProgress,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Tooltip,
 } from "@mui/material";
 import ConstraintTable from "./ConstraintTable";
 import VariableTable from "./VariableTable";
@@ -19,6 +24,8 @@ import { RootState } from "@/store/store";
 import { HighsSolution } from "highs";
 import { ConstraintRow } from "@/lib/types/Solution";
 import React, { useEffect } from "react";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import BasisTable, { SolutionTableDataRow } from "./BasisTable";
 
 export const renderValue = (value: number) => {
   if (value === Infinity) {
@@ -154,47 +161,53 @@ export default function SolutionContainer() {
     return <></>;
   } else {
     // prepare data for tables
-    const constraintRows: ConstraintRow[] = [];
+    const constraintRows: SolutionTableDataRow[] = [];
     for (const constraint of Object.values(result.solution.Rows)) {
-      constraintRows.push(constraint as ConstraintRow);
+      constraintRows.push(constraint as unknown as SolutionTableDataRow);
     }
-    const VariableColumns = Object.values(result.solution.Columns);
+    const VariableColumns: SolutionTableDataRow[] = Object.values(
+      result.solution.Columns
+    );
 
     return renderinPaper(
       <>
         {renderAlert(result.solution, result.startTime, result.endTime)}
-        <TableContainer>
-          <Table sx={{ minWidth: 650 }}>
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell align="right">Upper</TableCell>
-                <TableCell align="right">Lower</TableCell>
-                <TableCell align="right">Type</TableCell>
-                <TableCell align="right">Primal</TableCell>
-                <TableCell align="right">Dual</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {/* Variablen Table */}
-              <VariableTable VariableColumns={VariableColumns} />
 
-              {/* Show Divider */}
-              {VariableColumns.length > 0 && constraintRows.length > 0 && (
-                <TableRow>
-                  {
-                    <TableCell colSpan={6}>
-                      <hr />
-                    </TableCell>
-                  }
-                </TableRow>
-              )}
+        <Box sx={{ my: 3 }}>
+          {/* Show Decision Variables  */}
+          <Accordion elevation={3} defaultExpanded>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              Decision Variables
+            </AccordionSummary>
+            <AccordionDetails>
+              <BasisTable dataRows={VariableColumns} />
+            </AccordionDetails>
+          </Accordion>
 
-              {/* Constraints Table */}
-              <ConstraintTable constraintsRows={constraintRows} />
-            </TableBody>
-          </Table>
-        </TableContainer>
+          {/* Show Constraints  */}
+          <Accordion elevation={3}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              Constraints
+            </AccordionSummary>
+            <AccordionDetails>
+              <BasisTable dataRows={constraintRows} />
+            </AccordionDetails>
+          </Accordion>
+
+          {/* Logging View  */}
+          <Tooltip title={result.log.length === 0 ? "No logs available" : ""}>
+            <Accordion elevation={3} disabled={result.log.length === 0}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                Solver Logs
+              </AccordionSummary>
+              <AccordionDetails>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+                eget.
+              </AccordionDetails>
+            </Accordion>
+          </Tooltip>
+        </Box>
       </>
     );
   }
