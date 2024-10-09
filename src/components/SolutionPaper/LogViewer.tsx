@@ -8,7 +8,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { TableVirtuoso, TableComponents } from "react-virtuoso";
-import { renderValue } from "./SolutionPaper";
 
 const VirtuosoTableComponents: TableComponents<string> = {
   Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (

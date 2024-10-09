@@ -4,26 +4,16 @@ import {
   Paper,
   Alert,
   AlertTitle,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
   LinearProgress,
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Box,
   Tooltip,
-  Stack,
 } from "@mui/material";
-import ConstraintTable from "./ConstraintTable";
-import VariableTable from "./VariableTable";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { HighsSolution } from "highs";
-import { ConstraintRow } from "@/lib/types/Solution";
 import React, { useEffect } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import BasisTable, { SolutionTableDataRow } from "./BasisTable";
@@ -145,6 +135,16 @@ export default function SolutionContainer() {
     };
   }, [result, timeDelta]);
 
+  if (result.error !== undefined) {
+    console.log("Solution Paper encountered an error", result.error);
+    return renderinPaper(
+      <Alert severity="error">
+        <AlertTitle>Es ist ein Fehler aufgetreten</AlertTitle>
+        <Typography>{result.error.message}</Typography>
+      </Alert>
+    );
+  }
+
   if (result.solution === undefined) {
     // Show loading message
     if (result.startTime !== undefined) {
@@ -170,27 +170,6 @@ export default function SolutionContainer() {
     const VariableColumns: SolutionTableDataRow[] = Object.values(
       result.solution.Columns
     );
-
-    const logs = ["a happy little log", "a sad little log", `some quite long
-      log that should be displayed in a multiline textfield.some quite long
-      log that should be displayed in a multiline textfield.some quite long
-      log that should be displayed in a multiline textfield.some quite long
-      log that should be displayed in a multiline textfield.some quite long
-      log that should be displayed in a multiline textfield.some quite long
-      log that should be displayed in a multiline textfield.some quite long
-      log that should be displayed in a multiline textfield.some quite long
-      log that should be displayed in a multiline textfieldsome quite long
-      log that should be displayed in a multiline textfieldsome quite long
-      log that should be displayed in a multiline textfieldsome quite long
-      log that should be displayed in a multiline textfield.some quite long
-      log that should be displayed in a multiline textfieldsome quite long
-      log that should be displayed in a multiline textfieldsome quite long
-      log that should be displayed in a multiline textfieldsome quite long
-      log that should be displayed in a multiline textfield.some quite long
-      log that should be displayed in a multiline textfieldsome quite long
-      log that should be displayed in a multiline textfieldsome quite long
-      log that should be displayed in a multiline textfieldsome quite long
-      log that should be displayed in a multiline textfield`];
 
     return renderinPaper(
       <>
@@ -219,16 +198,12 @@ export default function SolutionContainer() {
 
           {/* Logging View  */}
           <Tooltip title={result.log.length === 0 ? "No logs available" : ""}>
-            <Accordion
-              elevation={3}
-              // disabled={result.log.length === 0}
-            >
+            <Accordion elevation={3} disabled={result.log.length === 0}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 Solver Logs
               </AccordionSummary>
               <AccordionDetails>
-                
-                <LogViewer logs={logs} />
+                <LogViewer logs={result.log} />
               </AccordionDetails>
             </Accordion>
           </Tooltip>

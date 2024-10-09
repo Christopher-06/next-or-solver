@@ -8,7 +8,6 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import MouseProvider from "../MouseProvider/MouseProvider";
-import NameInput from "../NameInput/NameInput";
 import BoundInput from "./BoundInput";
 import ClearIcon from "@mui/icons-material/Clear";
 import ValueTypeSelector from "./ValueTypeSelector";

@@ -1,7 +1,6 @@
 "use client";
 import { Grid2 } from "@mui/material";
 import SenseSelector from "./SenseSelector";
-import { useState } from "react";
 import FormularTextField from "../FormularTextField";
 import { Sense } from "@/lib/types/Modell";
 import { useDispatch, useSelector } from "react-redux";
