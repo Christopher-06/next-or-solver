@@ -4,7 +4,7 @@
 import { BOUND, BOUND_TYPE, COL, LINPROB, PROB_TYPE, RHS, ROW, ROW_TYPE } from "./LINPROB";
 
 const lp_to_mps = (lp: any): string => {
-    const problem = new LINPROB("problem", (lp.dir == 2) ? PROB_TYPE.max : PROB_TYPE.min);  // name, min/max
+    const problem = new LINPROB("problem", (lp.dir == 2) ? PROB_TYPE.max : PROB_TYPE.min, lp.obj);  // name, min/max
     add_obj(problem, lp);
     add_rows(problem, lp);
     add_data_form_cols(problem, lp);
@@ -19,8 +19,10 @@ const add_obj = (problem: LINPROB, lp: any) => {
 const add_rows = (problem: LINPROB, lp: any) => {
     for (const row of lp.row) {
         if (row != null) {
-            problem.add_row(new ROW((row.type == 2) ? ROW_TYPE.G :((row.type == 3) ? ROW_TYPE.L : ROW_TYPE.E), row.name));
-            add_rhs(problem, row);
+            if (row.name != problem.obj_name) {
+                problem.add_row(new ROW((row.type == 2) ? ROW_TYPE.G :((row.type == 3) ? ROW_TYPE.L : ROW_TYPE.E), row.name));
+                add_rhs(problem, row);
+            }
         }
     }
     return;
@@ -58,10 +60,11 @@ const add_data_form_cols = (problem:LINPROB, lp: any) => {
 }
 
 const add_cols = (problem: LINPROB, ptr: any, col_name: string) => {  // rekursive Funktion
-    if (ptr != null) {
-        const row: any = ptr.row;
-        problem.add_col(new COL(col_name, row.name, ptr.val));
-        add_cols(problem, ptr.c_next, col_name);
+    if (ptr != null) {  // TODO: ungleich obj_name
+        if (ptr.row.name != problem.obj_name) {
+            problem.add_col(new COL(col_name, ptr.row.name, ptr.val));
+            add_cols(problem, ptr.c_next, col_name);
+        }
     }
     return
 }

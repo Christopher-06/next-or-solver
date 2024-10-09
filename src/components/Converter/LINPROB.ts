@@ -3,6 +3,7 @@
 export class LINPROB {
     prob_name : string;
     prob_type : PROB_TYPE;
+    obj_name : string;
     rows : ROW[] = [];
     cols : COL[] = [];
     rhss : RHS[] = [];
@@ -13,9 +14,10 @@ export class LINPROB {
     rhss_string : string = "RHS";
     bounds_string : string = "BOUNDS";
 
-    constructor(prob_name: string, prob_type : PROB_TYPE) {
+    constructor(prob_name: string, prob_type : PROB_TYPE, obj_name: string) {
         this.prob_name = prob_name;
         this.prob_type = prob_type;
+        this.obj_name = obj_name;
         this.name_string = "NAME\t" + this.prob_name;
     }
 
