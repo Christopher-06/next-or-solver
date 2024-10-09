@@ -10,15 +10,7 @@ import Paper from "@mui/material/Paper";
 import { TableVirtuoso, TableComponents } from "react-virtuoso";
 import { renderValue } from "./SolutionPaper";
 
-export type SolutionTableDataRow = {
-  Name: string;
-  Upper: number;
-  Lower: number;
-  Type: string;
-  Primal: number;
-  Dual: number;
-};
-const VirtuosoTableComponents: TableComponents<SolutionTableDataRow> = {
+const VirtuosoTableComponents: TableComponents<string> = {
   Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
     <TableContainer component={Paper} {...props} ref={ref} />
   )),
@@ -40,42 +32,34 @@ const VirtuosoTableComponents: TableComponents<SolutionTableDataRow> = {
 function fixedHeaderContent() {
   return (
     <TableRow sx={{ backgroundColor: "background.paper" }}>
-      <TableCell>Name</TableCell>
-      <TableCell align="center">Upper</TableCell>
-      <TableCell align="center">Lower</TableCell>
-      <TableCell align="center">Type</TableCell>
-      <TableCell align="center">Primal</TableCell>
-      <TableCell align="center">Dual</TableCell>
+      <TableCell></TableCell>
+      <TableCell sx={{ w: 1 }} colSpan={10}>
+        Messages
+      </TableCell>
     </TableRow>
   );
 }
 
-function rowContent(_index: number, row: SolutionTableDataRow) {
+function rowContent(idx: number, msg: string) {
   return (
     <>
-      <TableCell component="th" scope="row">
-        {row.Name}
+      <TableCell component="th" scope="row" align="center">
+        [#{idx + 1}]
       </TableCell>
-      <TableCell align="center">{renderValue(row.Upper)}</TableCell>
-      <TableCell align="center">{renderValue(row.Lower)}</TableCell>
-      <TableCell align="center">{row.Type}</TableCell>
-      <TableCell align="center">{renderValue(row.Primal)}</TableCell>
-      <TableCell align="center">{renderValue(row.Dual)}</TableCell>
+      <TableCell align="left" colSpan={10}>
+        {msg}
+      </TableCell>
     </>
   );
 }
 
-export default function BasisTable({
-  dataRows,
-}: {
-  dataRows: SolutionTableDataRow[];
-}) {
-  const height = 60 + Math.min(300, dataRows.length * 55);
+export default function LogViewer({ logs }: { logs: string[] }) {
+  const height = 100 + Math.min(300, logs.length * 55);
 
   return (
     <Paper sx={{ height, w: 1 }}>
       <TableVirtuoso
-        data={dataRows}
+        data={logs}
         components={VirtuosoTableComponents}
         fixedHeaderContent={fixedHeaderContent}
         itemContent={rowContent}

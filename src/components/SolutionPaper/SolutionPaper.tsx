@@ -16,6 +16,7 @@ import {
   AccordionSummary,
   Box,
   Tooltip,
+  Stack,
 } from "@mui/material";
 import ConstraintTable from "./ConstraintTable";
 import VariableTable from "./VariableTable";
@@ -26,6 +27,7 @@ import { ConstraintRow } from "@/lib/types/Solution";
 import React, { useEffect } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import BasisTable, { SolutionTableDataRow } from "./BasisTable";
+import LogViewer from "./LogViewer";
 
 export const renderValue = (value: number) => {
   if (value === Infinity) {
@@ -169,6 +171,27 @@ export default function SolutionContainer() {
       result.solution.Columns
     );
 
+    const logs = ["a happy little log", "a sad little log", `some quite long
+      log that should be displayed in a multiline textfield.some quite long
+      log that should be displayed in a multiline textfield.some quite long
+      log that should be displayed in a multiline textfield.some quite long
+      log that should be displayed in a multiline textfield.some quite long
+      log that should be displayed in a multiline textfield.some quite long
+      log that should be displayed in a multiline textfield.some quite long
+      log that should be displayed in a multiline textfield.some quite long
+      log that should be displayed in a multiline textfieldsome quite long
+      log that should be displayed in a multiline textfieldsome quite long
+      log that should be displayed in a multiline textfieldsome quite long
+      log that should be displayed in a multiline textfield.some quite long
+      log that should be displayed in a multiline textfieldsome quite long
+      log that should be displayed in a multiline textfieldsome quite long
+      log that should be displayed in a multiline textfieldsome quite long
+      log that should be displayed in a multiline textfield.some quite long
+      log that should be displayed in a multiline textfieldsome quite long
+      log that should be displayed in a multiline textfieldsome quite long
+      log that should be displayed in a multiline textfieldsome quite long
+      log that should be displayed in a multiline textfield`];
+
     return renderinPaper(
       <>
         {renderAlert(result.solution, result.startTime, result.endTime)}
@@ -196,14 +219,16 @@ export default function SolutionContainer() {
 
           {/* Logging View  */}
           <Tooltip title={result.log.length === 0 ? "No logs available" : ""}>
-            <Accordion elevation={3} disabled={result.log.length === 0}>
+            <Accordion
+              elevation={3}
+              // disabled={result.log.length === 0}
+            >
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 Solver Logs
               </AccordionSummary>
               <AccordionDetails>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
+                
+                <LogViewer logs={logs} />
               </AccordionDetails>
             </Accordion>
           </Tooltip>
