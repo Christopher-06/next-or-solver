@@ -11,10 +11,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearAllVariables } from "@/store/slices/Variables";
 import { RootState } from "@/store/store";
 import solve from "@/lib/highs";
+import solveGLPK from "@/lib/glpk_solver"; 
 import ExportButton from "../File/ExportButton";
 import { FileFormat } from "../File/FileFormat";
 import { InputType } from "@/store/slices/InputType";
 import { setTextFieldValue } from "@/store/slices/TextFieldInputs";
+ 
 
 const FILEFORMAT_MAP: { [key in InputType]: FileFormat } = {
   GMPL: FileFormat.GMPL,
@@ -87,7 +89,7 @@ export default function ActionsBar() {
                   solution = await solve(textFieldValue, currentFormat); 
                 } else if (selectedSolver === "GLPK") {
                   solution=null;
-                  //solution = await solveGLPK(textFieldValue, currentFormat);  // GLPK-Solver Header
+                  solution = await solveGLPK(textFieldValue, currentFormat);  // GLPK-Solver Header
                 }
                 dispatch(setSolution({ key: inputType, solution }));
               }
