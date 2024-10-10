@@ -6,7 +6,7 @@ import ModellContainer from "@/components/ModellContainer/ModellContainer";
 import { useTranslations } from "next-intl";
 import DataInputContainer from "@/components/DataInputContainer/DataInputContainer";
 import ExportButton from "./ExportButton";
-// import ImportButton from "./ImportButton";
+import ImportButton from "./ImportButton";
 
 export default function EasyInput() {
   const t = useTranslations();
@@ -14,7 +14,7 @@ export default function EasyInput() {
     <>
       {/* Import/Export Buttons} */}
       <ExportButton />
-      {/* <ImportButton /> */}
+      <ImportButton />
 
       {/* Variablen Feld */}
       <Paper sx={{ my: 3, p: 3 }}>

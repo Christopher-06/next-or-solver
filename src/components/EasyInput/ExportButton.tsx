@@ -11,26 +11,26 @@ export default function EASYUI_Export_Button() {
     const variables = useSelector((state: RootState) => state.variables);
 
     const saveFile = () => {
-        const easy_ui: Easy_UI = { model : model, variables : variables};
+        const easy_ui: Easy_UI = { model: model, variables: variables };
         const easy_ui_str = JSON.stringify(easy_ui);
-    
+
         const blob = new Blob([easy_ui_str], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
-    
+
         const link = document.createElement('a');
         link.href = url;
-        link.download = `problem_Easy_UI.txt`;
+        link.download = `problem.json`;
         link.click();
-        
+
         URL.revokeObjectURL(url);
     };
 
     return (
         < >
-            <Button 
-                variant="contained" 
-                onClick={saveFile} 
-                style={{ marginTop: '10px', float: 'right', marginRight: 3, marginLeft: 3 }}
+            <Button
+                variant="contained"
+                onClick={saveFile}
+                style={{ marginTop: '10px', marginRight: 3, marginLeft: 3 }}
             >
                 <FileDownloadIcon sx={{ mr: 1 }} />
                 Export
