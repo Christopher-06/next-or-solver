@@ -4,7 +4,8 @@ import { Button, Grid2, Stack } from "@mui/material";
 import { Select, MenuItem } from "@mui/material";
 import React from "react";
 import {
-  appendSolutionLog,
+  appendSolutionSolverOutput,
+  appendSolutionSolverLog,
   clearSolution,
   setSolution,
   setSolutionError,
@@ -44,6 +45,7 @@ export default function ActionsBar() {
 
   const handleDeleteAllClick = () => {
     dispatch(clearSolution(inputType));
+
     if (inputType == "EASY_UI") {
       dispatch(clearAllVariables());
       dispatch(clearAllModell());
@@ -79,8 +81,13 @@ export default function ActionsBar() {
         const solution = solveGLPK(
           textFieldValue,
           currentFormat,
+          // Logging function
           (msg) => {
-            dispatch(appendSolutionLog({ key: inputType, log: msg }));
+            dispatch(appendSolutionSolverLog({ key: inputType, log: msg }));
+          },
+          // Output function
+          (msg: string) => {
+            dispatch(appendSolutionSolverOutput({ key: inputType, out: msg }));
           }
         );
         dispatch(setSolution({ key: inputType, solution }));
