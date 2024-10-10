@@ -5,8 +5,8 @@ import { Variable } from "../types/Variable";
 
 import highsLoader from "highs";
 import ConvertToGMPL from "./converter";
-import convertLP from "@/components/File/Converter";
-import { FileFormat } from "@/components/File/FileFormat";
+import convertLP from "@/components/Converter/Converter";
+import { FileFormat } from "@/components/Converter/FileFormat";
 
 describe("easy-ui/converter", () => {
   it("should convert TRANSPORT_PROBLEM to GMPL", async () => {
