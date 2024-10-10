@@ -1,37 +1,44 @@
 "use client";
-import { Grid2, TextField } from "@mui/material";
-import SenseSelector, { Sense } from "./SenseSelector";
-import { useState } from "react";
+import { Stack } from "@mui/material";
 import MouseProvider from "../MouseProvider/MouseProvider";
+import Constraint from "./Constraint/Constraint";
+import Objective from "./Objective/Objective";
+import { RootState } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { addConstraint } from "@/store/slices/Modell";
 
 export default function ModellContainer() {
-  const [sense, setSense] = useState<Sense>("MAX");
+  const modell = useSelector((state: RootState) => state.modell);
+  const dispatch = useDispatch();
+
+  // Have one empty variable at the bottom
+  useEffect(() => {
+    if (
+      modell.constraints.length === 0 ||
+      modell.constraints[modell.constraints.length - 1].formular !== ""
+    ) {
+      dispatch(addConstraint());
+    }
+  }, [modell, dispatch]);
 
   return (
-    <MouseProvider>
-      <Grid2 container spacing={2} alignItems="center">
-        {/* Sense Selection */}
-        <Grid2
-          size={{ sm: 12, md: 2 }}
-          sx={{ display: "flex", justifyContent: "center" }}
-        >
-          <SenseSelector sense={sense} setSense={setSense} />
-        </Grid2>
+    <>
+      {/* Objective Input */}
+      <MouseProvider>
+        <Objective />
+      </MouseProvider>
 
-        {/* Objective Input */}
-        <Grid2
-          size={{ sm: 12, md: 10 }}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <TextField fullWidth label="Objective" variant="outlined" />
-        </Grid2>
-      </Grid2>
-
-      {/* TODO: Constraints */}
-    </MouseProvider>
+      {/* Constraints */}
+      <Stack spacing={5} sx={{ pt: 10 }} direction="column">
+        {modell.constraints.map((_, index) => (
+          <Constraint
+            key={index}
+            constraintIndex={index}
+            showDeleteButton={index !== modell.constraints.length - 1}
+          />
+        ))}
+      </Stack>
+    </>
   );
 }

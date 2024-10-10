@@ -1,20 +1,27 @@
 "use client";
+import { useTranslations } from "next-intl";
 import { Button, Grid2, Stack } from "@mui/material";
 import { Select, MenuItem } from "@mui/material";
 import React from "react";
 import {
+  appendSolutionSolverOutput,
+  appendSolutionSolverLog,
   clearSolution,
   setSolution,
+  setSolutionError,
   startSolving,
 } from "@/store/slices/SolveResults";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAllVariables } from "@/store/slices/Variables";
 import { RootState } from "@/store/store";
-import solve from "@/lib/highs";
+import solveHIGHS from "@/lib/highs";
+import solveGLPK from "@/lib/glpk_solver";
 import ExportButton from "../Editor/ExportButton";
 import { FileFormat } from "../Converter/FileFormat";
 import { InputType } from "@/store/slices/InputType";
 import { setTextFieldValue } from "@/store/slices/TextFieldInputs";
+import { clearAllModell } from "@/store/slices/Modell";
+import ConvertToGMPL from "@/lib/easy-ui/converter";
 
 const FILEFORMAT_MAP: { [key in InputType]: FileFormat } = {
   GMPL: FileFormat.GMPL,
@@ -24,15 +31,74 @@ const FILEFORMAT_MAP: { [key in InputType]: FileFormat } = {
 };
 
 export default function ActionsBar() {
+  const t = useTranslations();
+  const dispatch = useDispatch();
   const inputType = useSelector((state: RootState) => state.inputType);
   const textFieldInputs = useSelector(
     (state: RootState) => state.textFieldInputs
   );
-  const textFieldValue = textFieldInputs[inputType].textFieldValue;
-  const dispatch = useDispatch();
-  const currentFormat = FILEFORMAT_MAP[inputType];
+  let textFieldValue = textFieldInputs[inputType].textFieldValue;
+  let currentFormat = FILEFORMAT_MAP[inputType];
   const [selectedSolver, setSelectedSolver] = React.useState("HIGHS");
+  const easyUiModell = useSelector((state: RootState) => state.modell);
+  const easyUiVariables = useSelector((state: RootState) => state.variables);
 
+  const handleDeleteAllClick = () => {
+    dispatch(clearSolution(inputType));
+
+    if (inputType == "EASY_UI") {
+      dispatch(clearAllVariables());
+      dispatch(clearAllModell());
+    } else {
+      dispatch(
+        setTextFieldValue({
+          key: inputType,
+          value: "",
+        })
+      );
+    }
+  }
+
+  const handleSolveClick = async () => {
+    dispatch(startSolving(inputType));
+
+    // inject conversion from EASY UI to GMPL
+    if (inputType == "EASY_UI") {
+      console.log("Converting EASY UI to GMPL");
+      textFieldValue = ConvertToGMPL(easyUiModell, easyUiVariables);
+      currentFormat = FileFormat.GMPL;
+    }
+
+      if (selectedSolver === "HIGHS") {
+        // Run HIGHs solver
+        const solution = await solveHIGHS(
+          textFieldValue,
+          currentFormat
+        );
+        dispatch(setSolution({ key: inputType, solution }));
+      } else if (selectedSolver === "GLPK") {
+        // Run GLPK solver
+        const solution = solveGLPK(
+          textFieldValue,
+          currentFormat,
+          // Logging function
+          (msg) => {
+            dispatch(appendSolutionSolverLog({ key: inputType, log: msg }));
+          },
+          // Output function
+          (msg: string) => {
+            dispatch(appendSolutionSolverOutput({ key: inputType, out: msg }));
+          }
+        );
+        dispatch(setSolution({ key: inputType, solution }));
+      } else {
+        // No solver found
+        setSolutionError({
+          key: inputType,
+          error: new Error("Solver nicht gefunden"),
+        });
+      }
+  }
 
   return (
     <>
@@ -61,46 +127,31 @@ export default function ActionsBar() {
             <Button
               variant="contained"
               color="warning"
-              onClick={() => {
-                dispatch(clearSolution(inputType));
-                if (inputType == "EASY_UI") {
-                  dispatch(clearAllVariables());
-                } else {
-                  dispatch(
-                    setTextFieldValue({
-                      key: inputType,
-                      value: "",
-                    })
-                  );
-                }
-              }}
+              onClick={handleDeleteAllClick }
             >
-              Alles Löschen
+              {t("actions_bar.actions_bar.btn_delete_all")}
             </Button>
             <Button
               variant="contained"
               color="primary"
-              onClick={async () => {
-                dispatch(startSolving(inputType));
-                // let solution;
-                // if (selectedSolver === "HIGHS") {
-                const solution = await solve(textFieldValue, currentFormat); 
-                // } else if (selectedSolver === "GLPK") {
-                //   solution = {};
-                  // solution = await solveGLPK(textFieldValue, currentFormat);  // GLPK-Solver Header
-                // }
-                dispatch(setSolution({ key: inputType, solution }));
-              }
-            }
+              onClick={handleSolveClick}
             >
-              Lösen mit
-              <Select 
-  value={selectedSolver} onChange={(e) => setSelectedSolver(e.target.value)} >
-  <MenuItem color="primary" value="HIGHS">HIGHS Solver</MenuItem>
-  <MenuItem value="GLPK">GLPK Solver</MenuItem>
-</Select>
+              {t("actions_bar.actions_bar.btn_solve")}
+              </Button>
 
-            </Button>
+
+              <Select
+                value={selectedSolver}
+                onChange={(e) => setSelectedSolver(e.target.value)}
+                sx={{  ml : 3, }}
+                // variant="standard"
+              >
+                <MenuItem color="primary" value="HIGHS">
+                  HIGHS Solver
+                </MenuItem>
+                <MenuItem value="GLPK">GLPK Solver</MenuItem>
+              </Select>
+
           </Stack>
         </Grid2>
       </Grid2>
