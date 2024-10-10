@@ -155,6 +155,13 @@ export const variablesSlice = createSlice({
         variable.dataValue = action.payload.value;
       }
     },
+    setWholeVariableList : (state, action: PayloadAction<Variable[]>) => {
+      // delete all variables
+      state.splice(0, state.length);
+
+      // add new variables
+      state.push(...action.payload);
+    },
     validate: (state) => {
       // TODO: Implement validation
       console.log("Validating variables state", state);
@@ -175,6 +182,7 @@ export const {
   setDimList,
   clearAllVariables,
   setVariableValue,
+  setWholeVariableList,
   validate,
 } = variablesSlice.actions;
 

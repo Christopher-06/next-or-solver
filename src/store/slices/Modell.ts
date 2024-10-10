@@ -80,6 +80,11 @@ export const modellSlice = createSlice({
     setConstraintForAll : (state, action : PayloadAction<{index : number, value: ForAllType[]}>) => {
       state.constraints[action.payload.index].for_all = [...action.payload.value];
     },
+    setWholeModellState: (state, action: PayloadAction<Modell>) => {
+      state.objective_formular = action.payload.objective_formular;
+      state.sense = action.payload.sense;
+      state.constraints = [...action.payload.constraints];
+    },
     validate: (state) => {
       // TODO: Implement validation
       console.log("Validating variables state", state);
@@ -98,6 +103,7 @@ export const {
   clearAllModell,
   setConstraintForAll,
   validate,
+  setWholeModellState
 } = modellSlice.actions;
 
 export default modellSlice.reducer;
