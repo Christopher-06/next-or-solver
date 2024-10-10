@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
 import { FileFormat } from './FileFormat';
 import convertLP from './Converter';
@@ -13,7 +12,6 @@ interface ExportButtonProps {
 }
 
 const ExportButton: React.FC<ExportButtonProps> = ({ content, currentFormat, targetFormat }) => {
-    const [value, setValue] = useState("");
 
     // Bestimme das Format basierend auf der Dateiendung
     const getFileExtension = (format: FileFormat): string | null => {
@@ -23,17 +21,11 @@ const ExportButton: React.FC<ExportButtonProps> = ({ content, currentFormat, tar
         return null;
     };
 
-    const convertedContent = convertLP(content || '', currentFormat, targetFormat); // Konvertierter Inhalt
-    useEffect(() => {
-        if (convertedContent) {
-            setValue(convertedContent);
-        }
-    }, [convertedContent]);
-
-    const saveFile = (content: string, format: FileFormat) => {
-        const fileExtension = getFileExtension(format) || '';
+    const saveFile = () => {
+        const convertedContent = convertLP(content || '', currentFormat, targetFormat); // Konvertierter Inhalt
+        const fileExtension = getFileExtension(targetFormat) || '';
     
-        const blob = new Blob([content], { type: 'text/plain' });
+        const blob = new Blob([convertedContent || ""], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
     
         const link = document.createElement('a');
@@ -47,8 +39,8 @@ const ExportButton: React.FC<ExportButtonProps> = ({ content, currentFormat, tar
 
     // Handle File Save
     const handleSaveFile = () => {
-        if (value) {
-            saveFile(value, targetFormat); // Datei speichern
+        if (content) {
+            saveFile(); // Datei speichern
         }
     };
 

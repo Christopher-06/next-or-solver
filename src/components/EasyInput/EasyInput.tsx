@@ -4,6 +4,7 @@ import React from "react";
 import VariableContainer from "@/components/VariableContainer/VariableContainer";
 import ModellContainer from "@/components/ModellContainer/ModellContainer";
 import { useTranslations } from "next-intl";
+import DataInputContainer from "@/components/DataInputContainer/DataInputContainer";
 
 export default function EasyInput() {
   const t = useTranslations();
@@ -12,7 +13,7 @@ export default function EasyInput() {
       {/* Variablen Feld */}
       <Paper sx={{ my: 3, p: 3 }}>
         <Typography variant="h5" sx={{ mb: 3 }}>
-        {t("easy_input.easy_input.variables")}
+          {t("easy_input.easy_input.variables")}
         </Typography>
         <VariableContainer />
       </Paper>
@@ -20,7 +21,7 @@ export default function EasyInput() {
       {/* Modell Feld */}
       <Paper sx={{ my: 3, p: 3 }}>
         <Typography variant="h5" sx={{ mb: 3 }}>
-        {t("easy_input.easy_input.modell")}
+          {t("easy_input.easy_input.modell")}
         </Typography>
         <ModellContainer />
       </Paper>
@@ -28,6 +29,8 @@ export default function EasyInput() {
       {/* Daten Feld */}
       <Paper sx={{ my: 3, p: 3 }}>
         <Typography variant="h5">{t("easy_input.easy_input.data")}</Typography>
+
+        <DataInputContainer />
       </Paper>
     </>
   );
