@@ -130,10 +130,10 @@ export default function TwoDimension({ variable }: { variable: Variable }) {
   };
 
   const rows = row_index_values;
-  const height = 57 + Math.min(300, rows.length * 73);
+  const height = 60 + Math.min(300, rows.length * 73);
 
   return (
-    <Paper sx={{ height, w: "100%" }}>
+    <Paper sx={{ height, minWidth: "800px" }}>
       <TableVirtuoso
         data={rows}
         components={VirtuosoTableComponents}
