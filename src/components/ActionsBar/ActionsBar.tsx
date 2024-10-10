@@ -130,17 +130,21 @@ export default function ActionsBar() {
               onClick={handleSolveClick}
             >
               {t("actions_bar.actions_bar.btn_solve")}
+              </Button>
+
+
               <Select
                 value={selectedSolver}
                 onChange={(e) => setSelectedSolver(e.target.value)}
-                sx={{ ml: 1, p: 0 }}
+                sx={{  ml : 3, }}
+                // variant="standard"
               >
                 <MenuItem color="primary" value="HIGHS">
                   HIGHS Solver
                 </MenuItem>
                 <MenuItem value="GLPK">GLPK Solver</MenuItem>
               </Select>
-            </Button>
+
           </Stack>
         </Grid2>
       </Grid2>

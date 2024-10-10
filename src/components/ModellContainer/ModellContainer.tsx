@@ -1,8 +1,4 @@
 "use client";
-import { useTranslations } from "next-intl";
-import { Grid2, TextField } from "@mui/material";
-import SenseSelector, { Sense } from "./SenseSelector";
-import { useState } from "react";
 import { Stack } from "@mui/material";
 import MouseProvider from "../MouseProvider/MouseProvider";
 import Constraint from "./Constraint/Constraint";
@@ -13,8 +9,6 @@ import { useEffect } from "react";
 import { addConstraint } from "@/store/slices/Modell";
 
 export default function ModellContainer() {
-  const t = useTranslations();
-
   const modell = useSelector((state: RootState) => state.modell);
   const dispatch = useDispatch();
 
@@ -34,18 +28,6 @@ export default function ModellContainer() {
       <MouseProvider>
         <Objective />
       </MouseProvider>
-
-      {/* Objective Input */}
-      {/* <Grid2
-          size={{ sm: 12, md: 10 }}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <TextField fullWidth label={t("modell_container.modell_container.label")} variant="outlined" />
-        </Grid2> */}
 
       {/* Constraints */}
       <Stack spacing={5} sx={{ pt: 10 }} direction="column">
