@@ -1,3 +1,4 @@
+import { createUniqueID } from "@/lib/helper";
 import {
   GetDefaultVariable,
   Variable,
@@ -11,44 +12,73 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: Variable[] = [
   {
-    _id: "2345tgd",
+    _id: createUniqueID(),
     name: "x",
     lowerBound: 0,
-    upperBound: 10,
-    valueType: "CONTINUOUS",
-    propertyType: "DECISION",
-    dimensionType: "SKALAR",
-    dimList: [],
-    dataValue: undefined,
-  },
-  {
-    _id: "tzwrhgbs",
-    name: "z",
-    lowerBound: 0,
-    upperBound: 1,
     valueType: "INTEGER",
-    propertyType: "PARAMETER",
-    dimensionType: "SKALAR",
-    dimList: [],
-    dataValue: undefined,
-  },
-  {
-    _id: "sfghfgh",
-    name: "c",
-    valueType: "CONTINUOUS",
-    propertyType: "PARAMETER",
+    propertyType: "DECISION",
     dimensionType: "ARRAY",
-    dimList: ["p", "p"],
-    dataValue: undefined,
+    dimList: ["I", "J"],
+    dataValue: []
   },
   {
-    _id: "hsfhsh",
-    name: "p",
+    _id: createUniqueID(),
+    name: "I",
     valueType: "CONTINUOUS",
     propertyType: "PARAMETER",
     dimensionType: "SET",
     dimList: [],
-    dataValue: new Set<string>(["Meppen", "Hamburg", "Lingen", "Groß Hesepe", "Apeldorn", "Twist"]),
+    dataValue: new Set<string>([
+      "Seattle",
+      "San-Diego",
+    ]),
+  },
+  {
+    _id: createUniqueID(),
+    name: "J",
+    valueType: "CONTINUOUS",
+    propertyType: "PARAMETER",
+    dimensionType: "SET",
+    dimList: [],
+    dataValue: new Set<string>(
+      ["New-York", "Chicago", "Topeka"]
+    ),
+  },
+  {
+    _id: createUniqueID(),
+    name: "a",
+    valueType: "CONTINUOUS",
+    propertyType: "PARAMETER",
+    dimensionType: "ARRAY",
+    dimList: ["I"],
+    dataValue: [350, 600]
+  },
+  {
+    _id: createUniqueID(),
+    name: "b",
+    valueType: "CONTINUOUS",
+    propertyType: "PARAMETER",
+    dimensionType: "ARRAY",
+    dimList: ["J"],
+    dataValue: [325, 300, 275]
+  },
+  {
+    _id: createUniqueID(),
+    name: "d",
+    valueType: "CONTINUOUS",
+    propertyType: "PARAMETER",
+    dimensionType: "ARRAY",
+    dimList: ["I", "J"],
+    dataValue: [2.5, 1.8, 1.8, 2.5, 1.8, 1.4]
+  },
+  {
+    _id: createUniqueID(),
+    name: "f",
+    valueType: "CONTINUOUS",
+    propertyType: "PARAMETER",
+    dimensionType: "SKALAR",
+    dimList: [],
+    dataValue: 90
   }
 ];
 
@@ -125,6 +155,13 @@ export const variablesSlice = createSlice({
         variable.dataValue = action.payload.value;
       }
     },
+    setWholeVariableList : (state, action: PayloadAction<Variable[]>) => {
+      // delete all variables
+      state.splice(0, state.length);
+
+      // add new variables
+      state.push(...action.payload);
+    },
     validate: (state) => {
       // TODO: Implement validation
       console.log("Validating variables state", state);
@@ -145,6 +182,7 @@ export const {
   setDimList,
   clearAllVariables,
   setVariableValue,
+  setWholeVariableList,
   validate,
 } = variablesSlice.actions;
 

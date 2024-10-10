@@ -4,25 +4,28 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: Modell = {
-  objective_formular: "",
-  sense: "MAX",
+  objective_formular: "sum{i in I, j in J} (f * d[i,j] / 1000) * x[i,j]",
+  sense: "MIN",
   constraints: [
     {
       _id: createUniqueID(),
-      name: "c1",
-      formular : "x[i] + y[j] <= 1",
+      name: "supply",
+      formular : "sum{j in J} x[i,j] <= a[i]",
       for_all : [
         {
           set_name : "I",
           index_name : "i"
-        },
+        }
+      ]
+    },
+    {
+      _id: createUniqueID(),
+      name: "demand",
+      formular : "sum{i in I} x[i,j] >= b[j]",
+      for_all : [
         {
           set_name : "J",
           index_name : "j"
-        },
-        {
-          set_name : "Cities",
-          index_name : "City"
         }
       ]
     }
@@ -77,6 +80,11 @@ export const modellSlice = createSlice({
     setConstraintForAll : (state, action : PayloadAction<{index : number, value: ForAllType[]}>) => {
       state.constraints[action.payload.index].for_all = [...action.payload.value];
     },
+    setWholeModellState: (state, action: PayloadAction<Modell>) => {
+      state.objective_formular = action.payload.objective_formular;
+      state.sense = action.payload.sense;
+      state.constraints = [...action.payload.constraints];
+    },
     validate: (state) => {
       // TODO: Implement validation
       console.log("Validating variables state", state);
@@ -95,6 +103,7 @@ export const {
   clearAllModell,
   setConstraintForAll,
   validate,
+  setWholeModellState
 } = modellSlice.actions;
 
 export default modellSlice.reducer;
