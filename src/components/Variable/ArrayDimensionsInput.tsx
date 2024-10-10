@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useTranslations } from "next-intl"; //Sprache
 import NameInput from "../NameInput/NameInput";
 import { Typography } from "@mui/material";
 import { useMouseContext } from "../MouseProvider/MouseProvider";
@@ -10,6 +11,7 @@ import VariableName from "./VarName";
 
 export default function ArrayDimensionsInput({ var_idx }: { var_idx: number }) {
   const { isInside } = useMouseContext();
+  const t = useTranslations(); //Sprache
 
   const dispatch = useDispatch();
   const variable = useSelector((state: RootState) => state.variables[var_idx]);
@@ -58,7 +60,7 @@ export default function ArrayDimensionsInput({ var_idx }: { var_idx: number }) {
     dimInput = (
       <NameInput
         name={tempDimInput}
-        label="Dimensions"
+        label={t("variable.arraydimension.label")} //Sprache
         setName={(dimList: string) => {
           setTempDimInput(dimList);
 

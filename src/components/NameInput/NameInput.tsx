@@ -1,10 +1,11 @@
+import { useTranslations } from "next-intl";
 import { TextField, Typography } from "@mui/material";
 import { useMouseContext } from "../MouseProvider/MouseProvider";
 
 export default function NameInput({
   name,
   setName,
-  label = "Name",
+  label = undefined,
   viewingSuffix = "",
   onBlur = () => {},
   errorText = undefined,
@@ -17,6 +18,8 @@ export default function NameInput({
   errorText?: string;
 }) {
   const { isInside } = useMouseContext();
+  const t = useTranslations();
+  const tlabel = label || t("variable.name.label");
 
   // Draw TextField when name is choosen and mouse is inside
 
@@ -25,7 +28,7 @@ export default function NameInput({
       <Typography
         variant="h6"
         noWrap
-        sx={{ mx: 3, w : 1 }}
+        sx={{ mx: 3, w: 1 }}
         color={
           errorText !== undefined && errorText !== "" ? "error" : "textPrimary"
         }
@@ -39,7 +42,7 @@ export default function NameInput({
       <TextField
         sx={{ mx: 1 }}
         size="small"
-        label={label}
+        label={tlabel}
         variant="outlined"
         helperText={errorText}
         error={errorText !== undefined && errorText !== ""}

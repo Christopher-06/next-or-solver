@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 import { Button, Grid2, Stack } from "@mui/material";
 import { Select, MenuItem } from "@mui/material";
 import React from "react";
@@ -29,6 +30,7 @@ const FILEFORMAT_MAP: { [key in InputType]: FileFormat } = {
 };
 
 export default function ActionsBar() {
+  const t = useTranslations();
   const dispatch = useDispatch();
   const inputType = useSelector((state: RootState) => state.inputType);
   const textFieldInputs = useSelector(
@@ -120,25 +122,29 @@ export default function ActionsBar() {
               color="warning"
               onClick={handleDeleteAllClick }
             >
-              Alles Löschen
+              {t("actions_bar.actions_bar.btn_delete_all")}
             </Button>
             <Button
               variant="contained"
               color="primary"
               onClick={handleSolveClick}
             >
-              Lösen mit
+              {t("actions_bar.actions_bar.btn_solve")}
+              </Button>
+
+
               <Select
                 value={selectedSolver}
                 onChange={(e) => setSelectedSolver(e.target.value)}
-                sx={{ ml: 1, p: 0 }}
+                sx={{  ml : 3, }}
+                // variant="standard"
               >
                 <MenuItem color="primary" value="HIGHS">
                   HIGHS Solver
                 </MenuItem>
                 <MenuItem value="GLPK">GLPK Solver</MenuItem>
               </Select>
-            </Button>
+
           </Stack>
         </Grid2>
       </Grid2>
