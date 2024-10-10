@@ -2,8 +2,8 @@
 "use client";
 
 import { Button, TextareaAutosize } from "@mui/material";
-import { FileFormat } from "./FileFormat";
-import convertLP from "./Converter";
+import { FileFormat } from "../Converter/FileFormat";
+import convertLP from "../Converter/Converter";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";

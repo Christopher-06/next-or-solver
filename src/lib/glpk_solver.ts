@@ -1,4 +1,4 @@
-import { FileFormat } from "@/components/File/FileFormat";
+import { FileFormat } from "@/components/Converter/FileFormat";
 import glpk from "glpk.js";
 import { HighsModelStatus, HighsSolution } from "highs";
 
