@@ -33,7 +33,6 @@ const ExportButton: React.FC<ExportButtonProps> = ({ content, currentFormat, tar
         link.download = `problem${fileExtension}`;
         link.click();
         
-        // Optional: URL wieder freigeben
         URL.revokeObjectURL(url);
     };
 
