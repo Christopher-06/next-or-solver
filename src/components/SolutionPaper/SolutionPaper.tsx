@@ -20,13 +20,33 @@ import BasisTable, { SolutionTableDataRow } from "./BasisTable";
 import LogViewer from "./LogViewer";
 
 export const renderValue = (value: number) => {
-  if (value === Infinity) {
+  if (value === undefined || isNaN(value)) {
+    return "-";
+  } else if (value === Infinity || value >= 1.7976931348623157e308) {
     return "∞";
-  } else if (value === -Infinity) {
+  } else if (value === -Infinity || value <= -1.7976931348623157e308) {
     return "-∞";
-  }
+  } else if (Math.abs(value) < 1e-5) {
+    return "0.0";
+  } else if (Math.abs(value) > 1e4) {
+    return value.toExponential(5);
+  } else {
+    // round value to 5 digits
+    value = Math.round(value * 1e5) / 1e5;
+    let s = value.toString();
+    s = s.length > 10 ? s.slice(0, 10) : s; // keep it short
+    while (s[s.length - 1] === "0") {
+      // remove trailing zeros
+      s = s.slice(0, -1);
+    }
 
-  return value;
+    if (s[s.length - 1] === ".") {
+      // remove trailing dot
+      s += "0";
+    }
+
+    return s;
+  }
 };
 
 const renderTimeDelta = (timeDelta: number) => {
