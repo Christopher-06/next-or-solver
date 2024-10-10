@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import "@testing-library/jest-dom";
-import { FileFormat } from "@/components/File/FileFormat";
+import { FileFormat } from "@/components/Converter/FileFormat";
 import { HighsSolution } from "highs";
 const highsLoader = require("highs");
 

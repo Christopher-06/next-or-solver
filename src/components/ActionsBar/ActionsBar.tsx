@@ -4,7 +4,8 @@ import { Button, Grid2, Stack } from "@mui/material";
 import { Select, MenuItem } from "@mui/material";
 import React from "react";
 import {
-  appendSolutionLog,
+  appendSolutionSolverOutput,
+  appendSolutionSolverLog,
   clearSolution,
   setSolution,
   setSolutionError,
@@ -15,8 +16,8 @@ import { clearAllVariables } from "@/store/slices/Variables";
 import { RootState } from "@/store/store";
 import solveHIGHS from "@/lib/highs";
 import solveGLPK from "@/lib/glpk_solver";
-import ExportButton from "../File/ExportButton";
-import { FileFormat } from "../File/FileFormat";
+import ExportButton from "../Editor/ExportButton";
+import { FileFormat } from "../Converter/FileFormat";
 import { InputType } from "@/store/slices/InputType";
 import { setTextFieldValue } from "@/store/slices/TextFieldInputs";
 import { clearAllModell } from "@/store/slices/Modell";
@@ -44,6 +45,7 @@ export default function ActionsBar() {
 
   const handleDeleteAllClick = () => {
     dispatch(clearSolution(inputType));
+
     if (inputType == "EASY_UI") {
       dispatch(clearAllVariables());
       dispatch(clearAllModell());
@@ -55,32 +57,35 @@ export default function ActionsBar() {
         })
       );
     }
-  }
+  };
 
   const handleSolveClick = async () => {
     dispatch(startSolving(inputType));
 
-    // inject conversion from EASY UI to GMPL
-    if (inputType == "EASY_UI") {
-      console.log("Converting EASY UI to GMPL");
-      textFieldValue = ConvertToGMPL(easyUiModell, easyUiVariables);
-      currentFormat = FileFormat.GMPL;
-    }
+    try {
+      // inject conversion from EASY UI to GMPL
+      if (inputType == "EASY_UI") {
+        console.log("Converting EASY UI to GMPL");
+        textFieldValue = ConvertToGMPL(easyUiModell, easyUiVariables);
+        currentFormat = FileFormat.GMPL;
+      }
 
       if (selectedSolver === "HIGHS") {
         // Run HIGHs solver
-        const solution = await solveHIGHS(
-          textFieldValue,
-          currentFormat
-        );
+        const solution = await solveHIGHS(textFieldValue, currentFormat);
         dispatch(setSolution({ key: inputType, solution }));
       } else if (selectedSolver === "GLPK") {
         // Run GLPK solver
         const solution = solveGLPK(
           textFieldValue,
           currentFormat,
+          // Logging function
           (msg) => {
-            dispatch(appendSolutionLog({ key: inputType, log: msg }));
+            dispatch(appendSolutionSolverLog({ key: inputType, log: msg }));
+          },
+          // Output function
+          (msg: string) => {
+            dispatch(appendSolutionSolverOutput({ key: inputType, out: msg }));
           }
         );
         dispatch(setSolution({ key: inputType, solution }));
@@ -91,7 +96,12 @@ export default function ActionsBar() {
           error: new Error("Solver nicht gefunden"),
         });
       }
-  }
+    } catch (errorUnknown) {
+      console.log("Error while solving", errorUnknown);
+      const error: Error = errorUnknown as Error;
+      dispatch(setSolutionError({ key: inputType, error }));
+    }
+  };
 
   return (
     <>
@@ -115,12 +125,19 @@ export default function ActionsBar() {
             />
           </Stack>
         </Grid2>
-        <Grid2 size={{ xs: 12, sm: 6 }}>
-          <Stack direction="row" spacing={2} justifyContent="end">
+        <Grid2 size={{ xs: 12, sm: 6 }}
+          sx={{  justifyContent : "center" }}
+        >
+          <Stack
+            direction="row"
+            spacing={2}
+            justifyContent="end"
+            alignItems="center"
+          >
             <Button
               variant="contained"
               color="warning"
-              onClick={handleDeleteAllClick }
+              onClick={handleDeleteAllClick}
             >
               {t("actions_bar.actions_bar.btn_delete_all")}
             </Button>
@@ -130,21 +147,18 @@ export default function ActionsBar() {
               onClick={handleSolveClick}
             >
               {t("actions_bar.actions_bar.btn_solve")}
-              </Button>
+            </Button>
 
-
-              <Select
-                value={selectedSolver}
-                onChange={(e) => setSelectedSolver(e.target.value)}
-                sx={{  ml : 3, }}
-                // variant="standard"
-              >
-                <MenuItem color="primary" value="HIGHS">
-                  HIGHS Solver
-                </MenuItem>
-                <MenuItem value="GLPK">GLPK Solver</MenuItem>
-              </Select>
-
+            <Select
+              value={selectedSolver}
+              onChange={(e) => setSelectedSolver(e.target.value)}
+              sx={{ ml: 3 }}
+            >
+              <MenuItem color="primary" value="HIGHS">
+                HIGHS Solver
+              </MenuItem>
+              <MenuItem value="GLPK">GLPK Solver</MenuItem>
+            </Select>
           </Stack>
         </Grid2>
       </Grid2>

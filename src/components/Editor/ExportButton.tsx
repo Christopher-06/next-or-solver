@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from '@mui/material';
-import { FileFormat } from './FileFormat';
-import convertLP from './Converter';
+import { FileFormat } from '../Converter/FileFormat';
+import convertLP from '../Converter/Converter';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 interface ExportButtonProps {
