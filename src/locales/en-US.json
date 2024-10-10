@@ -1,18 +1,71 @@
 {
+  "actions_bar": {
+    "actions_bar": {
+      "btn_solve": "Solve with",
+      "btn_delete_all": "Clear all"
+    }
+  },
+  "easy_input": {
+    "easy_input": {
+      "variables": "Variables",
+      "modell": "Modell",
+      "data": "Data"
+    }
+  },
   "navbar": {
     "title": "Next OR Solver",
     "description": "An online tool for solving operations research problems",
-    "settings": {
-      "tooltip": "Open Settings"
-    }
+    "theme_toggle": "Change Color Mode",
+    "locale_switch": "Select Language"
   },
-  "locale_switch": {
-    "helptext": "Choose Language"
+  "solution_paper": {
+    "solution_paper": {
+      "no_solution": "No optimal solution found",
+      "solution_found": "Optimal obejective function value is",
+      "upper": "Upper Bound",
+      "lower": "Lower Bound",
+      "type": "Type",
+      "primal": "Primal",
+      "dual": "Dual",
+      "name": "Name",
+      "solution": "Solution",
+      "calculation_running": "Calculation running..."
+    }
   },
   "colormode_selection": {
     "tooltip": "Change Color Mode",
     "system": "System",
     "light": "Light",
     "dark": "Dark"
+  },
+  "input": {
+    "function_type": {
+      "name": "Type",
+      "min": "min",
+      "max": "max"
+    },
+    "function": "Objective Function"
+  },
+  "modell_container": {
+    "modell_container": {
+      "label": "Objective Function"
+    }
+  },
+  "variable": {
+    "name": {
+      "label": "Name"
+    },
+    "type": {
+      "system": "System",
+      "decision": "Decision",
+      "label": "Typ",
+      "helper": "Choose the type of variable",
+      "continuous": "Continous",
+      "integer": "Integer",
+      "binary": "Binary"
+    },
+    "arraydimension": {
+      "label": "Dimension"
+    }
   }
 }

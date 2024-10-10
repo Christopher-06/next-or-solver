@@ -1,9 +1,36 @@
 {
+  "actions_bar": {
+    "actions_bar": {
+      "btn_solve": "Lösen mit",
+      "btn_delete_all": "Alles Löschen"
+    }
+  },
+  "easy_input": {
+    "easy_input": {
+      "variables": "Variablen",
+      "modell": "Modell",
+      "data": "Daten"
+    }
+  },
   "navbar": {
     "title": "Next OR Solver",
     "description": "Ein Online-Tool zur Lösung von Operation Research Problemen",
-    "theme_toggle" : "Wechsle Farbmodus",
-    "locale_switch" : "Wähle Sprache"
+    "theme_toggle": "Wechsle Farbmodus",
+    "locale_switch": "Wähle Sprache"
+  },
+  "solution_paper": {
+    "solution_paper": {
+      "no_solution": "Keine optimale Lösung gefunden",
+      "solution_found": "Optimaler Zielfunktionswert ist",
+      "upper": "Obere Grenze",
+      "lower": "Untere Grenze",
+      "type": "Typ",
+      "primal": "Primal",
+      "dual": "Dual",
+      "name": "Name",
+      "solution": "Lösung",
+      "calculation_running": "Berechnung läuft..."
+    }
   },
   "colormode_selection": {
     "tooltip": "Ändere Farbmodus",
@@ -19,18 +46,26 @@
     },
     "function": "Zielfunktion"
   },
+  "modell_container": {
+    "modell_container": {
+      "label": "Zielfunktion"
+    }
+  },
   "variable": {
-    "name" : {
-      "label" : "Name"
+    "name": {
+      "label": "Name"
     },
     "type": {
-      "system" : "System",
+      "system": "System",
       "decision": "Entscheidung",
       "label": "Typ",
-      "helper" : "Wähle den Typen der Variable",
+      "helper": "Wähle den Typen der Variable",
       "continuous": "Kontinuierlich",
       "integer": "Ganzzahlig",
-      "binary": "Binär"      
+      "binary": "Binär"
+    },
+    "arraydimension": {
+      "label": "Dimension"
     }
   }
 }

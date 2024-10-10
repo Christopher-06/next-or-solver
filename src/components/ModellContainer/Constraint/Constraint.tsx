@@ -1,5 +1,5 @@
 "use client";
-import NameInput from "@/components/Variable/NameInput";
+import NameInput from "@/components/NameInput/NameInput";
 import { Box, Button, Tooltip } from "@mui/material";
 import FormularTextField from "../FormularTextField";
 import MouseProvider from "@/components/MouseProvider/MouseProvider";

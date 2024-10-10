@@ -1,23 +1,41 @@
-import NameInput from "./NameInput";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useTranslations } from "next-intl"; //Sprache
+import NameInput from "../NameInput/NameInput";
 import { Typography } from "@mui/material";
 import { useMouseContext } from "../MouseProvider/MouseProvider";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { setDimList } from "@/store/slices/Variables";
+import VariableName from "./VarName";
 
-export default function ArrayDimensionsInput({
-  name,
-  setName,
-  dimList,
-  setDimList,
-}: {
-  name: string;
-  setName: (name: string) => void;
-  dimList: string[];
-  setDimList: (dimList: string[]) => void;
-}) {
+export default function ArrayDimensionsInput({ var_idx }: { var_idx: number }) {
   const { isInside } = useMouseContext();
+  const t = useTranslations(); //Sprache
+
+  const dispatch = useDispatch();
+  const variable = useSelector((state: RootState) => state.variables[var_idx]);
+
+  // validate form
+  const okayDimIndices = useSelector((state: RootState) =>
+    state.variables
+      .filter((v) => variable.dimList.includes(v.name))
+      .map((v) => v.name)
+  );
+  const badDimIndices = variable.dimList.filter(
+    (d) => !okayDimIndices.includes(d)
+  );
+  const helperText =
+    badDimIndices.length > 0
+      ? "Invalid dimensions: " + badDimIndices.join(", ")
+      : "";
+
+  // Update TextField when dimList changes
+  const [tempDimInput, setTempDimInput] = useState(variable.dimList.join(", "));
 
   let dimInput = <></>;
 
-  if (name !== "" && !isInside) {
+  if (variable.name !== "" && !isInside) {
     // Draw as Math Text
     dimInput = (
       <>
@@ -25,15 +43,11 @@ export default function ArrayDimensionsInput({
           [&nbsp;
         </Typography>
 
-        <Typography variant="h5" color="textPrimary">
-          {dimList.map((dim, i) => {
-            return (
-              <>
-                {" " + dim}
-                {i < dimList.length - 1 ? ", " : ""}
-              </>
-            );
-          })}
+        <Typography
+          variant="h5"
+          color={helperText === "" ? "textPrimary" : "error"}
+        >
+          {variable.dimList.join(", ")}
         </Typography>
 
         <Typography variant="h4" color="textDisabled">
@@ -45,18 +59,25 @@ export default function ArrayDimensionsInput({
     // Draw as Text Field Input
     dimInput = (
       <NameInput
-        name={dimList.join(", ")}
-        label="Dimensions"
+        name={tempDimInput}
+        label={t("variable.arraydimension.label")} //Sprache
         setName={(dimList: string) => {
-          setDimList([dimList]);
+          setTempDimInput(dimList);
+
+          const newDimList = dimList
+            .split(",")
+            .map((d) => d.trim())
+            .filter((d) => d !== "");
+          dispatch(setDimList({ index: var_idx, dimList: newDimList }));
         }}
+        errorText={helperText}
       />
     );
   }
 
   return (
     <>
-      <NameInput name={name} setName={setName} />
+      <VariableName var_idx={var_idx} />
 
       {dimInput}
     </>

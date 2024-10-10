@@ -9,14 +9,29 @@ import { useDispatch } from "react-redux";
 export default function AddItemField({ variable }: { variable: Variable }) {
   const dispatch = useDispatch();
   const [newValueText, setNewValueText] = useState("");
+  const [helperText, setHelperText] = useState("");
 
   const onClickAdd = () => {
     const newValue = newValueText.trim();
+
+    if(newValue.includes(" ")) {
+      setHelperText("No spaces allowed");
+      return;
+    }
+    // only accept numbers, letters and underscores
+    const inputRegex = /^[a-zA-Z0-9_]*$/;
+    if (!inputRegex.test(newValue)) {
+      setHelperText("Only letters, numbers and underscores allowed");
+      return;
+    }
+
+    setHelperText("");
     setNewValueText("");
 
     if (newValue === "") {
       return;
     }
+
 
     // Update global state
     if (variable?.dataValue instanceof Set) {
@@ -42,6 +57,8 @@ export default function AddItemField({ variable }: { variable: Variable }) {
         label="Neuer Wert"
         variant="outlined"
         value={newValueText}
+        helperText={helperText}
+        error={helperText !== ""}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             onClickAdd();

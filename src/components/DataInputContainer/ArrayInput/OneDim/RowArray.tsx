@@ -63,7 +63,7 @@ export default function ItemsChipArray({ variable }: { variable: Variable }) {
         return (
           <ListItem key={variable._id + col_name}>
             <NumericInput
-              value={dataArray.length < idx ? dataArray[idx] : undefined}
+              value={idx < dataArray.length ? dataArray[idx] : undefined}
               label={col_name}
               valueType={variable.valueType}
               setValue={valueSetter(idx)}
