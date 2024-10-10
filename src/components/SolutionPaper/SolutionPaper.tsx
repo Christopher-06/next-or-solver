@@ -64,67 +64,95 @@ const renderTimeDelta = (timeDelta: number) => {
   return `${timeDelta} ms`;
 };
 
-const renderAlert = (
-  solution: HighsSolution,
-  startTime: number | undefined,
-  endTime: number | undefined
-) => {
-  if (solution.Status === "Optimal") {
-    return (
-      <Alert severity="success" sx={{ pt: 2 }}>
-        <AlertTitle>
-          Optimaler Zielfunktionswert von {solution.ObjectiveValue}
-        </AlertTitle>
-
-        {/* Show the time it took to solve the problem */}
-        {endTime && startTime && (
-          <Typography variant="h3">
-            {renderTimeDelta(endTime - startTime)}
-          </Typography>
-        )}
-      </Alert>
-    );
-  } else {
-    // TODO: Implement other cases for better user feedback
-    return (
-      <Alert severity="error" sx={{ pt: 2 }}>
-        <AlertTitle>Keine optimale Lösung gefunden</AlertTitle>
-        <Typography variant="h3">{solution.Status}</Typography>
-      </Alert>
-    );
-  }
-};
-
-const renderinPaper = (children: React.ReactNode) => {
-  return (
-    <Paper sx={{ m: 3, p: 3 }}>
-      <Typography variant="h5" sx={{ mb: 1 }}>
-        Lösung
-      </Typography>
-      {children}
-    </Paper>
-  );
-};
-
-const rerenderInterval = (timeDelta: number) => {
-  if (timeDelta < 60000) {
-    // < 1min => 300ms - 500ms
-    return 300 + Math.random() * 400;
-  } else if (timeDelta <= 600000) {
-    // <10min => 500ms - 1000ms
-    return 500 + Math.random() * 500;
-  } else {
-    // >10min => 1000ms - 2000ms
-    return 1000 + Math.random() * 1000;
-  }
-};
-
 export default function SolutionContainer() {
   const inputType = useSelector((state: RootState) => state.inputType);
   const allSolveResults = useSelector((state: RootState) => state.solveResults);
   const result = allSolveResults[inputType];
 
   const [timeDelta, setTimeDelta] = React.useState<number>(0);
+
+  const renderAlert = (
+    solution: HighsSolution,
+    startTime: number | undefined,
+    endTime: number | undefined
+  ) => {
+    {
+      /* Show the time it took to solve the problem */
+    }
+    const wallTimeDisplay =
+      endTime && startTime ? renderTimeDelta(endTime - startTime) : null;
+
+    if (solution.Status === "Optimal") {
+      return (
+        <Alert severity="success" sx={{ pt: 2 }}>
+          <AlertTitle>
+            Optimaler Zielfunktionswert ({wallTimeDisplay})
+          </AlertTitle>
+
+          <Typography variant="h3">{solution.ObjectiveValue}</Typography>
+        </Alert>
+      );
+    } else if (solution.Status === "Infeasible") {
+      return (
+        <Alert severity="error" sx={{ pt: 2 }}>
+          <AlertTitle>Problem ist nicht lösbar ({wallTimeDisplay})</AlertTitle>
+        </Alert>
+      );
+    } else if (solution.Status === "Unbounded") {
+      return (
+        <Alert severity="error" sx={{ pt: 2 }}>
+          <AlertTitle>Problem ist unbeschränkt ({wallTimeDisplay})</AlertTitle>
+        </Alert>
+      );
+    } else if (
+      solution.Status === "Primal infeasible or unbounded" ||
+      solution.Status === "Bound on objective reached"
+    ) {
+      return (
+        <Alert severity="error" sx={{ pt: 2 }}>
+          <AlertTitle>
+            Problem ist primal unbeschränkt oder nicht lösbar ({wallTimeDisplay}
+            )
+          </AlertTitle>
+        </Alert>
+      );
+    } else {
+      return (
+        <Alert severity="error" sx={{ pt: 2 }}>
+          <AlertTitle>
+            Keine optimale Lösung gefunden ({wallTimeDisplay})
+          </AlertTitle>
+          <Typography variant="caption">{solution.Status}</Typography>
+
+          <Typography variant="h3">{solution.ObjectiveValue}</Typography>
+        </Alert>
+      );
+    }
+  };
+
+  const renderinPaper = (children: React.ReactNode) => {
+    return (
+      <Paper sx={{ m: 3, p: 3 }}>
+        <Typography variant="h5" sx={{ mb: 1 }}>
+          Lösung
+        </Typography>
+        {children}
+      </Paper>
+    );
+  };
+
+  const rerenderInterval = (timeDelta: number) => {
+    if (timeDelta < 60000) {
+      // < 1min => 10 - 100ms
+      return 10 + Math.random() * 90;
+    } else if (timeDelta <= 600000) {
+      // <10min => 500 - 1000ms
+      return 500 + Math.random() * 500;
+    } else {
+      // >10min => 1000ms - 2000ms
+      return 1000 + Math.random() * 1000;
+    }
+  };
 
   // Rerender every 70ms to 5 seconds to update the time delta
   useEffect(() => {
@@ -175,6 +203,13 @@ export default function SolutionContainer() {
             Berechnung läuft seit
             <Typography variant="h3">{renderTimeDelta(timeDelta)}</Typography>
           </Alert>
+
+          {/* Show Log while solving */}
+          {result.solverLog.length > 0 ? (
+            <Box sx={{ my: 3 }}>
+              <LogViewer logs={result.solverLog} />
+            </Box>
+          ) : null}
         </>
       );
     }
@@ -216,14 +251,35 @@ export default function SolutionContainer() {
             </AccordionDetails>
           </Accordion>
 
-          {/* Logging View  */}
-          <Tooltip title={result.log.length === 0 ? "No logs available" : ""}>
-            <Accordion elevation={3} disabled={result.log.length === 0}>
+          {/* Solver Output View  */}
+          <Tooltip
+            title={
+              result.solverOutput.length === 0 ? "No output available" : ""
+            }
+          >
+            <Accordion
+              elevation={3}
+              disabled={result.solverOutput.length === 0}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                Solver Output
+              </AccordionSummary>
+              <AccordionDetails>
+                <LogViewer logs={result.solverOutput} />
+              </AccordionDetails>
+            </Accordion>
+          </Tooltip>
+
+          {/* Solver Logs View  */}
+          <Tooltip
+            title={result.solverLog.length === 0 ? "No logs available" : ""}
+          >
+            <Accordion elevation={3} disabled={result.solverLog.length === 0}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 Solver Logs
               </AccordionSummary>
               <AccordionDetails>
-                <LogViewer logs={result.log} />
+                <LogViewer logs={result.solverLog} />
               </AccordionDetails>
             </Accordion>
           </Tooltip>

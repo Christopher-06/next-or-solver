@@ -9,7 +9,8 @@ const initialState: {
     startTime: EpochTimeStamp | undefined;
     endTime: EpochTimeStamp | undefined;
     error: Error | undefined;
-    log: string[];
+    solverLog: string[];
+    solverOutput : string[]; 
   };
 } = {
   EASY_UI: {
@@ -17,28 +18,32 @@ const initialState: {
     startTime: undefined,
     endTime: undefined,
     error: undefined,
-    log: [],
+    solverLog: [],
+    solverOutput: [],
   },
   GMPL: {
     solution: undefined,
     startTime: undefined,
     endTime: undefined,
     error: undefined,
-    log: [],
+    solverLog: [],
+    solverOutput: [],
   },
   CPLEX_LP: {
     solution: undefined,
     startTime: undefined,
     endTime: undefined,
     error: undefined,
-    log: [],
+    solverLog: [],
+    solverOutput: [],
   },
   MPS: {
     solution: undefined,
     startTime: undefined,
     endTime: undefined,
     error: undefined,
-    log: [],
+    solverLog: [],
+    solverOutput: [],
   },
 };
 
@@ -58,7 +63,8 @@ export const solveResultsSlice = createSlice({
         startTime: state[action.payload.key].startTime,
         endTime: Date.now(),
         error: undefined,
-        log: state[action.payload.key].log,
+        solverLog: state[action.payload.key].solverLog,
+        solverOutput: state[action.payload.key].solverOutput,
       };
     },
     startSolving: (state, action: PayloadAction<InputType>) => {
@@ -67,7 +73,8 @@ export const solveResultsSlice = createSlice({
         startTime: Date.now(),
         endTime: undefined,
         error: undefined,
-        log: [],
+        solverLog: [],
+        solverOutput: [],
       };
     },
     clearSolution: (state, action: PayloadAction<InputType>) => {
@@ -76,7 +83,8 @@ export const solveResultsSlice = createSlice({
         startTime: undefined,
         endTime: undefined,
         error: undefined,
-        log: [],
+        solverLog: [],
+        solverOutput: [],
       };
     },
     setSolutionError: (
@@ -88,14 +96,21 @@ export const solveResultsSlice = createSlice({
         startTime: state[action.payload.key].startTime,
         endTime: Date.now(),
         error: action.payload.error,
-        log: state[action.payload.key].log,
+        solverLog: state[action.payload.key].solverLog,
+        solverOutput: state[action.payload.key].solverOutput,
       };
     },
-    appendSolutionLog: (
+    appendSolutionSolverLog: (
       state,
       action: PayloadAction<{ key: InputType; log: string }>
     ) => {
-      state[action.payload.key].log.push(action.payload.log);
+      state[action.payload.key].solverLog.push(action.payload.log);
+    },
+    appendSolutionSolverOutput: (
+      state,
+      action: PayloadAction<{ key: InputType; out: string }>
+    ) => {
+      state[action.payload.key].solverOutput.push(action.payload.out);
     },
   },
 });
@@ -106,7 +121,8 @@ export const {
   clearSolution,
   startSolving,
   setSolutionError,
-  appendSolutionLog,
+  appendSolutionSolverOutput,
+  appendSolutionSolverLog,
 } = solveResultsSlice.actions;
 
 export default solveResultsSlice.reducer;
