@@ -5,7 +5,6 @@ import React, { useEffect, useRef } from 'react';
 import { useMonaco, Editor, OnChange } from '@monaco-editor/react';
 import { FileFormat } from '../Converter/FileFormat';
 import * as monacoEditor from 'monaco-editor';
-import { Button } from '@mui/material';
 
 const TextEditor = ({ value, edit, format, theme}: {
     value: string;
@@ -38,7 +37,7 @@ const TextEditor = ({ value, edit, format, theme}: {
       
       monaco.languages.register({ id: FileFormat.GMPL.toString() });
 
-      let gmpl_keywords = ['var', 'maximize', 'minimize', 's.t.', 'solve', 'display', 'end', 'param', 'set', 'dimen', 'binary', 'in', 'printf', 'data', 'and', 'else', 'mod', 'union', 'by', 'if', 'not', 'within', 'cross', 'in', 'or', 'diff', 'inter', 'symdiff', 'div', 'less', 'then']
+      const gmpl_keywords = ['var', 'maximize', 'minimize', 's.t.', 'solve', 'display', 'end', 'param', 'set', 'dimen', 'binary', 'in', 'printf', 'data', 'and', 'else', 'mod', 'union', 'by', 'if', 'not', 'within', 'cross', 'in', 'or', 'diff', 'inter', 'symdiff', 'div', 'less', 'then']
 
       monaco.languages.setMonarchTokensProvider(FileFormat.GMPL.toString(), {
         gmpl_keywords,
@@ -138,7 +137,7 @@ const TextEditor = ({ value, edit, format, theme}: {
 
       monaco.languages.register({ id: FileFormat.CPLEX_LP.toString() });
 
-      let lp_keywords = ['Maximize', 'Minimize', 'Subject To', 'Bounds', 'General', 'Binaries', 'Semi-Continuous', 'SOS', 'END']
+      const lp_keywords = ['Maximize', 'Minimize', 'Subject To', 'Bounds', 'General', 'Binaries', 'Semi-Continuous', 'SOS', 'END']
 
       monaco.languages.setMonarchTokensProvider(FileFormat.CPLEX_LP.toString(), {
         ignoreCase:true,
