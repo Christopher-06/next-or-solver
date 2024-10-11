@@ -9,6 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { TableVirtuoso, TableComponents } from "react-virtuoso";
 import { renderValue } from "./SolutionPaper";
+import { useTranslations } from "next-intl";
 
 export type SolutionTableDataRow = {
   Name: string;
@@ -38,14 +39,15 @@ const VirtuosoTableComponents: TableComponents<SolutionTableDataRow> = {
 };
 
 function fixedHeaderContent() {
+  const t = useTranslations();
   return (
     <TableRow sx={{ backgroundColor: "background.paper" }}>
-      <TableCell>Name</TableCell>
-      <TableCell align="center">Upper</TableCell>
-      <TableCell align="center">Lower</TableCell>
-      <TableCell align="center">Type</TableCell>
-      <TableCell align="center">Primal</TableCell>
-      <TableCell align="center">Dual</TableCell>
+      <TableCell>{t("solution_paper.basis_table.name")}</TableCell>
+      <TableCell align="center">{t("solution_paper.basis_table.upper")}</TableCell>
+      <TableCell align="center">{t("solution_paper.basis_table.lower")}</TableCell>
+      <TableCell align="center">{t("solution_paper.basis_table.type")}</TableCell>
+      <TableCell align="center">{t("solution_paper.basis_table.primal")}</TableCell>
+      <TableCell align="center">{t("solution_paper.basis_table.dual")}</TableCell>
     </TableRow>
   );
 }

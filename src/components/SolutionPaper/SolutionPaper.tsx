@@ -11,6 +11,7 @@ import {
   Box,
   Tooltip,
 } from "@mui/material";
+import { useTranslations } from "next-intl";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { HighsSolution } from "highs";
@@ -68,6 +69,7 @@ export default function SolutionContainer() {
   const inputType = useSelector((state: RootState) => state.inputType);
   const allSolveResults = useSelector((state: RootState) => state.solveResults);
   const result = allSolveResults[inputType];
+  const t = useTranslations();
 
   const [timeDelta, setTimeDelta] = React.useState<number>(0);
 
@@ -86,7 +88,7 @@ export default function SolutionContainer() {
       return (
         <Alert severity="success" sx={{ pt: 2 }}>
           <AlertTitle>
-            Optimaler Zielfunktionswert ({wallTimeDisplay})
+          {t("solution_paper.solution_paper.solution_found")} ({wallTimeDisplay})
           </AlertTitle>
 
           <Typography variant="h3">{solution.ObjectiveValue}</Typography>
@@ -95,13 +97,13 @@ export default function SolutionContainer() {
     } else if (solution.Status === "Infeasible") {
       return (
         <Alert severity="error" sx={{ pt: 2 }}>
-          <AlertTitle>Problem ist nicht lösbar ({wallTimeDisplay})</AlertTitle>
+          <AlertTitle>{t("solution_paper.solution_paper.not_solvable")} ({wallTimeDisplay})</AlertTitle>
         </Alert>
       );
     } else if (solution.Status === "Unbounded") {
       return (
         <Alert severity="error" sx={{ pt: 2 }}>
-          <AlertTitle>Problem ist unbeschränkt ({wallTimeDisplay})</AlertTitle>
+          <AlertTitle>{t("solution_paper.solution_paper.unrestricted")} ({wallTimeDisplay})</AlertTitle>
         </Alert>
       );
     } else if (
@@ -111,7 +113,7 @@ export default function SolutionContainer() {
       return (
         <Alert severity="error" sx={{ pt: 2 }}>
           <AlertTitle>
-            Problem ist primal unbeschränkt oder nicht lösbar ({wallTimeDisplay}
+          {t("solution_paper.solution_paper.primal_unlimited_or_unsolvable")} ({wallTimeDisplay}
             )
           </AlertTitle>
         </Alert>
@@ -120,7 +122,7 @@ export default function SolutionContainer() {
       return (
         <Alert severity="error" sx={{ pt: 2 }}>
           <AlertTitle>
-            Keine optimale Lösung gefunden ({wallTimeDisplay})
+          {t("solution_paper.solution_paper.no_solution")} ({wallTimeDisplay})
           </AlertTitle>
           <Typography variant="caption">{solution.Status}</Typography>
 
@@ -134,7 +136,7 @@ export default function SolutionContainer() {
     return (
       <Paper sx={{ m: 3, p: 3 }}>
         <Typography variant="h5" sx={{ mb: 1 }}>
-          Lösung
+        {t("solution_paper.solution_paper.solution")}
         </Typography>
         {children}
       </Paper>
@@ -187,7 +189,7 @@ export default function SolutionContainer() {
     console.log("Solution Paper encountered an error", result.error);
     return renderinPaper(
       <Alert severity="error">
-        <AlertTitle>Es ist ein Fehler aufgetreten</AlertTitle>
+        <AlertTitle>{t("solution_paper.solution_paper.error")}</AlertTitle>
         <Typography>{result.error.message}</Typography>
       </Alert>
     );
@@ -200,7 +202,7 @@ export default function SolutionContainer() {
         <>
           <LinearProgress />
           <Alert severity="info">
-            Berechnung läuft seit
+          {t("solution_paper.solution_paper.calculation_running")}
             <Typography variant="h3">{renderTimeDelta(timeDelta)}</Typography>
           </Alert>
 
@@ -234,7 +236,7 @@ export default function SolutionContainer() {
           {/* Show Decision Variables  */}
           <Accordion elevation={3} defaultExpanded>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              Decision Variables
+            {t("solution_paper.solution_paper.Decision_Variables")}
             </AccordionSummary>
             <AccordionDetails>
               <BasisTable dataRows={VariableColumns} />
@@ -244,7 +246,7 @@ export default function SolutionContainer() {
           {/* Show Constraints  */}
           <Accordion elevation={3}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              Constraints
+            {t("solution_paper.solution_paper.Constraints")}
             </AccordionSummary>
             <AccordionDetails>
               <BasisTable dataRows={constraintRows} />
@@ -262,7 +264,7 @@ export default function SolutionContainer() {
               disabled={result.solverOutput.length === 0}
             >
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                Solver Output
+              {t("solution_paper.solution_paper.Solver_Output")}
               </AccordionSummary>
               <AccordionDetails>
                 <LogViewer logs={result.solverOutput} />
@@ -276,7 +278,7 @@ export default function SolutionContainer() {
           >
             <Accordion elevation={3} disabled={result.solverLog.length === 0}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                Solver Logs
+              {t("solution_paper.solution_paper.Solver_Logs")}
               </AccordionSummary>
               <AccordionDetails>
                 <LogViewer logs={result.solverLog} />

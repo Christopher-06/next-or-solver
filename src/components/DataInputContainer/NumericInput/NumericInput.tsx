@@ -3,11 +3,12 @@ import { VarValueDataType, VarValueType } from "@/lib/types/Variable";
 import { TextField, Tooltip } from "@mui/material";
 import React from "react";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function NumericInput({
   value,
   setValue,
-  label = "Wert",
+  label = undefined,
   centered = true,
   lowerBound = undefined,
   upperBound = undefined,
@@ -25,13 +26,18 @@ export default function NumericInput({
   showHelperText?: boolean;
   showHelperTextInTooltip ?: boolean;
 }) {
+  const t = useTranslations();
   const [text, setText] = useState("");
   const [helperText, setHelperText] = useState("");
+
+  if (label == undefined){
+    label = t("data_input_container.nummeric_input.value")
+  }
 
   useEffect(() => {
     setText(value !== undefined ? value.toString() : "");
     if (value === undefined) {
-      setHelperText(value ? "" : "Bitte geben Sie einen Wert ein");
+      setHelperText(value ? "" : t("data_input_container.nummeric_input.type_in_value"));
     }
   }, [value]);
 
@@ -39,22 +45,22 @@ export default function NumericInput({
     const newValue = parseFloat(text);
 
     if (isNaN(newValue)) {
-      setHelperText("Es wurde ein Zahl erwartet");
+      setHelperText(t("data_input_container.nummeric_input.number_requiered"));
       return;
     }
 
     if (upperBound && newValue > upperBound) {
-      setHelperText("Der Wert ist größer als die obere Grenze");
+      setHelperText(t("data_input_container.nummeric_input.value_greater_then_UP"));
       return;
     }
 
     if (lowerBound && newValue < lowerBound) {
-      setHelperText("Der Wert ist kleiner als die untere Grenze");
+      setHelperText(t("data_input_container.nummeric_input.value_lower_then_LB"));
       return;
     }
 
     if (valueType === "INTEGER" && !Number.isInteger(newValue)) {
-      setHelperText("Es wurde eine ganze Zahl erwartet");
+      setHelperText(t("data_input_container.nummeric_input.integer_required"));
       return;
     }
 

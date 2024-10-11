@@ -6,12 +6,14 @@ import { Sense } from "@/lib/types/Modell";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { setObjectiveFormular, setObjectiveSense } from "@/store/slices/Modell";
+import { useTranslations } from "next-intl";
 
 export default function Objective() {
 
   const dispatch = useDispatch();
   const modell_objective = useSelector((state : RootState) => state.modell.objective_formular);
   const modell_sense = useSelector((state : RootState) => state.modell.sense);
+  const t = useTranslations();
 
   const setSense = (sense: Sense) => {
     dispatch(setObjectiveSense(sense));  
@@ -43,7 +45,7 @@ export default function Objective() {
           text={modell_objective}
           setText={setObjective}
           centered={false}
-          label="Objective"
+          label={t("modell_container.modell_container.label")}
         />
       </Grid2>
     </Grid2>
