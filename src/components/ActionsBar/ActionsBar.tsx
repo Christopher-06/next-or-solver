@@ -19,9 +19,11 @@ import solveGLPK from "@/lib/glpk_solver";
 import ExportButton from "../Editor/ExportButton";
 import { FileFormat } from "../Converter/FileFormat";
 import { InputType } from "@/store/slices/InputType";
-import { setTextFieldValue } from "@/store/slices/TextFieldInputs";
+import { setInputError, setTextFieldValue } from "@/store/slices/TextFieldInputs";
 import { clearAllModell } from "@/store/slices/Modell";
 import ConvertToGMPL from "@/lib/easy-ui/converter";
+import { Modell } from "@/lib/types/Modell";
+import { Variable } from "@/lib/types/Variable";
 
 const FILEFORMAT_MAP: { [key in InputType]: FileFormat } = {
   GMPL: FileFormat.GMPL,
@@ -39,9 +41,11 @@ export default function ActionsBar() {
   );
   let textFieldValue = textFieldInputs[inputType].textFieldValue;
   let currentFormat = FILEFORMAT_MAP[inputType];
-  const [selectedSolver, setSelectedSolver] = React.useState("HIGHS");
-  const easyUiModell = useSelector((state: RootState) => state.modell);
-  const easyUiVariables = useSelector((state: RootState) => state.variables);
+  const [selectedSolver, setSelectedSolver] = React.useState("GLPK");
+  const easyUiModell: Modell = useSelector((state: RootState) => state.modell);
+  const easyUiVariables: Variable[] = useSelector(
+    (state: RootState) => state.variables
+  );
 
   const handleDeleteAllClick = () => {
     dispatch(clearSolution(inputType));
@@ -66,7 +70,7 @@ export default function ActionsBar() {
       // inject conversion from EASY UI to GMPL
       if (inputType == "EASY_UI") {
         console.log("Converting EASY UI to GMPL");
-        textFieldValue = ConvertToGMPL(easyUiModell, easyUiVariables);
+        textFieldValue = ConvertToGMPL(easyUiModell, easyUiVariables, true);
         currentFormat = FileFormat.GMPL;
       }
 
@@ -96,10 +100,15 @@ export default function ActionsBar() {
           error: new Error("Solver nicht gefunden"),
         });
       }
-    } catch (errorUnknown) {
-      console.log("Error while solving", errorUnknown);
-      const error: Error = errorUnknown as Error;
-      dispatch(setSolutionError({ key: inputType, error }));
+
+      // clear input error
+      dispatch(setInputError({ key: inputType, error: null }));
+    } catch (error) {
+      console.log("Error while solving", error);
+      if (error instanceof Error) {
+        dispatch(setSolutionError({ key: inputType, error }));
+        dispatch(setInputError({ key: inputType, error }));
+      }
     }
   };
 
@@ -110,24 +119,28 @@ export default function ActionsBar() {
           <Stack direction="row" spacing={2} justifyContent="start">
             <ExportButton
               content={textFieldValue}
+              easyUiModell={easyUiModell}
+              easyUiVariables={easyUiVariables}
               currentFormat={currentFormat}
               targetFormat={FileFormat.GMPL}
             />
             <ExportButton
               content={textFieldValue}
+              easyUiModell={easyUiModell}
+              easyUiVariables={easyUiVariables}
               currentFormat={currentFormat}
               targetFormat={FileFormat.CPLEX_LP}
             />
             <ExportButton
               content={textFieldValue}
+              easyUiModell={easyUiModell}
+              easyUiVariables={easyUiVariables}
               currentFormat={currentFormat}
               targetFormat={FileFormat.MPS}
             />
           </Stack>
         </Grid2>
-        <Grid2 size={{ xs: 12, sm: 6 }}
-          sx={{  justifyContent : "center" }}
-        >
+        <Grid2 size={{ xs: 12, sm: 6 }} sx={{ justifyContent: "center" }}>
           <Stack
             direction="row"
             spacing={2}

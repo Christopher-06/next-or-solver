@@ -6,6 +6,7 @@ import SetInput from "./SetInput/SetInput";
 import { Variable } from "@/lib/types/Variable";
 import React from "react";
 import ArrayInput from "./ArrayInput/ArrayInput";
+import { EasyUIVariableDefineError } from "@/lib/easy-ui/validation";
 
 export default function DataInputContainer() {
   const variables = useSelector((state: RootState) =>
@@ -14,6 +15,15 @@ export default function DataInputContainer() {
         variable.propertyType === "PARAMETER" && variable.name !== ""
     )
   );
+
+  const variableError = useSelector((state: RootState) => {
+    const err = state.textFieldInputs.EASY_UI.currentError;
+    if (err instanceof EasyUIVariableDefineError) {
+      return err;
+    }
+
+    return null;
+  });
 
   // No Variables
   if (variables.length === 0) {
@@ -78,7 +88,20 @@ export default function DataInputContainer() {
 
   return (
     <Grid2 container spacing={3} sx={{ m: 2 }}>
-      {orderedVariables.map((variable) => renderInput(variable))}
+      {orderedVariables.map((variable) => {
+        return (
+          <>
+            {renderInput(variable)}
+
+            {variableError &&
+              variableError.message.indexOf(variable.name) !== -1 && (
+                <Typography variant="body2" color="error">
+                  {variableError.message}
+                </Typography>
+              )}
+          </>
+        );
+      })}
     </Grid2>
   );
 }

@@ -9,6 +9,7 @@ import {
   parameterSkalarVariableDefinitions,
 } from "./variables";
 import { createUniqueID } from "../helper";
+import { validateEasyUI } from "./validation";
 
 export type ConvertErrorName =
   | "NO_DIMENSION"
@@ -53,10 +54,10 @@ function createObjective(modell: Modell, variables: Variable[]) {
   );
 }
 
-export default function ConvertToGMPL(modell: Modell, variables: Variable[]) {
+export function getStatements(modell: Modell, variables: Variable[]) {
   // Create all var ... and param ... and set ... definitions
   const params_sets_defines = [
-    ...parameterSetVariableDefinitions(variables), // for indices
+    ...parameterSetVariableDefinitions(variables),
     // decision variables
     ...decisionSkalarVariableDefinitions(variables),
     ...decisionArrayVariableDefinitions(variables),
@@ -65,25 +66,45 @@ export default function ConvertToGMPL(modell: Modell, variables: Variable[]) {
     ...parameterArrayVariableDefinitions(variables),
   ];
 
-  const declarations =
-    params_sets_defines.map((def) => def[0]).join(";\n") + ";\n";
-  const defines =
-    params_sets_defines
-      .map((def) => def[1])
-      .filter((x) => x?.length > 0)
-      .join(";\n") + ";\n";
+  const declarations = params_sets_defines.map((def) => def[0]);
+  const defines = params_sets_defines
+    .map((def) => def[1])
+    .filter((x) => x?.length > 0);
+  const ObjectiveStatement = createObjective(modell, variables);
+  const Constraints = CreateAllConstraint(modell.constraints);
 
-  return `
-${declarations}
+  return {
+    declarations,
+    defines,
+    ObjectiveStatement,
+    Constraints,
+  };
+}
 
+export default function ConvertToGMPL(
+  modell: Modell,
+  variables: Variable[],
+  validate = false
+) {
+  const { declarations, defines, ObjectiveStatement, Constraints } =
+    getStatements(modell, variables);
 
-${createObjective(modell, variables)}
-  
-${CreateAllConstraint(modell.constraints)}
-  
-solve;
+  if (validate) {
+    validateEasyUI(declarations, defines, ObjectiveStatement, Constraints);
+  }
 
-data;
-${defines}
-end;`;
+  const constraintStatements = Constraints.map((c) => c[1]).join("\n");
+
+  let gmpl = declarations.join(";\n") + ";\n\n";
+  gmpl += ObjectiveStatement + "\n\n";
+  gmpl += constraintStatements + "\n\n";
+  gmpl += "solve;\n\n";
+  if (defines.length > 0) {
+    gmpl += "data;\n";
+    gmpl += defines.join(";\n") + ";\n\n";
+  }
+  gmpl += "end;\n";
+
+  console.log("EASY UI GMPL", gmpl);
+  return gmpl;
 }
