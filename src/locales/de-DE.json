@@ -67,6 +67,22 @@
     "light": "Hell",
     "dark": "Dunkel"
   },
+  "footer":{
+    "footer":{
+      "about": "Information",
+      "dialog_title": "Über Next OR Solver",
+      "about_nors": "Über Next OR Solver",
+      "about_nors_text": "Der Next OR Solver bietet eine benutzerfreundliche Plattform zur Lösung von Optimierungsproblemen. Mithilfe der Solver HiGHS und GLPK lassen sich sowohl spezifische als auch allgemeine Modelle effizient lösen. Zur Eingabe der Optimierungsprobleme stehen die Formate GMPL, CPLEX LP und unsere intuitive EASY UI zur Verfügung. Die Modelle können in den verschiedenen Formaten exportiert und importiert werden. Das Projekt wurde im Rahmen des Moduls Programmierprojekt an der Hochschule Osnabrück von vier Studenten entwickelt, mit dem Ziel, eine einfache Möglichkeit zur Lösung von komplexen Optimierungsproblemen zu schaffen.",
+      "license": "Lizenz",
+      "license_text_1": "Diese Webseite verwendet Software, die unter der GNU General Public License Version 2 (GPLv2) lizenziert ist. Der Quellcode dieser Software ist verfügbar unter: ",
+      "license_text_2": "Next OR Solver",
+      "license_text_3": "Weitere Informationen zur Lizenz finden Sie auf der Webseite der Free Software Foundation: ",
+      "license_text_4": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "disclaimer": "Haftungsausschluss",
+      "disclaimer_text": "Diese Software wird unter der GNU General Public License Version 2 (GPL v2) bereitgestellt. Sie wird ohne Gewährleistung jeglicher Art, weder ausdrücklich noch stillschweigend, zur Verfügung gestellt. Die Autoren übernehmen keine Haftung für Schäden, die direkt oder indirekt aus der Nutzung dieser Software entstehen.",
+      "close": "Schließen"
+    }
+  },
   "input": {
     "function_type": {
       "name": "Type",
