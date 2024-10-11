@@ -38,19 +38,7 @@ const VirtuosoTableComponents: TableComponents<SolutionTableDataRow> = {
   )),
 };
 
-function fixedHeaderContent() {
-  const t = useTranslations();
-  return (
-    <TableRow sx={{ backgroundColor: "background.paper" }}>
-      <TableCell>{t("solution_paper.basis_table.name")}</TableCell>
-      <TableCell align="center">{t("solution_paper.basis_table.upper")}</TableCell>
-      <TableCell align="center">{t("solution_paper.basis_table.lower")}</TableCell>
-      <TableCell align="center">{t("solution_paper.basis_table.type")}</TableCell>
-      <TableCell align="center">{t("solution_paper.basis_table.primal")}</TableCell>
-      <TableCell align="center">{t("solution_paper.basis_table.dual")}</TableCell>
-    </TableRow>
-  );
-}
+
 
 function rowContent(_index: number, row: SolutionTableDataRow) {
   return (
@@ -72,7 +60,21 @@ export default function BasisTable({
 }: {
   dataRows: SolutionTableDataRow[];
 }) {
+  const t = useTranslations();
   const height = 60 + Math.min(300, dataRows.length * 55);
+
+  function fixedHeaderContent() {
+    return (
+      <TableRow sx={{ backgroundColor: "background.paper" }}>
+        <TableCell>{t("solution_paper.basis_table.name")}</TableCell>
+        <TableCell align="center">{t("solution_paper.basis_table.upper")}</TableCell>
+        <TableCell align="center">{t("solution_paper.basis_table.lower")}</TableCell>
+        <TableCell align="center">{t("solution_paper.basis_table.type")}</TableCell>
+        <TableCell align="center">{t("solution_paper.basis_table.primal")}</TableCell>
+        <TableCell align="center">{t("solution_paper.basis_table.dual")}</TableCell>
+      </TableRow>
+    );
+  }
 
   return (
     <Paper sx={{ height, w: 1 }}>
