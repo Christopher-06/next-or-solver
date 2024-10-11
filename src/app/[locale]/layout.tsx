@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <StoreProvider>
       <html lang={locale} suppressHydrationWarning>
-        <body>
+        <body >
           <NextIntlClientProvider messages={messages}>
             <InitColorSchemeScript attribute="class" />
 

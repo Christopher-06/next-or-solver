@@ -2,7 +2,10 @@
 
 import React, { FC, useState } from 'react';
 import { AppBar, Toolbar, Typography, Link, Container, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material';
+import GitHubIcon from '@mui/icons-material/GitHub';
+ 
 
+ 
 const Footer: FC = () => {
   const [open, setOpen] = useState(false);
 
@@ -16,6 +19,8 @@ const Footer: FC = () => {
     setOpen(false);
   };
 
+
+
   return (
     <>
       <AppBar position="static" component="footer" color="primary" sx={{ top: 'auto', bottom: 0 }}>
@@ -24,7 +29,7 @@ const Footer: FC = () => {
             <Typography variant="body2" color="inherit" align="center" sx={{ flexGrow: 1 }}>
               {'Next OR Solver........Copyright © '}
               <Link color="inherit" href="https://github.com/Christopher-06/next-or-solver">
-                GitHub
+                <GitHubIcon style={{ fontSize: 40 }} />
               </Link>{' '}
               <Link color="inherit" href="#" onClick={handleClickOpen}>
                 Lizenz
@@ -41,7 +46,12 @@ const Footer: FC = () => {
         <DialogContent dividers>
           <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
             {/* Hier können die Lizenzinformationen eingefügt werden. Inhalt ist scrollbar, wenn er länger wird. */}
-           Text TExt text
+            <h1>Über next-or-solver</h1>
+            Das Projekt „next-or-solver“ ist eine Next.js-basierte Webanwendung, die in TypeScript entwickelt wurde. 
+            Es enthält verschiedene Komponenten, darunter NavBar und Theme, und nutzt Material-UI für das Styling. 
+            Die Anwendung scheint sich mit der Lösung von Optimierungsproblemen zu befassen. Um das Projekt zu starten, 
+            müssen die Abhängigkeiten mit npm install installiert und der Entwicklungsserver mit npm run dev gestartet werden.
+            Weitere Informationen zur Installation, Nutzung und zur Dokumentation von Next.js finden sich im Repository.
             
             <br /><br />
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
