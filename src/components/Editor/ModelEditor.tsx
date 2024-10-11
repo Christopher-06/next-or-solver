@@ -52,7 +52,7 @@ const ModelEditor: React.FC<ModelEditor> = ({ format }) => {
     }
   };
 
-  const edit: OnChange = (value: string | undefined, ev: any) => {
+  const edit: OnChange = (value: string | undefined) => {
     setValue(value || '');
   };
 
