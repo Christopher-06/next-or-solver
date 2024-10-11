@@ -51,7 +51,12 @@ const add_data_form_cols = (problem:LINPROB, lp: any) => {
     for (const col of lp.col) {
         if (col != null) {
             // Zielfunktionskoeffizienten 
-            problem.add_col(new COL(col.name, obj_name, col.coef))
+            // Zielfunktion ist standardmäßig Minimierungs-Problem, daher Koeffizienten bei Maximierung negieren 
+            if (problem.prob_type == PROB_TYPE.max) {
+                problem.add_col(new COL(col.name, obj_name, -col.coef))
+            } else {
+                problem.add_col(new COL(col.name, obj_name, col.coef))
+            }
 
             // COLUMNS
             add_cols(problem, col.ptr, col.name);

@@ -33,8 +33,8 @@ export default function Home() {
   };
 
   return (
-    <Container maxWidth={false}>
-      <TabContext value={inputType}>
+    <Container sx={{minHeight:"100vh"}} maxWidth={false}>
+      <TabContext  value={inputType}>
         <Tabs value={inputType} onChange={handleChange}>
           <Tab label="Easy UI" value="EASY_UI" />
           <Tab label="GMPL" value="GMPL" />

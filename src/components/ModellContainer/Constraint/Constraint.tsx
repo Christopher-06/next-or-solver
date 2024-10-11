@@ -93,7 +93,7 @@ export default function Constraint({
           text={constraint.formular}
           setText={setFormularDispatched}
           error={constraintError != null}
-          label={t("modell_container.constraint.Formular_label")}
+          label={t("modell_container.constraint.formular_label")}
         />
 
         {/* For All View */}
