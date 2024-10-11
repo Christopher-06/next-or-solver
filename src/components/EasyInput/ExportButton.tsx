@@ -1,3 +1,14 @@
+/*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, version 2 of the License.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*/
+
 "use client";
 import React from "react";
 import { Button } from "@mui/material";
@@ -5,29 +16,13 @@ import { useSelector } from "react-redux";
 import { Easy_UI } from "@/lib/types/Modell";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { RootState } from "@/store/store";
-import { Variable, VarValueDataType } from "@/lib/types/Variable";
 
 export default function EASYUI_Export_Button() {
   const model = useSelector((state: RootState) => state.modell);
   const variables = useSelector((state: RootState) => state.variables);
 
   const saveFile = () => {
-    // convert all set values to array
-    const variables_array: Variable[] = [];
-    variables.forEach((variable) => {
-      let dataValue: VarValueDataType = variable.dataValue;
-      if (variable.dimensionType === "SET") {
-        if (variable.dataValue instanceof Set) {
-          dataValue = Array.from(variable.dataValue);
-        } else {
-          dataValue = [];
-        }
-      }
-
-      variables_array.push({ ...variable, dataValue: dataValue });
-    });
-
-    const easy_ui: Easy_UI = { model: model, variables: variables_array };
+    const easy_ui: Easy_UI = { model: model, variables: variables };
     const easy_ui_str = JSON.stringify(easy_ui);
 
     const blob = new Blob([easy_ui_str], { type: "text/plain" });

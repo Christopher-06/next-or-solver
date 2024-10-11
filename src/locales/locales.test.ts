@@ -1,3 +1,14 @@
+/*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, version 2 of the License.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*/
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -27,7 +38,7 @@ describe("locales", () => {
     const german_locale = require("./de-DE.json");
     const english_locale = require("./en-US.json");
 
-    // TODO: expect(Object.keys(german_locale).sort()).toEqual(Object.keys(english_locale).sort());
+    expect(Object.keys(german_locale).sort()).toEqual(Object.keys(english_locale).sort());
   });
 
   it("all locales should not have duplicate keys", () => {
@@ -54,6 +65,6 @@ describe("locales", () => {
     const german_set = new Set(german_keys);
     const english_set = new Set(english_keys);
 
-    // TODO: expect(german_set).toEqual(english_set);
+    expect(german_set).toEqual(english_set);
   });
 });

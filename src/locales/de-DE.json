@@ -46,7 +46,7 @@
       "error": "Es ist ein Fehler aufgetreten",
       "calculation_running": "Berechnung läuft seit",
       "Decision_Variables": "Entscheidungsvariablen",
-      "Constraints": "Restrikionen",
+      "Constraints": "Restriktionen",
       "Solver_Output": "Solver Ausgabe",
       "Solver_Logs": "Solver Protokoll",
       "solution": "Lösung"
@@ -72,7 +72,7 @@
       "about": "Information",
       "dialog_title": "Über Next OR Solver",
       "about_nors": "Über Next OR Solver",
-      "about_nors_text": "Der Next OR Solver bietet eine benutzerfreundliche Plattform zur Lösung von Optimierungsproblemen. Mithilfe der Solver HiGHS und GLPK lassen sich sowohl spezifische als auch allgemeine Modelle effizient lösen. Zur Eingabe der Optimierungsprobleme stehen die Formate GMPL, CPLEX LP und unsere intuitive EASY UI zur Verfügung. Die Modelle können in den verschiedenen Formaten exportiert und importiert werden. Das Projekt wurde im Rahmen des Moduls Programmierprojekt an der Hochschule Osnabrück von vier Studenten entwickelt, mit dem Ziel, eine einfache Möglichkeit zur Lösung von komplexen Optimierungsproblemen zu schaffen.",
+      "about_nors_text": "Der Next OR Solver bietet eine benutzerfreundliche Plattform zur Lösung von Optimierungsproblemen. Mithilfe der Solver HiGHS und GLPK lassen sich sowohl spezifische als auch allgemeine Modelle effizient lösen. Zur Eingabe der Optimierungsprobleme stehen die Formate GMPL, CPLEX LP und unsere intuitive EASY UI, welche an GMPL angelehnt ist, zur Verfügung. Die Modelle können in den verschiedenen Formaten exportiert und importiert werden. Das Projekt wurde im Rahmen des Moduls Programmierprojekt an der Hochschule Osnabrück von vier Studenten entwickelt, mit dem Ziel, eine einfache Möglichkeit zur Lösung von komplexen Optimierungsproblemen zu schaffen.",
       "license": "Lizenz",
       "license_text_1": "Diese Webseite verwendet Software, die unter der GNU General Public License Version 2 (GPLv2) lizenziert ist. Der Quellcode dieser Software ist verfügbar unter: ",
       "license_text_2": "Next OR Solver",

@@ -1,3 +1,14 @@
+/*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, version 2 of the License.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*/
+
 import { useTranslations } from "next-intl";
 import { TextField, Typography } from "@mui/material";
 import { useMouseContext } from "../MouseProvider/MouseProvider";
@@ -7,13 +18,15 @@ export default function NameInput({
   setName,
   label = undefined,
   viewingSuffix = "",
+  viewingPrefix = "",
   onBlur = () => {},
   errorText = undefined,
 }: {
   name: string;
   setName: (name: string) => void;
   label?: string;
-  viewingSuffix?: string;
+  viewingPrefix?: string | JSX.Element;
+  viewingSuffix?: string | JSX.Element;
   onBlur?: () => void;
   errorText?: string;
 }) {
@@ -33,6 +46,7 @@ export default function NameInput({
           errorText !== undefined && errorText !== "" ? "error" : "textPrimary"
         }
       >
+        {viewingPrefix}
         {name}
         {viewingSuffix}
       </Typography>

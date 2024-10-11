@@ -1,35 +1,23 @@
+/*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, version 2 of the License.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*/
+
 import { createUniqueID } from "@/lib/helper";
 import { ForAllType, Modell, Sense } from "@/lib/types/Modell";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: Modell = {
-  objective_formular: "sum{i in I, j in J} (f * d[i,j] / 1000) * x[i,j]",
+  objective_formular: "",
   sense: "MIN",
-  constraints: [
-    {
-      _id: createUniqueID(),
-      name: "supply",
-      formular : "sum{j in J} x[i,j] <= a[i]",
-      for_all : [
-        {
-          set_name : "I",
-          index_name : "i"
-        }
-      ]
-    },
-    {
-      _id: createUniqueID(),
-      name: "demand",
-      formular : "sum{i in I} x[i,j] >= b[j]",
-      for_all : [
-        {
-          set_name : "J",
-          index_name : "j"
-        }
-      ]
-    }
-  ],
+  constraints: []
 };
 
 export const modellSlice = createSlice({

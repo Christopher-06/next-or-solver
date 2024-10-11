@@ -1,3 +1,14 @@
+/*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, version 2 of the License.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*/
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { FileFormat } from './FileFormat';
@@ -59,7 +70,7 @@ const convertLP = (fileContent: string, currentFormat: FileFormat | null, target
                 break;
             case FileFormat.CPLEX_LP:
                 if (targetFormat === FileFormat.GMPL) {
-                    newContent = "LP_CPLEX to GMPL conversion";
+                    throw new Error("LP_CPLEX to GMPL conversion unsupported");
                 } else if (targetFormat === FileFormat.MPS) {
                     const lp = glpk.glp_create_prob();
                     let pos = 0;
@@ -77,9 +88,9 @@ const convertLP = (fileContent: string, currentFormat: FileFormat | null, target
                 break;
             case FileFormat.MPS:
                 if (targetFormat === FileFormat.GMPL) {
-                    newContent = "MPS to GMPL conversion";
+                    throw new Error("MPS to GMPL conversion unsupported");
                 } else if (targetFormat === FileFormat.CPLEX_LP) {
-                    newContent = "MPS to LP_CPLEX conversion";
+                    throw new Error("MPS to LP_CPLEX conversion unsupported");
                 } else {
                     throw new Error("Unsupported format or conversion.");
                 }
