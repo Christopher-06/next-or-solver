@@ -311,6 +311,7 @@ const TextEditor = ({
           "editor.background": "#FFFFFF",
           "editorLineNumber.foreground": "#999999",
           "editorLineNumber.activeForeground": "#3B3B3B",
+          "editor.foreground": '#3B3B3B',
         },
       });
 
@@ -330,7 +331,8 @@ const TextEditor = ({
         colors: {
           "editor.background": '#1F1F1F',
           "editorLineNumber.foreground": "#EEEEEE",
-          "editorLineNumber.activeForeground": "#999999" 
+          "editorLineNumber.activeForeground": "#999999",
+          "editor.foreground": '#CCCCCC',
         }
     });
     }
