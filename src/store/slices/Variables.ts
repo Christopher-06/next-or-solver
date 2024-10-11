@@ -1,3 +1,14 @@
+/*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, version 2 of the License.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*/
+
 import { createUniqueID } from "@/lib/helper";
 import {
   GetDefaultVariable,
@@ -28,10 +39,10 @@ const initialState: Variable[] = [
     propertyType: "PARAMETER",
     dimensionType: "SET",
     dimList: [],
-    dataValue: new Set<string>([
+    dataValue: [
       "Seattle",
       "San-Diego",
-    ]),
+    ],
   },
   {
     _id: createUniqueID(),
@@ -40,9 +51,9 @@ const initialState: Variable[] = [
     propertyType: "PARAMETER",
     dimensionType: "SET",
     dimList: [],
-    dataValue: new Set<string>(
+    dataValue: 
       ["New-York", "Chicago", "Topeka"]
-    ),
+    ,
   },
   {
     _id: createUniqueID(),

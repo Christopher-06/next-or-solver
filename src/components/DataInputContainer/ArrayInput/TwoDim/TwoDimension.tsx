@@ -1,3 +1,14 @@
+/*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, version 2 of the License.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*/
+
 /* eslint-disable react/display-name */
 import { Variable } from "@/lib/types/Variable";
 import { RootState } from "@/store/store";
@@ -47,10 +58,7 @@ export default function TwoDimension({ variable }: { variable: Variable }) {
       (v) => v.name === col_index_name && v.dimensionType === "SET"
     )
   );
-  const col_index_values =
-    col_index_var?.dataValue instanceof Set
-      ? Array.from(col_index_var?.dataValue)
-      : [];
+  const col_index_values = col_index_var?.dataValue as string[];
 
   // Get row index variable
   const row_index_name = variable.dimList[1];
@@ -59,10 +67,7 @@ export default function TwoDimension({ variable }: { variable: Variable }) {
       (v) => v.name === row_index_name && v.dimensionType === "SET"
     )
   );
-  const row_index_values =
-    row_index_var?.dataValue instanceof Set
-      ? Array.from(row_index_var?.dataValue)
-      : [];
+  const row_index_values = row_index_var?.dataValue as string[];
 
   const DATA_ARRAY_LENGTH = col_index_values.length * row_index_values.length;
 

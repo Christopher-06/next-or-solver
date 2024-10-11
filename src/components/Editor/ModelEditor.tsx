@@ -1,6 +1,18 @@
-"use client";
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ */
 
-import { Button, useTheme } from "@mui/material";
+/* eslint-disable react-hooks/exhaustive-deps */
+
+"use client";
+import { Button, Snackbar, useTheme } from "@mui/material";
 import { FileFormat } from "../Converter/FileFormat";
 import convertLP from "../Converter/Converter";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
@@ -9,13 +21,13 @@ import { RootState } from "@/store/store";
 import { setTextFieldValue } from "@/store/slices/TextFieldInputs";
 import TextEditor from "./Editor";
 import { OnChange } from "@monaco-editor/react";
+import { useState } from "react";
 
 interface ModelEditor {
   format: FileFormat;
 }
 
 const ModelEditor: React.FC<ModelEditor> = ({ format }) => {
-
   const inputType = useSelector((state: RootState) => state.inputType);
   const textFieldInputs = useSelector(
     (state: RootState) => state.textFieldInputs
@@ -25,6 +37,7 @@ const ModelEditor: React.FC<ModelEditor> = ({ format }) => {
   const setValue = (value: string) => {
     dispatch(setTextFieldValue({ value, key: inputType }));
   };
+  const [errorSnackbar, setErrorSnackbar] = useState<null | string>(null);
 
   // Bestimme das Format basierend auf der Dateiendung
   const getFileFormat = (fileName: string | null): FileFormat | null => {
@@ -42,17 +55,27 @@ const ModelEditor: React.FC<ModelEditor> = ({ format }) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const content = e.target?.result as string;
-        const currentFormat = getFileFormat(file.name);
-        const convertedContent = convertLP(content || "", currentFormat, format);
-        setValue(convertedContent || "");
+        try {
+          const content = e.target?.result as string;
+          const currentFormat = getFileFormat(file.name);
+          const convertedContent = convertLP(
+            content || "",
+            currentFormat,
+            format
+          );
+          setValue(convertedContent || "");
+        } catch (error) {
+          if (error instanceof Error) {
+            setErrorSnackbar(error.message);
+          }
+        }
       };
       reader.readAsText(file);
     }
   };
 
   const edit: OnChange = (value: string | undefined) => {
-    setValue(value || '');
+    setValue(value || "");
   };
 
   return (
@@ -73,25 +96,20 @@ const ModelEditor: React.FC<ModelEditor> = ({ format }) => {
         </Button>
       </label>
 
-      {/* Textarea mit dem konvertierten Inhalt
-      <TextareaAutosize
-        minRows={30}
-        maxRows={30}
-        style={{
-          width: "100%",
-          marginTop: "20px",
-          resize: "none",
-          fontSize: "16px",
-        }}
-        value={value || ""}
-        onChange={edit} // Aktualisiere den State bei Änderungen
-        placeholder={`${format} Model...`}
-      /> */}
       <TextEditor
         value={value}
-        edit={edit} 
-        format={format} 
-        theme={useTheme().palette.mode === 'dark' ? 'dark' : 'light'}/>
+        edit={edit}
+        format={format}
+        theme={useTheme().palette.mode === "dark" ? "dark" : "light"}
+      />
+
+      <Snackbar
+        open={errorSnackbar !== null}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        autoHideDuration={10000}
+        onClose={() => setErrorSnackbar(null)}
+        message={"[Convert Error] " + errorSnackbar}
+      />
     </div>
   );
 };

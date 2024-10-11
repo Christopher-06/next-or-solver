@@ -1,3 +1,14 @@
+/*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, version 2 of the License.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*/
+
 "use client";
 import { RootState } from "@/store/store";
 import { Grid2, Stack, Typography } from "@mui/material";
@@ -15,12 +26,14 @@ export default function SetInput({ variable_id }: { variable_id: string }) {
 
   // Enforce Set as data type
   useEffect(() => {
-    if (variable?.dataValue instanceof Set) {
-      return;
-    }
-
     if (variable) {
-      dispatch(setVariableValue({ _id: variable_id, value: new Set() }));
+      if (Array.isArray(variable.dataValue)) {
+        return;
+      }
+
+      if (variable) {
+        dispatch(setVariableValue({ _id: variable_id, value: [] }));
+      }
     }
   }, [variable, variable_id, dispatch]);
 
@@ -34,11 +47,9 @@ export default function SetInput({ variable_id }: { variable_id: string }) {
   }
 
   // Render nothing when not a good data type
-  if (!(variable.dataValue instanceof Set)) {
+  if (!Array.isArray(variable.dataValue)) {
     return <></>;
   }
-
-  const entries = Array.from(variable.dataValue);
 
   return (
     <Grid2 size={{ md: 12, lg: 12 }}>
@@ -56,7 +67,10 @@ export default function SetInput({ variable_id }: { variable_id: string }) {
           {"{"}
         </Typography>
 
-        <ItemsChipArray entries={entries} variable={variable} />
+        <ItemsChipArray
+          entries={variable.dataValue.map((k) => k as string)}
+          variable={variable}
+        />
 
         <Typography variant="h5" alignContent="center" sx={{ px: 1 }}>
           {"}"}

@@ -1,3 +1,14 @@
+/*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, version 2 of the License.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*/
+
 "use client";
 import {
   Button,
@@ -103,7 +114,7 @@ export default function VariableComponent({
 
   return (
     <MouseProvider>
-      <Grid2 container spacing={1}>
+      <Grid2 container spacing={1} sx={{ minHeight: "61px" }}>
         {/* choose variable property and dimension type */}
         <Grid2
           size={{ sm: 12, md: 3 }}
@@ -181,9 +192,6 @@ export default function VariableComponent({
         >
           {dimensionType !== "SET" && (
             <>
-              <Typography variant="h4" sx={{ mx: 2 }}>
-                &isin;{" "}
-              </Typography>
               <ValueTypeSelector
                 valueType={valueType}
                 setValueType={setValueTypeDispatched}

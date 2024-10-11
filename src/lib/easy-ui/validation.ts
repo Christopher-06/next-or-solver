@@ -1,3 +1,14 @@
+/*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, version 2 of the License.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*/
+
 import { Constraint, Modell } from "../types/Modell";
 import glpk from "glpk.js";
 import { Variable } from "../types/Variable";
@@ -127,7 +138,6 @@ export function validateEasyUI(
       // handle error
       const err_msg = error.toString();
       let line = parseInt(err_msg.split(":")[2]);
-      console.log(line);
       if (isNaN(line)) {
         throw new Error("Error in GMPL: " + err_msg);
       }
@@ -163,7 +173,7 @@ export function validateEasyUI(
 
       // defines
       defines.forEach((def) => {
-        line -= 1;
+        line -= (def.split("\n").length + 1);
         if (line <= 0) {
           throw new EasyUIVariableDefineError(err_msg, def);
         }

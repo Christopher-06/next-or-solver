@@ -1,3 +1,14 @@
+/*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, version 2 of the License.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*/
+
 "use client";
 import {
   Typography,
@@ -167,16 +178,16 @@ export default function SolutionContainer() {
     // Check if timeDelta greater than current Time (repressed Solve Button)
     if (
       result.startTime !== undefined &&
-      timeDelta > new Date().getTime() - result.startTime
+      timeDelta > performance.now() - result.startTime
     ) {
-      setTimeDelta(new Date().getTime() - result.startTime);
+      setTimeDelta(performance.now() - result.startTime);
       return;
     }
 
     // Update time delta every rerenderInterval
     const interval = setInterval(() => {
       if (result.endTime === undefined && result.startTime !== undefined) {
-        setTimeDelta(new Date().getTime() - result.startTime);
+        setTimeDelta(performance.now() - result.startTime);
       }
     }, rerenderInterval(timeDelta));
 

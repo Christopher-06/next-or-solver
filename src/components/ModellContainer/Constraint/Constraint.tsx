@@ -1,3 +1,14 @@
+/*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, version 2 of the License.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*/
+
 "use client";
 import { useTranslations } from "next-intl";
 import NameInput from "@/components/NameInput/NameInput";
@@ -64,14 +75,16 @@ export default function Constraint({
           justifyContent: "center",
           maxWidth: "100%",
           flexWrap: "wrap",
+          minHeight : "100px"
         }}
       >
         {/* Name Field */}
-        <Box sx={{ display: "flex", width: "120px" }}>
+        <Box sx={{ display: "flex", width: "190px" }}>
           <NameInput
             name={constraint.name}
             setName={setNameDispatched}
             viewingSuffix=":"
+            viewingPrefix={<>{constraintIndex == 0 ? "s.t." : <>&nbsp;&nbsp;&nbsp;&nbsp;</>} &nbsp;&nbsp;&nbsp;</>}
           />
         </Box>
 

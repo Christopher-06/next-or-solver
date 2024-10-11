@@ -1,3 +1,14 @@
+/*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, version 2 of the License.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*/
+
 "use client";
 import { Grid2, Typography } from "@mui/material";
 import SenseSelector from "./SenseSelector";
@@ -38,7 +49,7 @@ export default function Objective() {
     ];
 
   return (
-    <Grid2 container spacing={2} alignItems="center">
+    <Grid2 container spacing={2} alignItems="center" sx={{minHeight : "120px"}}>
       {/* Sense Selection */}
       <Grid2
         size={{ sm: 12, md: 2 }}
