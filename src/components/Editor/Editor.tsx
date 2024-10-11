@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useMonaco, Editor, OnChange } from '@monaco-editor/react';
 import { FileFormat } from '../Converter/FileFormat';
 import * as monacoEditor from 'monaco-editor';

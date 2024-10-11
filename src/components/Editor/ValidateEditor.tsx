@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { RootState } from "@/store/store";
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -57,9 +58,6 @@ export default function ValidateEditor({setMarker, deleteMarker, format}: {setMa
         } 
     } catch (error) {
         if (error instanceof Error) {
-            const err_msg = error.toString();
-            let line = parseInt(err_msg.split(":")[2]);
-            console.log(line);
             setMarker(error);
         } else {
             deleteMarker();
