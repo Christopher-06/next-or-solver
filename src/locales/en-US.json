@@ -5,6 +5,25 @@
       "btn_delete_all": "Clear all"
     }
   },
+  "data_input_container": {
+    "array_input": {
+      "max_2d_arrays": "Max. 2D Arrays are supported"
+    },
+    "nummeric_input": {
+      "value": "Value",
+      "type_in_value": "Please enter a value",
+      "number_requiered": "A number is required",
+      "value_greater_then_UP": "The value is greater than the upper limit",
+      "value_lower_then_LB": "The value is less than the lower limit",
+      "integer_required": "An integer is required"
+    },
+    "set_input": {
+      "no_spaces": "No spaces allowed",
+      "only_letters_numbers_underscores": "Only letters, numbers, and underscores are allowed",
+      "new_value": "New value"
+    }
+
+  },
   "easy_input": {
     "easy_input": {
       "variables": "Variables",
@@ -21,15 +40,26 @@
   "solution_paper": {
     "solution_paper": {
       "no_solution": "No optimal solution found",
-      "solution_found": "Optimal obejective function value is",
+      "solution_found": "Optimal objective function value",
+      "not_solvable": "Problem is not solvable",
+      "unrestricted": "Problem is unrestricted",
+      "primal_unlimited_or_unsolvable": "Problem is primal unlimited or not solvable",
+      "error": "An error has occurred",
+      "calculation_running": "Calculation running since",
+      "Decision_Variables": "Decision variables",
+      "Constraints": "Constraints",
+      "Solver_Output": "Solver Output",
+      "Solver_Logs": "Solver Log",
+      "solution": "Solution"
+    },
+    "basis_table": {
       "upper": "Upper Bound",
       "lower": "Lower Bound",
       "type": "Type",
       "primal": "Primal",
       "dual": "Dual",
       "name": "Name",
-      "solution": "Solution",
-      "calculation_running": "Calculation running..."
+      "solution": "Solution"
     }
   },
   "colormode_selection": {
@@ -49,6 +79,12 @@
   "modell_container": {
     "modell_container": {
       "label": "Objective Function"
+    },
+    "constraint":{
+      "formular_label": "Form",
+      "delete_btn": "Delete",
+      "index_label": "Index",
+      "choose_allQuantor": "Choose AllQuantor operations"
     }
   },
   "variable": {
@@ -66,6 +102,11 @@
     },
     "arraydimension": {
       "label": "Dimension"
+    },
+    "var_name": {
+      "helper1": "Sets should start with an uppercase letter",
+      "helper2": "Variable names must be unique",
+      "helper3": "Variable names must start with a letter and only contain letters, numbers and underscores"
     }
   }
 }

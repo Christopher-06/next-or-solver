@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import DataInputContainer from "@/components/DataInputContainer/DataInputContainer";
 import ExportButton from "./ExportButton";
 import ImportButton from "./ImportButton";
+import ValidateSometimes from "./ValidateSometimes";
 
 export default function EasyInput() {
   const t = useTranslations();
@@ -38,6 +39,9 @@ export default function EasyInput() {
 
         <DataInputContainer />
       </Paper>
+
+      {/* Validation Service */}
+      <ValidateSometimes />
     </>
   );
 }

@@ -31,6 +31,8 @@ import {
   removeVariable,
 } from "@/store/slices/Variables";
 import VariableName from "./VarName";
+import { EasyUIVariableDeclarationError } from "@/lib/easy-ui/validation";
+import { ConvertError } from "@/lib/easy-ui/converter";
 
 export default function VariableComponent({
   var_idx,
@@ -46,6 +48,25 @@ export default function VariableComponent({
   const variable: Variable = useSelector(
     (state: RootState) => state.variables[var_idx]
   );
+  const variableError = useSelector((state: RootState) => {
+    // GMPL Validate Errors
+    const errGMPL = state.textFieldInputs.EASY_UI.currentError;
+    if (errGMPL instanceof EasyUIVariableDeclarationError) {
+      if (errGMPL.message.indexOf(variable.name) !== -1) {
+        return errGMPL;
+      }
+    }
+
+    // Convert Erros
+    const errConvert = state.textFieldInputs.EASY_UI.currentError;
+    if (errConvert instanceof ConvertError) {
+      if (errConvert.variable.name === variable.name) {
+        return errConvert;
+      }
+    }
+
+    return null;
+  });
 
   const {
     name,
@@ -133,9 +154,7 @@ export default function VariableComponent({
           {dimensionType === "SKALAR" || dimensionType === "SET" ? (
             <VariableName var_idx={var_idx} />
           ) : (
-            <ArrayDimensionsInput
-              var_idx={var_idx}
-            />
+            <ArrayDimensionsInput var_idx={var_idx} />
           )}
         </Grid2>
 
@@ -193,6 +212,15 @@ export default function VariableComponent({
                 <ClearIcon fontSize="small" />
               </Button>
             </Tooltip>
+          )}
+        </Grid2>
+
+        {/* Error Viewer */}
+        <Grid2 size={{ xs: 12, sm: 12, md: 12 }}>
+          {variableError && (
+            <Typography variant="body2" color="error">
+              {variableError.message}
+            </Typography>
           )}
         </Grid2>
       </Grid2>

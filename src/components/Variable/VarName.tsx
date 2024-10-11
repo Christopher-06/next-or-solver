@@ -2,9 +2,11 @@ import { setName } from "@/store/slices/Variables";
 import { RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import NameInput from "../NameInput/NameInput";
+import { useTranslations } from "next-intl";
 
 export default function VariableName({ var_idx }: { var_idx: number }) {
   const dispatch = useDispatch();
+  const t = useTranslations();
   const all_var_names = useSelector((state: RootState) =>
     state.variables.map((v) => v.name)
   );
@@ -18,18 +20,18 @@ export default function VariableName({ var_idx }: { var_idx: number }) {
   if (var_dimType === "SET" && var_name !== "") {
     // Enforce first letter to be uppercase
     if (var_name[0] !== var_name[0].toUpperCase()) {
-      helperText = "Sets should start with an uppercase letter";
+      helperText = t("variable.var_name.helper1");
     }
   }
   if (all_var_names.filter((n) => n === var_name).length > 1) {
-    helperText = "Variable names must be unique";
+    helperText = t("variable.var_name.helper2");
   }
 
   // only accept numbers and underscores in the middle
   const inputRegex = /^[a-zA-Z][a-zA-Z0-9_]*$/;
   if (!inputRegex.test(var_name)) {
     helperText =
-      "Variable names must start with a letter and only contain letters, numbers and underscores";
+    t("variable.var_name.helper3");
   }
 
   return (
