@@ -19,11 +19,12 @@ import solveGLPK from "@/lib/glpk_solver";
 import ExportButton from "../Editor/ExportButton";
 import { FileFormat } from "../Converter/FileFormat";
 import { InputType } from "@/store/slices/InputType";
-import { setTextFieldValue } from "@/store/slices/TextFieldInputs";
+import { setInputError, setTextFieldValue } from "@/store/slices/TextFieldInputs";
 import { clearAllModell } from "@/store/slices/Modell";
 import ConvertToGMPL from "@/lib/easy-ui/converter";
 import { Modell } from "@/lib/types/Modell";
 import { Variable } from "@/lib/types/Variable";
+import { EasyUIConstraintError } from "@/lib/easy-ui/validation";
 
 const FILEFORMAT_MAP: { [key in InputType]: FileFormat } = {
   GMPL: FileFormat.GMPL,
@@ -41,7 +42,7 @@ export default function ActionsBar() {
   );
   let textFieldValue = textFieldInputs[inputType].textFieldValue;
   let currentFormat = FILEFORMAT_MAP[inputType];
-  const [selectedSolver, setSelectedSolver] = React.useState("HIGHS");
+  const [selectedSolver, setSelectedSolver] = React.useState("GLPK");
   const easyUiModell: Modell = useSelector((state: RootState) => state.modell);
   const easyUiVariables: Variable[] = useSelector(
     (state: RootState) => state.variables
@@ -70,7 +71,7 @@ export default function ActionsBar() {
       // inject conversion from EASY UI to GMPL
       if (inputType == "EASY_UI") {
         console.log("Converting EASY UI to GMPL");
-        textFieldValue = ConvertToGMPL(easyUiModell, easyUiVariables);
+        textFieldValue = ConvertToGMPL(easyUiModell, easyUiVariables, true);
         currentFormat = FileFormat.GMPL;
       }
 
@@ -100,10 +101,15 @@ export default function ActionsBar() {
           error: new Error("Solver nicht gefunden"),
         });
       }
-    } catch (errorUnknown) {
-      console.log("Error while solving", errorUnknown);
-      const error: Error = errorUnknown as Error;
-      dispatch(setSolutionError({ key: inputType, error }));
+
+      // clear input error
+      dispatch(setInputError({ key: inputType, error: null }));
+    } catch (error) {
+      console.log("Error while solving", error);
+      if (error instanceof Error) {
+        dispatch(setSolutionError({ key: inputType, error }));
+        dispatch(setInputError({ key: inputType, error }));
+      }
     }
   };
 

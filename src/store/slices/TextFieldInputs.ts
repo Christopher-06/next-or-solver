@@ -17,21 +17,26 @@ End`;
 type TextFieldInputState = {
   [key in InputType]: {
     textFieldValue: string;
+    currentError: Error | null;
   };
 };
 
 const initialState: TextFieldInputState = {
   GMPL: {
     textFieldValue: "",
+    currentError: null,
   },
   CPLEX_LP: {
     textFieldValue: DEFAULT_CPLEX_LP_PROBLEM,
+    currentError: null,
   },
   MPS: {
     textFieldValue: "",
+    currentError: null,
   },
   EASY_UI: {
     textFieldValue: "",
+    currentError: null,
   },
 };
 
@@ -49,10 +54,18 @@ export const TextFieldInputSlice = createSlice({
         console.error("EASY UI is not supported for Text Field Input Slice");
       }
     },
+    setInputError: (
+      state,
+      action: PayloadAction<{ error: Error | null; key: InputType | null }>
+    ) => {
+      if (action.payload.key !== null) {
+        state[action.payload.key].currentError = action.payload.error;
+      }
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setTextFieldValue } = TextFieldInputSlice.actions;
+export const { setTextFieldValue, setInputError } = TextFieldInputSlice.actions;
 
 export default TextFieldInputSlice.reducer;

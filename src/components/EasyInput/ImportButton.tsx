@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Button } from "@mui/material";
+import { Button, Snackbar } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { Easy_UI } from "@/lib/types/Modell";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
@@ -9,34 +9,42 @@ import { setWholeVariableList } from "@/store/slices/Variables";
 
 export default function EASYUI_Export_Button() {
   const dispatch = useDispatch();
+  const [errorSnackbar, setErrorSnackbar] = React.useState<string | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const content = e.target?.result as string;
-        const easy_ui: Easy_UI = JSON.parse(content);
+        try {
+          const content = e.target?.result as string;
+          const easy_ui: Easy_UI = JSON.parse(content);
 
-        // transform string[] to Set<string> by set variable types
-        easy_ui.variables.forEach((variable) => {
-          if (
-            variable.dimensionType === "SET" &&
-            Array.isArray(variable.dataValue)
-          ) {
-            if (variable.dataValue.length === 0) {
-              variable.dataValue = new Set();
-            } else {
-              variable.dataValue = new Set(
-                variable.dataValue.filter((v) => typeof v === "string")
-              );
+          // transform string[] to Set<string> by set variable types
+          easy_ui.variables.forEach((variable) => {
+            if (
+              variable.dimensionType === "SET" &&
+              Array.isArray(variable.dataValue)
+            ) {
+              if (variable.dataValue.length === 0) {
+                variable.dataValue = new Set();
+              } else {
+                variable.dataValue = new Set(
+                  variable.dataValue.filter((v) => typeof v === "string")
+                );
+              }
             }
-          }
-        });
+          });
 
-        dispatch(setWholeModellState(easy_ui.model));
-        dispatch(setWholeVariableList(easy_ui.variables));
+          dispatch(setWholeModellState(easy_ui.model));
+          dispatch(setWholeVariableList(easy_ui.variables));
+        } catch (e) {
+          console.error("Error parsing EasyUI Import", e);
+          setErrorSnackbar("Could not parse EasyUI Import File");
+        }
       };
+
       reader.readAsText(file);
     }
   };
@@ -60,6 +68,14 @@ export default function EASYUI_Export_Button() {
           Import
         </Button>
       </label>
+
+      <Snackbar
+        open={errorSnackbar !== null}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        autoHideDuration={10000}
+        onClose={() => setErrorSnackbar(null)}
+        message={"[Import Error] " + errorSnackbar}
+      />
     </>
   );
 }
