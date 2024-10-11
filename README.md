@@ -9,17 +9,18 @@ Das Projekt wurde im Rahmen des Moduls **Programmierprojekt** an der **Hochschul
 
 ### Features
 
-- **Modellunterstützung**: Import von Modellen im **CPLEX LP**-Format oder **GMPL** (GNU Math Programming Language).
-- **Geführte grafische Modellierung**: Benutzerfreundliche Oberfläche zur Erstellung von Modellen, die sowohl Anfänger als auch fortgeschrittene Nutzer anspricht.
-- **Solver-Integration**: Auswahl zwischen den Solvern **GLPK** (GNU Linear Programming Kit) und **HiGHS**.
-- **Client-seitige Berechnung**: Alle Berechnungen werden auf der Client-Seite durchgeführt, sodass keine Daten an einen Server gesendet werden.
-- **Exportmöglichkeiten**: Modelle und Ergebnisse können exportiert und zur weiteren Verwendung heruntergeladen werden.
-- **Multilingual**: Die Webseite erkennt automatisch die Nutzersprache und zeigt dementsprechend Deutsche bzw standardmäßig Englische Texte an
+- **Modellunterstützung**: Import von Modellen im **CPLEX LP**-Format oder **GMPL** (GNU Math Programming Language).  
+- **Geführte grafische Modellierung**: Benutzerfreundliche, an GLPM angelehnte Oberfläche zur Erstellung von Modellen, die sowohl Anfänger als auch fortgeschrittene Nutzer anspricht.  
+- **Solver-Integration**: Auswahl zwischen den Solvern **GLPK** (GNU Linear Programming Kit) und **HiGHS**.  
+- **Client-seitige Berechnung**: Alle Berechnungen werden auf der Client-Seite durchgeführt, sodass keine Daten an einen Server gesendet werden.  
+- **Exportmöglichkeiten**: Modelle und Ergebnisse können exportiert und zur weiteren Verwendung heruntergeladen werden.  
+- **Multilingual**: Die Webseite erkennt automatisch die Nutzersprache und zeigt dementsprechend Deutsche bzw standardmäßig Englische Texte an.  
 
 
 ### Verwendung von GLPK und HiGHS
--**MPS-Konvertierung**: **GLPK** wird genutzt, um Probleme im **MPS-Format** zu konvertieren. Dies ermöglicht die Bearbeitung komplexer mathematischer Optimierungsmodelle.
--**HiGHS Solver**: Für Modelle, die im **GMPL**-Format eingegeben werden, wird **GLPK** verwendet, um das Modell zu übersetzen und an HiGHS zur Lösung weiterzugeben. So wird eine effiziente Lösung linearer Probleme ermöglicht.
+- **MPS-Konvertierung**: **GLPK** wird genutzt, um Probleme zu parsen, um sie im Anschluss ins **MPS-Format** zu konvertieren. Dies ermöglicht die Bearbeitung komplexer mathematischer Optimierungsmodelle. Außerdem wird er verwendet, um Probleme im **GMPL-Format** 
+ins **LP-Format** zu übersetzen, da HiGHS nur das **LP-Format** akzeptiert.  
+- **HiGHS Solver**: Für Modelle, die im **GMPL**-Format eingegeben werden, wird **GLPK** verwendet, um das Modell zu übersetzen und an HiGHS zur Lösung weiterzugeben. So wird eine effiziente Lösung linearer Probleme ermöglicht.  
 
 ### Nutzung
 
@@ -35,9 +36,6 @@ Das Projekt wurde im Rahmen des Moduls **Programmierprojekt** an der **Hochschul
 4. **Ergebnisse exportieren**: 
    - Die Resultate können als Dateien exportiert werden, um sie für spätere Analysen zu verwenden.
 
-### Entwickelt von
-
-Das Projekt wurde von einem Team von vier Studenten der **Hochschule Osnabrück** im Rahmen des Moduls **Programmierprojekt** entwickelt.
 
 ### Lokale Entwicklungsumgebung einrichten
 
@@ -77,4 +75,15 @@ Um die Anwendung lokal auszuführen, benötigen Sie **Node.js 20.17 LTS**. Ansch
    npm run test
    ```
 
+7. **Linter Ausführung**:
+   Um den Linter zu starten kann man folgenden Befehl ausführen:
+   ```bash
+   npm run lint
+   ```
+
 Nun können Sie die Anwendung lokal nutzen und weiterentwickeln. Alle Änderungen am Code werden automatisch übernommen und der Server wird bei jeder Änderung neu geladen.
+
+#### Verwendete Frameworks
+
+# Next.js 
+
