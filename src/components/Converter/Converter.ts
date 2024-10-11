@@ -72,7 +72,7 @@ const convertLP = (
         break;
       case FileFormat.CPLEX_LP:
         if (targetFormat === FileFormat.GMPL) {
-          newContent = "LP_CPLEX to GMPL conversion";
+          throw new Error("CPLEX LP to GMPL conversion not supported.");
         } else if (targetFormat === FileFormat.MPS) {
           const lp = glpk.glp_create_prob();
           let pos = 0;
@@ -95,9 +95,9 @@ const convertLP = (
         break;
       case FileFormat.MPS:
         if (targetFormat === FileFormat.GMPL) {
-          newContent = "MPS to GMPL conversion";
+          throw new Error("MPS to GMPL conversion not supported.");
         } else if (targetFormat === FileFormat.CPLEX_LP) {
-          newContent = "MPS to LP_CPLEX conversion";
+          throw new Error("MPS to CPLEX LP conversion not supported.");
         } else {
           throw new Error("Unsupported format or conversion.");
         }
