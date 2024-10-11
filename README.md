@@ -16,6 +16,11 @@ Das Projekt wurde im Rahmen des Moduls **Programmierprojekt** an der **Hochschul
 - **Exportmöglichkeiten**: Modelle und Ergebnisse können exportiert und zur weiteren Verwendung heruntergeladen werden.
 - **Multilingual**: Die Webseite erkennt automatisch die Nutzersprache und zeigt dementsprechend Deutsche bzw standardmäßig Englische Texte an
 
+
+### Verwendung von GLPK und HiGHS
+-**MPS-Konvertierung**: **GLPK** wird genutzt, um Probleme im **MPS-Format** zu konvertieren. Dies ermöglicht die Bearbeitung komplexer mathematischer Optimierungsmodelle.
+-**HiGHS Solver**: Für Modelle, die im **GMPL**-Format eingegeben werden, wird **GLPK** verwendet, um das Modell zu übersetzen und an HiGHS zur Lösung weiterzugeben. So wird eine effiziente Lösung linearer Probleme ermöglicht.
+
 ### Nutzung
 
 1. **Modell laden oder erstellen**: 
