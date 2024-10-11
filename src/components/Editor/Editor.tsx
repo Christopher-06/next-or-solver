@@ -232,8 +232,8 @@ const TextEditor = ({ value, edit, format, theme}: {
         ],
         colors: {
           "editor.background": '#1F1F1F',
-          "editorLineNumber.foreground": "#394555",
-          "editorLineNumber.activeForeground": "#CCCCCC" 
+          "editorLineNumber.foreground": "#EEEEEE",
+          "editorLineNumber.activeForeground": "#999999" 
         }
     });
     }
