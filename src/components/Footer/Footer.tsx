@@ -1,18 +1,7 @@
-/*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*/
-
 'use client';  // Hinzufügen, um die Komponente als Client Component zu deklarieren
 
 import React, { FC, useState } from 'react';
-import { AppBar, Toolbar, Typography, Link, Container, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Box } from '@mui/material';
+import { AppBar, Toolbar, Typography, Link, Container, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { useTranslations } from "next-intl";
 
@@ -38,17 +27,17 @@ const Footer: FC = () => {
       <AppBar position="static" component="footer" color="primary" sx={{ top: 'auto', bottom: 0 }}>
         <Container maxWidth="md"   >
           <Toolbar sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Typography variant="body2" color="inherit" align="center" sx={{ flexGrow: 1, justifyContent: 'center' }}>
-              <Box sx={{ justifyContent:'center'}} >
-                {'Github'}
-                <Link color="inherit" href="https://github.com/Christopher-06/next-or-solver">
-                  <GitHubIcon style={{ fontSize: 40 , marginRight: '200px', justifyContent:'center' }} />
-                  
-                </Link>
-                <Link color="inherit" href="#" onClick={handleClickOpen} style={{ fontSize: 15 , marginLeft: '200px' }}>
-                {t("footer.footer.about_nors")}
-                </Link>
-              </Box>
+            <Typography variant="body2" color="inherit" align="center" sx={{ flexGrow: 1 }}>
+              {'Github'}
+              <Link color="inherit" href="https://github.com/Christopher-06/next-or-solver">
+                <GitHubIcon style={{ fontSize: 40 , marginRight: '200px' }} />
+                
+              </Link>
+              <Link color="inherit" href="#" onClick={handleClickOpen} style={{ fontSize: 15 , marginLeft: '200px' }}>
+              {t("footer.footer.about_nors")}
+              </Link>
+              {/*"    "+new Date().getFullYear()*/}
+              
             </Typography>
           </Toolbar>
         </Container>

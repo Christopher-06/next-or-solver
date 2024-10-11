@@ -83,7 +83,22 @@ Um die Anwendung lokal auszuführen, benötigen Sie **Node.js 20.17 LTS**. Ansch
 
 Nun können Sie die Anwendung lokal nutzen und weiterentwickeln. Alle Änderungen am Code werden automatisch übernommen und der Server wird bei jeder Änderung neu geladen.
 
-#### Verwendete Frameworks
+### Verwendete Frameworks
 
-# Next.js 
-
+#### Next.js 
+Wie nutzen Next.js aus folgenden Gründen:  
+1. Server-Side Rendering (SSR)  
+- Schnelle Initiale Ladezeiten: SSR führt zu schnelleren initialen Seitenladezeiten, da der Server den gesamten Inhalt liefert und der Browser nicht auf das clientseitige Rendering warten muss.  
+2. Optimierte Performance  
+- Automatisches Code-Splitting: Next.js teilt deinen Code automatisch auf, um nur das Nötigste zu laden. Dies reduziert die Ladezeiten und verbessert die allgemeine Performance der Website.  
+- Optimierung von Bildern: Mit der integrierten Next.js Image-Komponente kannst du Bilder optimieren (z.B. Lazy Loading, automatische Größenanpassung), was die Ladegeschwindigkeit weiter verbessert.  
+3. Internationalisierung (i18n)  
+- Eingebaute Unterstützung für mehrsprachige Webseiten: Next.js bietet native Unterstützung für Internationalisierung, was die Implementierung mehrsprachiger Webseiten vereinfacht.  
+4. TypeScript-Unterstützung  
+- Nahtlose Integration mit TypeScript: Next.js bietet First-Class TypeScript-Unterstützung. Das bedeutet, dass du ohne große Konfiguration TypeScript in deinem Projekt verwenden kannst.  
+5. Vercel-Hosting und Deployment  
+- Nahtloses Deployment mit Vercel: Vercel, das Unternehmen hinter Next.js, bietet eine exzellente Hosting-Plattform für Next.js-Anwendungen. Du kannst dein Projekt mit einem Klick automatisch deployen, und es unterstützt Funktionen wie Edge-Caching und statische Bereitstellungen, um die Performance deiner Website weiter zu optimieren.  
+6. React-Basierte Entwicklung  
+- Kompatibilität mit React-Ökosystem: Da Next.js auf React aufbaut, kannst du alle bekannten React-Bibliotheken und -Tools verwenden. Wenn du bereits Erfahrung mit React hast, ist der Einstieg in Next.js sehr einfach.  
+7. Integrierte CSS- und Sass-Unterstützung  
+Next.js unterstützt CSS- und Sass-Module von Haus aus, ohne dass zusätzliche Konfigurationen erforderlich sind. Du kannst auch styled-components oder andere CSS-in-JS-Lösungen nahtlos integrieren.  
