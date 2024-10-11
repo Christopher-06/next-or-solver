@@ -1,10 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useMonaco, Editor, OnChange } from '@monaco-editor/react';
 import { FileFormat } from '../Converter/FileFormat';
 import * as monacoEditor from 'monaco-editor';
+import { useDispatch, useSelector } from 'react-redux';
+import { setInputError } from '@/store/slices/TextFieldInputs';
+import { RootState } from '@/store/store';
+import ValidateEditor from './ValidateEditor';
+import { Alert } from '@mui/material';
 
 const TextEditor = ({ value, edit, format, theme}: {
     value: string;
@@ -14,6 +19,9 @@ const TextEditor = ({ value, edit, format, theme}: {
 }) => {
   const monaco = useMonaco();
   const editorRef = useRef(null) as React.MutableRefObject<null | any>;
+  const dispatch = useDispatch();
+  const inputType = useSelector((state: RootState) => state.inputType);
+  const glpkError = useSelector((state: RootState) => {const solutionError = state.textFieldInputs[inputType].currentError; return solutionError});
 
   useEffect(() => {
     if (monaco) {
@@ -231,15 +239,14 @@ const TextEditor = ({ value, edit, format, theme}: {
     }
   }, [monaco]);
 
-  const handleValidate = async () => {
-    console.log("validate");
-  }
-
-  const markLineAsError = (lineNumber: number, message: string) => {
+  const markLineAsError = (error: Error) => {
     if (editorRef.current && monaco) {
         const model = editorRef.current.getModel();
-
-        const markers = [
+        const parts = error.toString().split(":");
+        const lineNumber = parseInt(parts[2]);
+        const message = (parts.length > 2) ? parts.slice(3).join(':').trim() : "";
+        if (!isNaN(lineNumber)) {
+          const markers = [
             {
                 severity: monaco.MarkerSeverity.Error,
                 startLineNumber: lineNumber,
@@ -249,14 +256,34 @@ const TextEditor = ({ value, edit, format, theme}: {
                 message: message,
             },
         ];
-
         monaco.editor.setModelMarkers(model, 'owner', markers);
+        }
+      }
+      dispatch(
+        setInputError({
+          key: inputType,
+          error: new Error(error.toString())
+        })
+      )
+    };
+
+    const deleteMarker = () => {
+      if (editorRef.current && monaco) {
+        const model = editorRef.current.getModel();
+        monaco.editor.setModelMarkers(model, 'owner', []);
+      }
     }
-  };
 
   if (monaco == null) return null;
   return (
     <div style={{ height: '70vh', outline: '1px solid #888888', marginTop: '20px', marginLeft: '1px', marginRight: '1px', marginBottom: '1px'}}>
+      {glpkError&&
+          <Alert
+            severity='error'
+          >
+            {glpkError.toString()}
+          </Alert>
+        }
       <Editor
         height="70vh"
         defaultLanguage={format}
@@ -271,9 +298,12 @@ const TextEditor = ({ value, edit, format, theme}: {
         }}
         value={value}
         onChange={edit}
-        onValidate={handleValidate}
         onMount={(editor) => { editorRef.current = editor; }}
       />
+      <ValidateEditor
+        setMarker={markLineAsError}
+        deleteMarker={deleteMarker}
+        format={format} />
     </div>
   );
 };

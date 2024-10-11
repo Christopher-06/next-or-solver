@@ -69,7 +69,7 @@ export class EasyUIUnlocatedError extends Error {
   }
 }
 
-function readGMPLintoGLPK(gmpl_problem: string) {
+export function readGMPLintoGLPK(gmpl_problem: string) {
   const lp = glpk.glp_create_prob();
   const tran = glpk.glp_mpl_alloc_wksp();
 
