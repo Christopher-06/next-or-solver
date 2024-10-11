@@ -22,17 +22,17 @@ ROWS
  L	c2
  E	c3
 COLUMNS
- 	x1	obj	1
+ 	x1	obj	-1
  	x1	c1	-1
  	x1	c2	1
- 	x2	obj	2
+ 	x2	obj	-2
  	x2	c1	1
  	x2	c2	-4
  	x2	c3	1
- 	x3	obj	4
+ 	x3	obj	-4
  	x3	c1	1
  	x3	c2	1
- 	x4	obj	1
+ 	x4	obj	-1
  	x4	c1	10
  	x4	c3	-0.5
 RHS
@@ -60,10 +60,10 @@ ROWS
  L	c1
  L	c2
 COLUMNS
- 	x1	obj	0.6
+ 	x1	obj	-0.6
  	x1	c2	3
  	x1	c1	1
- 	x2	obj	0.5
+ 	x2	obj	-0.5
  	x2	c2	1
  	x2	c1	2
 RHS
