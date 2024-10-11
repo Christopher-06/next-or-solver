@@ -6,7 +6,7 @@ const CplexLpInput: React.FC = () => {
 
     return (
         <div>
-            <ModelEditor targetFormat={FileFormat.CPLEX_LP} />
+            <ModelEditor format={FileFormat.CPLEX_LP} />
         </div>
     );
 };

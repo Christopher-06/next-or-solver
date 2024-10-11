@@ -7,29 +7,35 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { setObjectiveFormular, setObjectiveSense } from "@/store/slices/Modell";
 import { EasyUIObjectiveError } from "@/lib/easy-ui/validation";
+import { useTranslations } from "next-intl";
 
 export default function Objective() {
-
   const dispatch = useDispatch();
-  const modell_objective = useSelector((state : RootState) => state.modell.objective_formular);
-  const modell_sense = useSelector((state : RootState) => state.modell.sense);
+  const modell_objective = useSelector(
+    (state: RootState) => state.modell.objective_formular
+  );
+  const modell_sense = useSelector((state: RootState) => state.modell.sense);
+  const t = useTranslations();
 
-  const objectionError = useSelector((state : RootState) => {
+  const objectionError = useSelector((state: RootState) => {
     const solutionError = state.textFieldInputs.EASY_UI.currentError;
-    if(solutionError instanceof EasyUIObjectiveError) {
+    if (solutionError instanceof EasyUIObjectiveError) {
       return solutionError;
     }
     return null;
   });
 
   const setSense = (sense: Sense) => {
-    dispatch(setObjectiveSense(sense));  
-  }
+    dispatch(setObjectiveSense(sense));
+  };
   const setObjective = (objective: string) => {
     dispatch(setObjectiveFormular(objective));
-  }
-  
-const objectionErrorMessage = objectionError?.message.split(":")[objectionError?.message.split(":").length-1];
+  };
+
+  const objectionErrorMessage =
+    objectionError?.message.split(":")[
+      objectionError?.message.split(":").length - 1
+    ];
 
   return (
     <Grid2 container spacing={2} alignItems="center">
@@ -54,15 +60,17 @@ const objectionErrorMessage = objectionError?.message.split(":")[objectionError?
           text={modell_objective}
           setText={setObjective}
           centered={false}
-          label="Objective"
           error={objectionError !== null}
+          label={t("modell_container.modell_container.label")}
         />
       </Grid2>
 
       {/* Error Message */}
       {objectionError && (
         <Grid2 size={{ sm: 12 }}>
-          <Typography color="error" variant="caption">{objectionErrorMessage}</Typography>
+          <Typography color="error" variant="caption">
+            {objectionErrorMessage}
+          </Typography>
         </Grid2>
       )}
     </Grid2>

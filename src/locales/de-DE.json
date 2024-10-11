@@ -5,6 +5,24 @@
       "btn_delete_all": "Alles Löschen"
     }
   },
+  "data_input_container": {
+    "array_input": {
+      "max_2d_arrays": "Max. 2D Arrays werden unterstützt"
+    },
+    "nummeric_input":{
+      "value": "Wert",
+      "type_in_value": "Bitte geben Sie einen Wert ein",
+      "number_requiered": "Es wird ein Zahl erwartet",
+      "value_greater_then_UP": "Der Wert ist größer als die obere Grenze",
+      "value_lower_then_LB": "Der Wert ist kleiner als die untere Grenze",
+      "integer_required": "Es wird eine ganze Zahl erwartet"
+    },
+    "set_input": {
+      "no_spaces": "Keine Leerschritte erlaubt",
+      "only_letters_numbers_underscores": "Nur Buchstaben, Nummern und Leerschritte erlaubt",
+      "new_value": "Neuer Wert"
+    }
+  },
   "easy_input": {
     "easy_input": {
       "variables": "Variablen",
@@ -21,15 +39,26 @@
   "solution_paper": {
     "solution_paper": {
       "no_solution": "Keine optimale Lösung gefunden",
-      "solution_found": "Optimaler Zielfunktionswert ist",
+      "solution_found": "Optimaler Zielfunktionswert",
+      "not_solvable": "Problem ist nicht lösbar",
+      "unrestricted": "Problem ist unbeschränkt",
+      "primal_unlimited_or_unsolvable": "Problem ist primal unbeschränkt oder nicht lösbar",
+      "error": "Es ist ein Fehler aufgetreten",
+      "calculation_running": "Berechnung läuft seit",
+      "Decision_Variables": "Entscheidungsvariablen",
+      "Constraints": "Restrikionen",
+      "Solver_Output": "Solver Ausgabe",
+      "Solver_Logs": "Solver Protokoll",
+      "solution": "Lösung"
+    },  
+    "basis_table": {
       "upper": "Obere Grenze",
       "lower": "Untere Grenze",
       "type": "Typ",
       "primal": "Primal",
       "dual": "Dual",
       "name": "Name",
-      "solution": "Lösung",
-      "calculation_running": "Berechnung läuft..."
+      "solution": "Lösung"
     }
   },
   "colormode_selection": {
@@ -49,6 +78,12 @@
   "modell_container": {
     "modell_container": {
       "label": "Zielfunktion"
+    },
+    "constraint":{
+      "Formular_label": "Formular",
+      "Delete_btn": "Löschen",
+      "index_label": "Index",
+      "choose_allQuantor": "Wähle AllQuantor Operationen"
     }
   },
   "variable": {
@@ -66,6 +101,12 @@
     },
     "arraydimension": {
       "label": "Dimension"
+    },
+    "var_name": {
+      "helper1": "Mengen sollten mit einem Großbuchstaben beginnen",
+      "helper2": "Variablennamen müssen eindeutig sein",
+      "helper3": "Variablennamen müssen mit einem Buchstaben beginnen und dürfen nur Buchstaben, Zahlen und Unterstriche enthalten"
+
     }
   }
 }

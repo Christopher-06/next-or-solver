@@ -5,6 +5,7 @@ import ForAllDialog from "./ForAllDialog";
 import { useMouseContext } from "@/components/MouseProvider/MouseProvider";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { useTranslations } from "next-intl";
 
 export default function ForAllView({
   forAll,
@@ -13,6 +14,7 @@ export default function ForAllView({
   forAll: ForAllType[];
   SetForAll: (forAll: ForAllType[]) => void;
 }) {
+  const t = useTranslations();
   const { isInside, setIsInside, setKeepInside } = useMouseContext();
   const [openModal, setOpenModal] = React.useState(false);
 
@@ -45,7 +47,7 @@ export default function ForAllView({
 
   return (
     <>
-      <Tooltip title={helperText !== "" ? helperText : "Wähle AllQuantor Operationen"}>
+      <Tooltip title={helperText !== "" ? helperText : t("modell_container.constraint.choose_allQuantor")}>
         <Button
           sx={{
             color: "text.primary",
