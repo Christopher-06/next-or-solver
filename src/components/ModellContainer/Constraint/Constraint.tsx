@@ -1,7 +1,7 @@
 "use client";
 import { useTranslations } from "next-intl";
 import NameInput from "@/components/NameInput/NameInput";
-import { Box, Button, Tooltip } from "@mui/material";
+import { Box, Button, Tooltip, Typography } from "@mui/material";
 import FormularTextField from "../FormularTextField";
 import MouseProvider from "@/components/MouseProvider/MouseProvider";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -14,6 +14,7 @@ import {
   setConstraintName,
 } from "@/store/slices/Modell";
 import ForAllView from "./ForAllView";
+import { EasyUIConstraintError } from "@/lib/easy-ui/validation";
 
 export default function Constraint({
   constraintIndex,
@@ -26,6 +27,15 @@ export default function Constraint({
   const constraint = useSelector(
     (state: RootState) => state.modell.constraints[constraintIndex]
   );
+  const constraintError = useSelector((state: RootState) => {
+    const solutionError = state.textFieldInputs.EASY_UI.currentError;
+    if (solutionError instanceof EasyUIConstraintError) {
+      if (solutionError.constraint._id == constraint._id) {
+        return solutionError;
+      }
+    }
+    return null;
+  });
   const dispatch = useDispatch();
 
   const setNameDispatched = (name: string) => {
@@ -39,6 +49,11 @@ export default function Constraint({
   const removeVariableDispatched = () => {
     dispatch(removeConstraint(constraintIndex));
   };
+
+  const constraintErrorMessage =
+    constraintError?.message.split(":")[
+      constraintError?.message.split(":").length - 1
+    ];
 
   return (
     <MouseProvider>
@@ -64,6 +79,7 @@ export default function Constraint({
         <FormularTextField
           text={constraint.formular}
           setText={setFormularDispatched}
+          error={constraintError != null}
           label={t("modell_container.constraint.Formular_label")}
         />
 
@@ -79,7 +95,10 @@ export default function Constraint({
 
         {/* Show delete button */}
         {showDeleteButton && (
-          <Tooltip title={t("modell_container.constraint.delete_btn")} sx={{ minWidth: "50px", mr: "auto" }}>
+          <Tooltip
+            title={t("modell_container.constraint.delete_btn")}
+            sx={{ minWidth: "50px", mr: "auto" }}
+          >
             <Button
               variant="contained"
               color="error"
@@ -91,6 +110,12 @@ export default function Constraint({
           </Tooltip>
         )}
       </Box>
+
+      {constraintError && (
+        <Typography color="error" variant="caption" textAlign="center">
+          {constraintErrorMessage}
+        </Typography>
+      )}
     </MouseProvider>
   );
 }

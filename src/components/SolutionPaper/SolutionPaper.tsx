@@ -186,7 +186,6 @@ export default function SolutionContainer() {
   }, [result, timeDelta]);
 
   if (result.error !== undefined) {
-    console.log("Solution Paper encountered an error", result.error);
     return renderinPaper(
       <Alert severity="error">
         <AlertTitle>{t("solution_paper.solution_paper.error")}</AlertTitle>

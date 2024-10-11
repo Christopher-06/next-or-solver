@@ -1,3 +1,4 @@
+import { Pair } from "../helper";
 import { Constraint } from "../types/Modell";
 
 
@@ -16,9 +17,8 @@ function AddConstraint(constraint : Constraint) {
     return gmpl;
 }
 
-export default function CreateAllConstraint(constraints : Constraint[]) {
-
+export default function CreateAllConstraint(constraints : Constraint[]) : Pair<Constraint, string>[] {
   return constraints
   .filter((constraint) => constraint.formular.trim().length > 0)
-  .map((constraint) => "s.t. " + AddConstraint(constraint) + ";").join("\n");
+  .map((constraint) => [constraint, "s.t. " + AddConstraint(constraint) + ";"]);
 }
