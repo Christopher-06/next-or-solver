@@ -54,7 +54,7 @@ const TextEditor = ({ value, edit, format, theme}: {
           root: [
             [/\b(var|maximize|minimize|solve|display|end|param|set|dimen|setof|binary|sum|in|printf|data|and|else|mod|union|by|if|not|within|cross|in|or|diff|inter|symdiff|div|less|then)\b|s\.t\./, 'keyword'],
             [/\+|\-|\=|\<=|\>=|\<|\>|\:|\,|\:\=|\=\=|(?<!\/)\*(?!\*)|(?<!\*)\/(?!\*)/, 'operator'],
-            [/(?<!in.*)(\w+)\s*:(?!\=)/, 'name'],
+            [/((?<!printf.*)|(?<!param.*))(\w+)\s*(?:{[^}]*})?\s*:(?!\=)/, 'name'],
             [/[a-zA-Z_]\w*/, 'identifier'],
             [/\d+(\.\d+)?/, 'number'],
             [/[\(\)\[\]\{\}\;]/, 'brackets'],
@@ -201,19 +201,19 @@ const TextEditor = ({ value, edit, format, theme}: {
           base: 'vs',
           inherit: true,
           rules: [
-              { token: 'keyword', foreground: '0000FF', fontStyle: 'bold' },
-              { token: 'operator', foreground: '888888' },
-              { token: 'name', foreground: 'FF00FF' },
-              { token: 'identifier', foreground: '111111' },
-              { token: 'number', foreground: '00FF00' },
-              { token: 'brackets', foreground: '111111' },
-              { token: 'string', foreground: 'EB8E41' },
-              { token: 'comment', foreground: '6AC270' },
+            { token: 'keyword', foreground: '#AF00DB', fontStyle: 'bold' },
+            { token: 'operator', foreground: '#3B3B3B' },
+            { token: 'name', foreground: '#795E26' },
+            { token: 'identifier', foreground: '#001080' },
+            { token: 'number', foreground: '#098658' },
+            { token: 'brackets', foreground: '#3B3B3B' },
+            { token: 'string', foreground: '#A31515' },
+            { token: 'comment', foreground: '#008000' },
           ],
           colors: {
-            // "editor.background": '#394555',
-            // "editorLineNumber.foreground": "#999999",
-            // "editorLineNumber.activeForeground": "#FFFFFF" 
+            "editor.background": '#FFFFFF',
+            "editorLineNumber.foreground": "#999999",
+            "editorLineNumber.activeForeground": "#3B3B3B" 
           }
       });
       
@@ -221,19 +221,19 @@ const TextEditor = ({ value, edit, format, theme}: {
         base: 'vs',
         inherit: true,
         rules: [
-            { token: 'keyword', foreground: '0C27C6', fontStyle: 'bold' },
-            { token: 'operator', foreground: 'DDDDDD' },
-            { token: 'name', foreground: 'FF00FF' },
-            { token: 'identifier', foreground: 'DDDDDD' },
-            { token: 'number', foreground: '00FF00' },
-            { token: 'brackets', foreground: '111111' },
-            { token: 'string', foreground: 'EB8E41' },
-            { token: 'comment', foreground: '3D9543' },
+          { token: 'keyword', foreground: '#C586C0', fontStyle: 'bold' },
+          { token: 'operator', foreground: '#CCCCCC' },
+          { token: 'name', foreground: '#DCDCAA' },
+          { token: 'identifier', foreground: '#9CDCFE' },
+          { token: 'number', foreground: '#B5CEA8' },
+          { token: 'brackets', foreground: '#CCCCCC' },
+          { token: 'string', foreground: '#CE9178' },
+          { token: 'comment', foreground: '#6A9955' },
         ],
         colors: {
-          "editor.background": '#394555',
-          "editorLineNumber.foreground": "#999999",
-          "editorLineNumber.activeForeground": "#FFFFFF" 
+          "editor.background": '#1F1F1F',
+          "editorLineNumber.foreground": "#394555",
+          "editorLineNumber.activeForeground": "#CCCCCC" 
         }
     });
     }
@@ -262,7 +262,7 @@ const TextEditor = ({ value, edit, format, theme}: {
       dispatch(
         setInputError({
           key: inputType,
-          error: new Error(error.toString())
+          error: new Error(error.toString().replace("Error: ", ""))
         })
       )
     };
