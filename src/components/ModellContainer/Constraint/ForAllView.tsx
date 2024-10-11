@@ -1,11 +1,12 @@
 import { ForAllType } from "@/lib/types/Modell";
-import { Button, Stack, Tooltip, Typography } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 import React from "react";
 import ForAllDialog from "./ForAllDialog";
 import { useMouseContext } from "@/components/MouseProvider/MouseProvider";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useTranslations } from "next-intl";
+import LatexTypography from "../latex_typography";
 
 export default function ForAllView({
   forAll,
@@ -28,7 +29,6 @@ export default function ForAllView({
 
   // validation
   const helperText = "";
-  
 
   const handleDialogOpen = () => {
     setOpenModal(true);
@@ -45,33 +45,45 @@ export default function ForAllView({
     return <></>;
   }
 
+  let forAllLatexString = forAll
+    .map((item) => {
+      return item.index_name + " \\in " + item.set_name;
+    })
+    .join(" \\\\ ");
+  forAllLatexString = forAllLatexString.length > 0 ? forAllLatexString : "...";
+
+  const showError =
+    forAll.filter(
+      (item) => !all_users_set_variable_names.includes(item.set_name)
+    ).length !== 0;
+
   return (
     <>
-      <Tooltip title={helperText !== "" ? helperText : t("modell_container.constraint.choose_allQuantor")}>
+      <Tooltip
+        title={
+          helperText !== ""
+            ? helperText
+            : t("modell_container.constraint.choose_allQuantor")
+        }
+      >
         <Button
           sx={{
             color: "text.primary",
             borderColor: "text.primary",
             mx: 1,
+            p: 0,
           }}
           onClick={handleDialogOpen}
           variant={isInside ? "outlined" : "text"}
         >
-          {/* Draw AllQuantor Operator */}
-          <Typography variant="h4">&forall;</Typography>
-
-          {/* List all variables and their corresponding sets */}
-          <Stack direction="column" spacing={0} sx={{ ml: 1 }}>
-            {forAll.map((row, index) => (
-              <Typography variant="h6" key={index} textAlign="center" textTransform="none"
-                color={
-                  all_users_set_variable_names.indexOf(row.set_name) === -1
-                  ? "error" : "text.primary"}
-              >
-                {row.index_name} ∈ {row.set_name}
-              </Typography>
-            ))}
-          </Stack>
+          <LatexTypography
+            formular={
+              "\\ \\forall \\begin{align*} " +
+              forAllLatexString +
+              " \\end{align*}"
+            }
+            error={showError}
+          />
         </Button>
       </Tooltip>
 

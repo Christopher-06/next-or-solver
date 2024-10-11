@@ -1,5 +1,27 @@
-import { TextField, Typography } from "@mui/material";
+import { TextField } from "@mui/material";
 import { useMouseContext } from "../MouseProvider/MouseProvider";
+import LatexTypography from "./latex_typography";
+
+const textToLatex = (text: string) => {
+  text = "\\\\" + text;
+
+  text = text.replace("(", " ( ").replace(")", " ) ");
+
+  text = text.replace("sum", `\\sum\\limits_`);
+
+  while (text.includes(" in ")) {
+    text = text.replace(" in ", " \\in ");
+  }
+
+  text = text.replace("<=", " \\leq ").replace(">=", " \\geq ");
+  text = text.replace("*", " \\cdot ").replace("/", " \\div ");
+
+  while (text.includes("  ")) {
+    text = text.replace("  ", " ");
+  }
+
+  return text;
+};
 
 export default function FormularTextField({
   text,
@@ -18,16 +40,7 @@ export default function FormularTextField({
 
   if (!isInside && text !== "") {
     return (
-      <Typography
-        variant="h5"
-        textAlign="center"
-        justifyContent="center"
-        display="flex"
-        alignItems="center"
-        sx={{ flex: 1, minWidth: "150px", color: error ? "red" : "textPrimary" }}
-      >
-        {text.replace("<=", " ≤ ").replace(">=", " ≥ ")}
-      </Typography>
+      <LatexTypography formular={textToLatex(text)} error={error} />
     );
   }
 

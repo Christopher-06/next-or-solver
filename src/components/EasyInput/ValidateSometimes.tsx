@@ -34,7 +34,7 @@ export default function ValidateSometimes() {
     if (modell.objective_formular !== "" && variables.length > 0) {
       const timeout = setTimeout(() => {
         validateEasyUI();
-      }, 500);
+      }, 3000);
 
       return () => clearTimeout(timeout);
     }

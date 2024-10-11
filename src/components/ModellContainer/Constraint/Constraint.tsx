@@ -64,6 +64,7 @@ export default function Constraint({
           justifyContent: "center",
           maxWidth: "100%",
           flexWrap: "wrap",
+          minHeight : "100px"
         }}
       >
         {/* Name Field */}
