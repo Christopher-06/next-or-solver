@@ -30,7 +30,8 @@ export function decisionArrayVariableDefinitions(variables: Variable[]) {
     .filter(
       (variable) =>
         variable.propertyType === "DECISION" &&
-        variable.dimensionType === "ARRAY"
+        variable.dimensionType === "ARRAY" &&
+        variable.name !== ""
     )
     .map((variable) => {
       const dimList = variable.dimList
@@ -57,7 +58,8 @@ export function parameterSkalarVariableDefinitions(variables: Variable[]) {
     .filter(
       (variable) =>
         variable.propertyType === "PARAMETER" &&
-        variable.dimensionType === "SKALAR"
+        variable.dimensionType === "SKALAR" &&
+        variable.name !== ""
     )
     .map((variable) => {
       const prefix = `param\t${variable.name}`;
@@ -70,7 +72,8 @@ export function parameterSetVariableDefinitions(variables: Variable[]) {
     .filter(
       (variable) =>
         variable.propertyType === "PARAMETER" &&
-        variable.dimensionType === "SET"
+        variable.dimensionType === "SET" &&
+        variable.name !== ""
     )
     .map((variable) => {
       const prefix = `set\t${variable.name}`;
@@ -86,7 +89,8 @@ export function parameterArrayVariableDefinitions(variables: Variable[]) {
     .filter(
       (variable) =>
         variable.propertyType === "PARAMETER" &&
-        variable.dimensionType === "ARRAY"
+        variable.dimensionType === "ARRAY" &&
+        variable.name !== ""
     )
     .map((variable) => {
       const prefix = `param\t${variable.name}`;

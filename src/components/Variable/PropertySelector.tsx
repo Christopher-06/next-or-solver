@@ -3,6 +3,7 @@ import { useMouseContext } from "../MouseProvider/MouseProvider";
 import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
 import SurroundSoundIcon from "@mui/icons-material/SurroundSound";
 import { VarPropertyType } from "@/lib/types/Variable";
+import { useTranslations } from "next-intl";
 
 const ALL_PROPERTY_TYPES: VarPropertyType[] = ["DECISION", "PARAMETER"];
 
@@ -16,6 +17,11 @@ const PROPERTY_COLOR: { [key in VarPropertyType]: "success" | "secondary" } = {
   PARAMETER: "secondary",
 };
 
+const PROPERTY_LABEL_KEYS : { [key in VarPropertyType]: string} = {
+  DECISION: "variable.type.system",
+  PARAMETER: "variable.type.decision"
+};
+
 export default function PropertySelector({
   propertyType,
   setPropertyType,
@@ -25,6 +31,7 @@ export default function PropertySelector({
   setPropertyType: (dataType: VarPropertyType) => void;
   keepTextFields?: boolean;
 }) {
+  const t = useTranslations();
   const { isInside, setIsInside } = useMouseContext();
 
   const onChange = (e: { target: { value: string } }) => {
@@ -36,7 +43,7 @@ export default function PropertySelector({
       <Chip
         sx={{ flex: 1, mx: 1 }}
         variant="filled"
-        label={propertyType}
+        label={t(PROPERTY_LABEL_KEYS[propertyType])}
         color={PROPERTY_COLOR[propertyType]}
         icon={PROPERTY_ICON[propertyType]}
       />
@@ -63,10 +70,11 @@ export default function PropertySelector({
       >
         {ALL_PROPERTY_TYPES.map((propertyType, index) => (
           <MenuItem key={index} value={index}>
-            {propertyType}
+            {t(PROPERTY_LABEL_KEYS[propertyType])}
           </MenuItem>
         ))}
       </Select>
     </>
   );
 }
+

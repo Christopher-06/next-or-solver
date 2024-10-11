@@ -32,7 +32,7 @@ export default function ModellContainer() {
         </MouseProvider>
 
         {/* Constraints */}
-        <Stack spacing={1} sx={{ pt: 2 }} direction="column">
+        <Stack spacing={1} direction="column">
           {modell.constraints.map((_, index) => (
             <Constraint
               key={index}

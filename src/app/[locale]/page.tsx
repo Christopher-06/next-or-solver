@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Container, Tab, Tabs, Tooltip } from "@mui/material";
+import { Container, Tab, Tabs } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 import GmplInput from "@/components/Inputs/GmplInput";
 import CplexLpInput from "@/components/Inputs/CplexLpInput";

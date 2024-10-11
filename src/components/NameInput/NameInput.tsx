@@ -7,13 +7,15 @@ export default function NameInput({
   setName,
   label = undefined,
   viewingSuffix = "",
+  viewingPrefix = "",
   onBlur = () => {},
   errorText = undefined,
 }: {
   name: string;
   setName: (name: string) => void;
   label?: string;
-  viewingSuffix?: string;
+  viewingPrefix?: string | JSX.Element;
+  viewingSuffix?: string | JSX.Element;
   onBlur?: () => void;
   errorText?: string;
 }) {
@@ -33,6 +35,7 @@ export default function NameInput({
           errorText !== undefined && errorText !== "" ? "error" : "textPrimary"
         }
       >
+        {viewingPrefix}
         {name}
         {viewingSuffix}
       </Typography>

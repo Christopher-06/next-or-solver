@@ -103,7 +103,7 @@ export default function VariableComponent({
 
   return (
     <MouseProvider>
-      <Grid2 container spacing={1}>
+      <Grid2 container spacing={1} sx={{ minHeight: "61px" }}>
         {/* choose variable property and dimension type */}
         <Grid2
           size={{ sm: 12, md: 3 }}
@@ -181,9 +181,6 @@ export default function VariableComponent({
         >
           {dimensionType !== "SET" && (
             <>
-              <Typography variant="h4" sx={{ mx: 2 }}>
-                &isin;{" "}
-              </Typography>
               <ValueTypeSelector
                 valueType={valueType}
                 setValueType={setValueTypeDispatched}

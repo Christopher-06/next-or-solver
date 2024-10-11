@@ -5,19 +5,20 @@ import LatexTypography from "./latex_typography";
 const textToLatex = (text: string) => {
   text = "\\\\" + text;
 
-  text = text.replace("(", " ( ").replace(")", " ) ");
+  text = text.replaceAll("(", " ( \\    \\ ").replaceAll(")", " \\    \\ ) ");
+  text = text.replaceAll("}", " } \\ \\ ").replaceAll("{", " { ");
 
-  text = text.replace("sum", `\\sum\\limits_`);
+  text = text.replaceAll("sum", `\\sum\\limits_`);
+  text = text.replaceAll(" in ", " \\  \\ \\in \\  \\ ");
+  text = text.replaceAll(",", " ,\\  \\ ");
 
-  while (text.includes(" in ")) {
-    text = text.replace(" in ", " \\in ");
-  }
-
-  text = text.replace("<=", " \\leq ").replace(">=", " \\geq ");
-  text = text.replace("*", " \\cdot ").replace("/", " \\div ");
+  text = text
+    .replaceAll("<=", " \\  \\ \\leq \\  \\ ")
+    .replace(">=", " \\  \\ \\geq \\  \\ ");
+  text = text.replaceAll("*", " \\cdot ").replaceAll("/", " \\div ");
 
   while (text.includes("  ")) {
-    text = text.replace("  ", " ");
+    text = text.replaceAll("  ", " ");
   }
 
   return text;
@@ -39,9 +40,7 @@ export default function FormularTextField({
   const { isInside } = useMouseContext();
 
   if (!isInside && text !== "") {
-    return (
-      <LatexTypography formular={textToLatex(text)} error={error} />
-    );
+    return <LatexTypography formular={textToLatex(text)} error={error} />;
   }
 
   return (
