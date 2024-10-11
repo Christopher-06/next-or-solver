@@ -328,11 +328,11 @@ const TextEditor = ({
           { token: "comment", foreground: "#6A9955" },
         ],
         colors: {
-          "editor.background": "#1F1F1F",
-          "editorLineNumber.foreground": "#394555",
-          "editorLineNumber.activeForeground": "#CCCCCC",
-        },
-      });
+          "editor.background": '#1F1F1F',
+          "editorLineNumber.foreground": "#EEEEEE",
+          "editorLineNumber.activeForeground": "#999999" 
+        }
+    });
     }
   }, [monaco]);
 
