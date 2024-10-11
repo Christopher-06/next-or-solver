@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 import NameInput from "@/components/NameInput/NameInput";
 import { Box, Button, Tooltip } from "@mui/material";
 import FormularTextField from "../FormularTextField";
@@ -21,6 +22,7 @@ export default function Constraint({
   constraintIndex: number;
   showDeleteButton?: boolean;
 }) {
+  const t = useTranslations();
   const constraint = useSelector(
     (state: RootState) => state.modell.constraints[constraintIndex]
   );
@@ -62,7 +64,7 @@ export default function Constraint({
         <FormularTextField
           text={constraint.formular}
           setText={setFormularDispatched}
-          label="Formular"
+          label={t("modell_container.constraint.Formular_label")}
         />
 
         {/* For All View */}
@@ -77,7 +79,7 @@ export default function Constraint({
 
         {/* Show delete button */}
         {showDeleteButton && (
-          <Tooltip title="Löschen" sx={{ minWidth: "50px", mr: "auto" }}>
+          <Tooltip title={t("modell_container.constraint.delete_btn")} sx={{ minWidth: "50px", mr: "auto" }}>
             <Button
               variant="contained"
               color="error"
