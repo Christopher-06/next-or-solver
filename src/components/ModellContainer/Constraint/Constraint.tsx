@@ -75,14 +75,16 @@ export default function Constraint({
           justifyContent: "center",
           maxWidth: "100%",
           flexWrap: "wrap",
+          minHeight : "100px"
         }}
       >
         {/* Name Field */}
-        <Box sx={{ display: "flex", width: "120px" }}>
+        <Box sx={{ display: "flex", width: "190px" }}>
           <NameInput
             name={constraint.name}
             setName={setNameDispatched}
             viewingSuffix=":"
+            viewingPrefix={<>{constraintIndex == 0 ? "s.t." : <>&nbsp;&nbsp;&nbsp;&nbsp;</>} &nbsp;&nbsp;&nbsp;</>}
           />
         </Box>
 

@@ -138,7 +138,6 @@ export function validateEasyUI(
       // handle error
       const err_msg = error.toString();
       let line = parseInt(err_msg.split(":")[2]);
-      console.log(line);
       if (isNaN(line)) {
         throw new Error("Error in GMPL: " + err_msg);
       }
@@ -174,7 +173,7 @@ export function validateEasyUI(
 
       // defines
       defines.forEach((def) => {
-        line -= 1;
+        line -= (def.split("\n").length + 1);
         if (line <= 0) {
           throw new EasyUIVariableDefineError(err_msg, def);
         }

@@ -49,7 +49,7 @@ export default function Objective() {
     ];
 
   return (
-    <Grid2 container spacing={2} alignItems="center">
+    <Grid2 container spacing={2} alignItems="center" sx={{minHeight : "120px"}}>
       {/* Sense Selection */}
       <Grid2
         size={{ sm: 12, md: 2 }}

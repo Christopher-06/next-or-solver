@@ -53,11 +53,11 @@ export default function DataInputContainer() {
   const renderInput = (variable: Variable) => {
     switch (variable.dimensionType) {
       case "SKALAR":
-        return <SkalarInput variable_id={variable._id} />;
+        return <SkalarInput key={variable._id} variable_id={variable._id} />;
       case "SET":
-        return <SetInput variable_id={variable._id} />;
+        return <SetInput key={variable._id} variable_id={variable._id} />;
       case "ARRAY":
-        return <ArrayInput variable_id={variable._id} />;
+        return <ArrayInput key={variable._id} variable_id={variable._id} />;
       default:
         console.error(`DimensionType ${variable.dimensionType} not supported`);
         return <></>;
@@ -97,6 +97,10 @@ export default function DataInputContainer() {
     }
   }
 
+  const variableErrorString = variableError?.message
+    ? variableError.message.split(":")[3].trim()
+    : "";
+
   return (
     <Grid2 container spacing={3} sx={{ m: 2 }}>
       {orderedVariables.map((variable) => {
@@ -104,12 +108,11 @@ export default function DataInputContainer() {
           <>
             {renderInput(variable)}
 
-            {variableError &&
-              variableError.message.indexOf(variable.name) !== -1 && (
-                <Typography variant="body2" color="error">
-                  {variableError.message}
-                </Typography>
-              )}
+            {variableErrorString.startsWith(variable.name) && (
+              <Typography variant="body2" color="error">
+                {variableErrorString}
+              </Typography>
+            )}
           </>
         );
       })}

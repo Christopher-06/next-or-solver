@@ -35,43 +35,56 @@ export default function NumericInput({
   upperBound?: undefined | number;
   valueType: VarValueType;
   showHelperText?: boolean;
-  showHelperTextInTooltip ?: boolean;
+  showHelperTextInTooltip?: boolean;
 }) {
   const t = useTranslations();
   const [text, setText] = useState("");
   const [helperText, setHelperText] = useState("");
 
-  if (label == undefined){
-    label = t("data_input_container.nummeric_input.value")
+  if (label == undefined) {
+    label = t("data_input_container.nummeric_input.value");
   }
 
   useEffect(() => {
-    setText(value !== undefined ? value.toString() : "");
-    if (value === undefined) {
-      setHelperText(value ? "" : t("data_input_container.nummeric_input.type_in_value"));
+    if (!Number.isNaN(value)) {
+      setText(value !== undefined ? value.toString() : "");
     }
-  }, [value,t]);
+
+    if (value === undefined) {
+      setHelperText(
+        value ? "" : t("data_input_container.nummeric_input.type_in_value")
+      );
+    }
+  }, [value, t]);
 
   const validateInput = () => {
     const newValue = parseFloat(text);
 
     if (isNaN(newValue)) {
       setHelperText(t("data_input_container.nummeric_input.number_requiered"));
+      setValue(NaN);
       return;
     }
 
     if (upperBound && newValue > upperBound) {
-      setHelperText(t("data_input_container.nummeric_input.value_greater_then_UP"));
+      setHelperText(
+        t("data_input_container.nummeric_input.value_greater_then_UP")
+      );
+      setValue(NaN);
       return;
     }
 
     if (lowerBound && newValue < lowerBound) {
-      setHelperText(t("data_input_container.nummeric_input.value_lower_then_LB"));
+      setHelperText(
+        t("data_input_container.nummeric_input.value_lower_then_LB")
+      );
+      setValue(NaN);
       return;
     }
 
     if (valueType === "INTEGER" && !Number.isInteger(newValue)) {
       setHelperText(t("data_input_container.nummeric_input.integer_required"));
+      setValue(NaN);
       return;
     }
 
@@ -82,24 +95,26 @@ export default function NumericInput({
 
   return (
     <>
-    <Tooltip title={showHelperTextInTooltip && helperText}>
-      <TextField
-        label={label}
-        variant="outlined"
-        error={helperText !== ""}
-        helperText={showHelperText ? helperText : ""}
-        size="small"
-        slotProps={{
-          htmlInput: {
-            style: (centered
-              ? { textAlign: "center" }
-              : {}) as React.CSSProperties,
-          },
-        }}
-        value={text}
-        onChange={(e: { target: { value: string } }) => setText(e.target.value)}
-        onBlur={validateInput}
-      />
+      <Tooltip title={showHelperTextInTooltip && helperText}>
+        <TextField
+          label={label}
+          variant="outlined"
+          error={helperText !== ""}
+          helperText={showHelperText ? helperText : ""}
+          size="small"
+          slotProps={{
+            htmlInput: {
+              style: (centered
+                ? { textAlign: "center" }
+                : {}) as React.CSSProperties,
+            },
+          }}
+          value={text !== "Nan" ? text : ""}
+          onChange={(e: { target: { value: string } }) =>
+            setText(e.target.value)
+          }
+          onBlur={validateInput}
+        />
       </Tooltip>
     </>
   );

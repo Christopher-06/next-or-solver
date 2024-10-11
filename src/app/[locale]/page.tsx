@@ -39,7 +39,7 @@ export default function Home() {
           <Tab label="Easy UI" value="EASY_UI" />
           <Tab label="GMPL" value="GMPL" />
           <Tab label="CPLEX LP" value="CPLEX_LP" />
-          <Tab label="MPS" value="MPS" />
+          {/* <Tab label="MPS" value="MPS" disabled /> */}
         </Tabs>
         <TabPanel value="EASY_UI">
           <EasyInput />

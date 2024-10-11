@@ -166,7 +166,7 @@ const TRANSPORT_PROBLEM: {
       propertyType: "PARAMETER",
       dimensionType: "SET",
       dimList: [],
-      dataValue: new Set<string>(["Seattle", "San-Diego"]),
+      dataValue: ["Seattle", "San-Diego"],
     },
     {
       _id: createUniqueID(),
@@ -175,7 +175,7 @@ const TRANSPORT_PROBLEM: {
       propertyType: "PARAMETER",
       dimensionType: "SET",
       dimList: [],
-      dataValue: new Set<string>(["New-York", "Chicago", "Topeka"]),
+      dataValue: ["New-York", "Chicago", "Topeka"],
     },
     {
       _id: createUniqueID(),

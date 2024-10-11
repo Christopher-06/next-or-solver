@@ -13,6 +13,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { InputType } from "./InputType";
 import { HighsSolution } from "highs";
+import { Pair } from "@/lib/helper";
 
 const initialState: {
   [key in InputType]: {
@@ -20,8 +21,8 @@ const initialState: {
     startTime: EpochTimeStamp | undefined;
     endTime: EpochTimeStamp | undefined;
     error: Error | undefined;
-    solverLog: string[];
-    solverOutput : string[]; 
+    solverLog: Pair<string, number>[];
+    solverOutput: Pair<string, number>[];
   };
 } = {
   EASY_UI: {
@@ -72,7 +73,7 @@ export const solveResultsSlice = createSlice({
       state[action.payload.key] = {
         solution: action.payload.solution,
         startTime: state[action.payload.key].startTime,
-        endTime: Date.now(),
+        endTime: performance.now(),
         error: undefined,
         solverLog: state[action.payload.key].solverLog,
         solverOutput: state[action.payload.key].solverOutput,
@@ -81,7 +82,7 @@ export const solveResultsSlice = createSlice({
     startSolving: (state, action: PayloadAction<InputType>) => {
       state[action.payload] = {
         solution: undefined,
-        startTime: Date.now(),
+        startTime: performance.now(),
         endTime: undefined,
         error: undefined,
         solverLog: [],
@@ -105,7 +106,7 @@ export const solveResultsSlice = createSlice({
       state[action.payload.key] = {
         solution: undefined,
         startTime: state[action.payload.key].startTime,
-        endTime: Date.now(),
+        endTime: performance.now(),
         error: action.payload.error,
         solverLog: state[action.payload.key].solverLog,
         solverOutput: state[action.payload.key].solverOutput,
@@ -115,13 +116,19 @@ export const solveResultsSlice = createSlice({
       state,
       action: PayloadAction<{ key: InputType; log: string }>
     ) => {
-      state[action.payload.key].solverLog.push(action.payload.log);
+      state[action.payload.key].solverLog.push([
+        action.payload.log,
+        Date.now(),
+      ]);
     },
     appendSolutionSolverOutput: (
       state,
       action: PayloadAction<{ key: InputType; out: string }>
     ) => {
-      state[action.payload.key].solverOutput.push(action.payload.out);
+      state[action.payload.key].solverOutput.push([
+        action.payload.out,
+        Date.now(),
+      ]);
     },
   },
 });

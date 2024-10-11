@@ -16,6 +16,7 @@ import type { RootState } from "@/store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { addVariable } from "@/store/slices/Variables";
 import { useEffect } from "react";
+import MathJax from "react-mathjax2";
 
 export default function VariableContainer() {
   const variables = useSelector((state: RootState) => state.variables);
@@ -29,14 +30,16 @@ export default function VariableContainer() {
   }, [variables, dispatch]);
 
   return (
-    <Stack spacing={5} direction="column">
-      {variables.map((_, index) => (
-        <VariableComponent
-          key={index}
-          var_idx={index}
-          showDeleteButton={index !== variables.length - 1}
-        />
-      ))}
-    </Stack>
+    <MathJax.Context input="tex">
+      <Stack spacing={5} direction="column">
+        {variables.map((_, index) => (
+          <VariableComponent
+            key={index}
+            var_idx={index}
+            showDeleteButton={index !== variables.length - 1}
+          />
+        ))}
+      </Stack>
+    </MathJax.Context>
   );
 }

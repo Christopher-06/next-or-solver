@@ -58,10 +58,7 @@ export default function TwoDimension({ variable }: { variable: Variable }) {
       (v) => v.name === col_index_name && v.dimensionType === "SET"
     )
   );
-  const col_index_values =
-    col_index_var?.dataValue instanceof Set
-      ? Array.from(col_index_var?.dataValue)
-      : [];
+  const col_index_values = col_index_var?.dataValue as string[];
 
   // Get row index variable
   const row_index_name = variable.dimList[1];
@@ -70,10 +67,7 @@ export default function TwoDimension({ variable }: { variable: Variable }) {
       (v) => v.name === row_index_name && v.dimensionType === "SET"
     )
   );
-  const row_index_values =
-    row_index_var?.dataValue instanceof Set
-      ? Array.from(row_index_var?.dataValue)
-      : [];
+  const row_index_values = row_index_var?.dataValue as string[];
 
   const DATA_ARRAY_LENGTH = col_index_values.length * row_index_values.length;
 

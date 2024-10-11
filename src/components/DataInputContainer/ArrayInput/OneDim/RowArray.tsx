@@ -32,10 +32,7 @@ export default function ItemsChipArray({ variable }: { variable: Variable }) {
       (v) => v.name === col_index_name && v.dimensionType === "SET"
     )
   );
-  const col_index_values =
-    col_index_var?.dataValue instanceof Set
-      ? Array.from(col_index_var?.dataValue)
-      : [];
+  const col_index_values = col_index_var?.dataValue as string[];
 
   const valueSetter = (index: number) => {
     return (value: number | undefined) => {

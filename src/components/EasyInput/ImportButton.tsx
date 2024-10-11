@@ -32,22 +32,6 @@ export default function EASYUI_Export_Button() {
           const content = e.target?.result as string;
           const easy_ui: Easy_UI = JSON.parse(content);
 
-          // transform string[] to Set<string> by set variable types
-          easy_ui.variables.forEach((variable) => {
-            if (
-              variable.dimensionType === "SET" &&
-              Array.isArray(variable.dataValue)
-            ) {
-              if (variable.dataValue.length === 0) {
-                variable.dataValue = new Set();
-              } else {
-                variable.dataValue = new Set(
-                  variable.dataValue.filter((v) => typeof v === "string")
-                );
-              }
-            }
-          });
-
           dispatch(setWholeModellState(easy_ui.model));
           dispatch(setWholeVariableList(easy_ui.variables));
         } catch (e) {

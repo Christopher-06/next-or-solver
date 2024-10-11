@@ -39,10 +39,10 @@ const initialState: Variable[] = [
     propertyType: "PARAMETER",
     dimensionType: "SET",
     dimList: [],
-    dataValue: new Set<string>([
+    dataValue: [
       "Seattle",
       "San-Diego",
-    ]),
+    ],
   },
   {
     _id: createUniqueID(),
@@ -51,9 +51,9 @@ const initialState: Variable[] = [
     propertyType: "PARAMETER",
     dimensionType: "SET",
     dimList: [],
-    dataValue: new Set<string>(
+    dataValue: 
       ["New-York", "Chicago", "Topeka"]
-    ),
+    ,
   },
   {
     _id: createUniqueID(),

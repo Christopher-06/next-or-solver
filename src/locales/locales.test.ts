@@ -38,7 +38,7 @@ describe("locales", () => {
     const german_locale = require("./de-DE.json");
     const english_locale = require("./en-US.json");
 
-    // TODO: expect(Object.keys(german_locale).sort()).toEqual(Object.keys(english_locale).sort());
+    expect(Object.keys(german_locale).sort()).toEqual(Object.keys(english_locale).sort());
   });
 
   it("all locales should not have duplicate keys", () => {
@@ -65,6 +65,6 @@ describe("locales", () => {
     const german_set = new Set(german_keys);
     const english_set = new Set(english_keys);
 
-    // TODO: expect(german_set).toEqual(english_set);
+    expect(german_set).toEqual(english_set);
   });
 });
