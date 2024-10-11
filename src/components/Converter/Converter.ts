@@ -17,7 +17,6 @@ import lp_to_mps from './LP_To_MPS';
 import correct_var_name from "./VarName";
 
 const convertLP = (fileContent: string, currentFormat: FileFormat | null, targetFormat: FileFormat) => {
-    console.log("convert");
 
     if (!fileContent) return;
 

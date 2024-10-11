@@ -9,17 +9,18 @@ Das Projekt wurde im Rahmen des Moduls **Programmierprojekt** an der **Hochschul
 
 ### Features
 
-- **Modellunterstützung**: Import von Modellen im **CPLEX LP**-Format oder **GMPL** (GNU Math Programming Language).
-- **Geführte grafische Modellierung**: Benutzerfreundliche Oberfläche zur Erstellung von Modellen, die sowohl Anfänger als auch fortgeschrittene Nutzer anspricht.
-- **Solver-Integration**: Auswahl zwischen den Solvern **GLPK** (GNU Linear Programming Kit) und **HiGHS**.
-- **Client-seitige Berechnung**: Alle Berechnungen werden auf der Client-Seite durchgeführt, sodass keine Daten an einen Server gesendet werden.
-- **Exportmöglichkeiten**: Modelle und Ergebnisse können exportiert und zur weiteren Verwendung heruntergeladen werden.
-- **Multilingual**: Die Webseite erkennt automatisch die Nutzersprache und zeigt dementsprechend Deutsche bzw standardmäßig Englische Texte an
+- **Modellunterstützung**: Import von Modellen im **CPLEX LP**-Format oder **GMPL** (GNU Math Programming Language).  
+- **Geführte grafische Modellierung**: Benutzerfreundliche, an GLPM angelehnte Oberfläche zur Erstellung von Modellen, die sowohl Anfänger als auch fortgeschrittene Nutzer anspricht.  
+- **Solver-Integration**: Auswahl zwischen den Solvern **GLPK** (GNU Linear Programming Kit) und **HiGHS**.  
+- **Client-seitige Berechnung**: Alle Berechnungen werden auf der Client-Seite durchgeführt, sodass keine Daten an einen Server gesendet werden.  
+- **Exportmöglichkeiten**: Modelle und Ergebnisse können exportiert und zur weiteren Verwendung heruntergeladen werden.  
+- **Multilingual**: Die Webseite erkennt automatisch die Nutzersprache und zeigt dementsprechend Deutsche bzw standardmäßig Englische Texte an.  
 
 
 ### Verwendung von GLPK und HiGHS
--**MPS-Konvertierung**: **GLPK** wird genutzt, um Probleme im **MPS-Format** zu konvertieren. Dies ermöglicht die Bearbeitung komplexer mathematischer Optimierungsmodelle.
--**HiGHS Solver**: Für Modelle, die im **GMPL**-Format eingegeben werden, wird **GLPK** verwendet, um das Modell zu übersetzen und an HiGHS zur Lösung weiterzugeben. So wird eine effiziente Lösung linearer Probleme ermöglicht.
+- **MPS-Konvertierung**: **GLPK** wird genutzt, um Probleme zu parsen, um sie im Anschluss ins **MPS-Format** zu konvertieren. Dies ermöglicht die Bearbeitung komplexer mathematischer Optimierungsmodelle. Außerdem wird er verwendet, um Probleme im **GMPL-Format** 
+ins **LP-Format** zu übersetzen, da HiGHS nur das **LP-Format** akzeptiert.  
+- **HiGHS Solver**: Für Modelle, die im **GMPL**-Format eingegeben werden, wird **GLPK** verwendet, um das Modell zu übersetzen und an HiGHS zur Lösung weiterzugeben. So wird eine effiziente Lösung linearer Probleme ermöglicht.  
 
 ### Nutzung
 
@@ -35,9 +36,6 @@ Das Projekt wurde im Rahmen des Moduls **Programmierprojekt** an der **Hochschul
 4. **Ergebnisse exportieren**: 
    - Die Resultate können als Dateien exportiert werden, um sie für spätere Analysen zu verwenden.
 
-### Entwickelt von
-
-Das Projekt wurde von einem Team von vier Studenten der **Hochschule Osnabrück** im Rahmen des Moduls **Programmierprojekt** entwickelt.
 
 ### Lokale Entwicklungsumgebung einrichten
 
@@ -77,4 +75,30 @@ Um die Anwendung lokal auszuführen, benötigen Sie **Node.js 20.17 LTS**. Ansch
    npm run test
    ```
 
+7. **Linter Ausführung**:
+   Um den Linter zu starten kann man folgenden Befehl ausführen:
+   ```bash
+   npm run lint
+   ```
+
 Nun können Sie die Anwendung lokal nutzen und weiterentwickeln. Alle Änderungen am Code werden automatisch übernommen und der Server wird bei jeder Änderung neu geladen.
+
+### Verwendete Frameworks
+
+#### Next.js 
+Wie nutzen Next.js aus folgenden Gründen:  
+1. Server-Side Rendering (SSR)  
+- Schnelle Initiale Ladezeiten: SSR führt zu schnelleren initialen Seitenladezeiten, da der Server den gesamten Inhalt liefert und der Browser nicht auf das clientseitige Rendering warten muss.  
+2. Optimierte Performance  
+- Automatisches Code-Splitting: Next.js teilt deinen Code automatisch auf, um nur das Nötigste zu laden. Dies reduziert die Ladezeiten und verbessert die allgemeine Performance der Website.  
+- Optimierung von Bildern: Mit der integrierten Next.js Image-Komponente kannst du Bilder optimieren (z.B. Lazy Loading, automatische Größenanpassung), was die Ladegeschwindigkeit weiter verbessert.  
+3. Internationalisierung (i18n)  
+- Eingebaute Unterstützung für mehrsprachige Webseiten: Next.js bietet native Unterstützung für Internationalisierung, was die Implementierung mehrsprachiger Webseiten vereinfacht.  
+4. TypeScript-Unterstützung  
+- Nahtlose Integration mit TypeScript: Next.js bietet First-Class TypeScript-Unterstützung. Das bedeutet, dass du ohne große Konfiguration TypeScript in deinem Projekt verwenden kannst.  
+5. Vercel-Hosting und Deployment  
+- Nahtloses Deployment mit Vercel: Vercel, das Unternehmen hinter Next.js, bietet eine exzellente Hosting-Plattform für Next.js-Anwendungen. Du kannst dein Projekt mit einem Klick automatisch deployen, und es unterstützt Funktionen wie Edge-Caching und statische Bereitstellungen, um die Performance deiner Website weiter zu optimieren.  
+6. React-Basierte Entwicklung  
+- Kompatibilität mit React-Ökosystem: Da Next.js auf React aufbaut, kannst du alle bekannten React-Bibliotheken und -Tools verwenden. Wenn du bereits Erfahrung mit React hast, ist der Einstieg in Next.js sehr einfach.  
+7. Integrierte CSS- und Sass-Unterstützung  
+Next.js unterstützt CSS- und Sass-Module von Haus aus, ohne dass zusätzliche Konfigurationen erforderlich sind. Du kannst auch styled-components oder andere CSS-in-JS-Lösungen nahtlos integrieren.  
