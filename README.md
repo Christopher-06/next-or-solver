@@ -69,8 +69,8 @@ Um die Anwendung lokal auszuführen, benötigen Sie **Node.js 20.17 LTS**. Ansch
 
 5. **Seite im Browser öffnen**:
    Sobald der Entwicklungsserver gestartet ist, können Sie die Anwendung unter folgender Adresse in Ihrem Browser aufrufen: [http://localhost:3000](http://localhost:3000)
-   
- 6. **Test Ausführung**:
+
+6. **Test Ausführung**:
    Um sicherzustellen, dass die Anwendung korrekt funktioniert, können Sie die Tests ausführen. 
    Führen Sie die Tests mit folgendem Befehl aus:
    ```bash
