@@ -15,32 +15,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: Modell = {
-  objective_formular: "sum{i in I, j in J} (f * d[i,j] / 1000) * x[i,j]",
+  objective_formular: "",
   sense: "MIN",
-  constraints: [
-    {
-      _id: createUniqueID(),
-      name: "supply",
-      formular : "sum{j in J} x[i,j] <= a[i]",
-      for_all : [
-        {
-          set_name : "I",
-          index_name : "i"
-        }
-      ]
-    },
-    {
-      _id: createUniqueID(),
-      name: "demand",
-      formular : "sum{i in I} x[i,j] >= b[j]",
-      for_all : [
-        {
-          set_name : "J",
-          index_name : "j"
-        }
-      ]
-    }
-  ],
+  constraints: []
 };
 
 export const modellSlice = createSlice({
