@@ -80,8 +80,8 @@
       "label": "Zielfunktion"
     },
     "constraint":{
-      "Formular_label": "Formular",
-      "Delete_btn": "Löschen",
+      "formular_label": "Formular",
+      "delete_btn": "Löschen",
       "index_label": "Index",
       "choose_allQuantor": "Wähle AllQuantor Operationen"
     }
