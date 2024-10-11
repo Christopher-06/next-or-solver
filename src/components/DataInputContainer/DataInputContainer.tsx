@@ -42,11 +42,11 @@ export default function DataInputContainer() {
   const renderInput = (variable: Variable) => {
     switch (variable.dimensionType) {
       case "SKALAR":
-        return <SkalarInput variable_id={variable._id} />;
+        return <SkalarInput key={variable._id} variable_id={variable._id} />;
       case "SET":
-        return <SetInput variable_id={variable._id} />;
+        return <SetInput key={variable._id} variable_id={variable._id} />;
       case "ARRAY":
-        return <ArrayInput variable_id={variable._id} />;
+        return <ArrayInput key={variable._id} variable_id={variable._id} />;
       default:
         console.error(`DimensionType ${variable.dimensionType} not supported`);
         return <></>;
