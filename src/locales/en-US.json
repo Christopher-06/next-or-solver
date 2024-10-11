@@ -73,7 +73,7 @@
         "about": "Information",
         "dialog_title": "About Next OR Solver",
         "about_nors": "About Next OR Solver",
-        "about_nors_text": "The Next OR Solver provides a user-friendly platform for solving optimization problems. With the help of the HiGHS and GLPK solvers, both specific and general models can be solved efficiently. The formats GMPL, CPLEX LP, and our intuitive EASY UI are available for inputting optimization problems. Models can be exported and imported in various formats. This project was developed by four students at the Osnabrück University of Applied Sciences as part of the Programming Project module, with the aim of creating an easy way to solve complex optimization problems.",
+        "about_nors_text": "The Next OR Solver provides a user-friendly platform for solving optimization problems. With the help of the HiGHS and GLPK solvers, both specific and general models can be solved efficiently. The following formats are available for entering optimization problems: GMPL, CPLEX LP, and our intuitive EASY UI, which is based on GMPL. Models can be exported and imported in various formats. This project was developed by four students at the Osnabrück University of Applied Sciences as part of the Programming Project module, with the aim of creating an easy way to solve complex optimization problems.",
         "license": "License",
         "license_text_1": "This website uses software licensed under the GNU General Public License Version 2 (GPLv2). The source code for this software is available at: ",
         "license_text_2": "Next OR Solver",
