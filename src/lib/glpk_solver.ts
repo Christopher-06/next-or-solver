@@ -1,4 +1,5 @@
 import { FileFormat } from "@/components/Converter/FileFormat";
+import correct_var_name from "@/components/Converter/VarName";
 import glpk from "glpk.js";
 import { HighsModelStatus, HighsSolution } from "highs";
 
@@ -55,6 +56,7 @@ function solveGMPL(gmpl_problem: string, outputFunc: (msg: string) => void) {
   // Generate Problem
   glpk.glp_mpl_generate(tran, null, outputFunc);
   glpk.glp_mpl_build_prob(tran, lp);
+  correct_var_name(lp);
 
   glpk.glp_scale_prob(lp, glpk.GLP_SF_AUTO);
 

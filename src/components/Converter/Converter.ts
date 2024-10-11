@@ -1,12 +1,12 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { FileFormat } from './FileFormat';
 import glpk from "glpk.js";
 import lp_to_mps from './LP_To_MPS';
+import correct_var_name from './VarName';
 
 const convertLP = (fileContent: string, currentFormat: FileFormat | null, targetFormat: FileFormat) => {
-    console.log("convert");
+    // console.log("convert");
 
     const convertFile = () => {
         try {
@@ -32,6 +32,7 @@ const convertLP = (fileContent: string, currentFormat: FileFormat | null, target
 
                             glpk.glp_mpl_generate(tran, null, console.log);
                             glpk.glp_mpl_build_prob(tran, lp);
+                            correct_var_name(lp);
 
                             newContent = "";
                             glpk.glp_write_lp(lp, null, (chunk: string) => {
@@ -51,6 +52,7 @@ const convertLP = (fileContent: string, currentFormat: FileFormat | null, target
 
                             glpk.glp_mpl_generate(tran, null, console.log);
                             glpk.glp_mpl_build_prob(tran, lp);
+                            correct_var_name(lp);
                             
                             newContent = lp_to_mps(lp);
                         } else {
