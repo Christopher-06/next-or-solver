@@ -81,8 +81,8 @@
       "label": "Objective Function"
     },
     "constraint":{
-      "Formular_label": "Formular",
-      "Delete_btn": "Delete",
+      "formular_label": "Form",
+      "delete_btn": "Delete",
       "index_label": "Index",
       "choose_allQuantor": "Choose AllQuantor operations"
     }
