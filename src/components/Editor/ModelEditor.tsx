@@ -1,19 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { Button, TextareaAutosize } from "@mui/material";
+import { Button, useTheme } from "@mui/material";
 import { FileFormat } from "../Converter/FileFormat";
 import convertLP from "../Converter/Converter";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { setTextFieldValue } from "@/store/slices/TextFieldInputs";
+import TextEditor from "./Editor";
+import { OnChange } from "@monaco-editor/react";
 
 interface ModelEditor {
-  targetFormat: FileFormat; // Enum für das Ziel-Format
+  format: FileFormat;
 }
 
-const ModelEditor: React.FC<ModelEditor> = ({ targetFormat }) => {
+const ModelEditor: React.FC<ModelEditor> = ({ format }) => {
 
   const inputType = useSelector((state: RootState) => state.inputType);
   const textFieldInputs = useSelector(
@@ -42,16 +44,16 @@ const ModelEditor: React.FC<ModelEditor> = ({ targetFormat }) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         const content = e.target?.result as string;
-        const format = getFileFormat(file.name);
-        const convertedContent = convertLP(content || "", format, targetFormat);
+        const currentFormat = getFileFormat(file.name);
+        const convertedContent = convertLP(content || "", currentFormat, format);
         setValue(convertedContent || "");
       };
       reader.readAsText(file);
     }
   };
 
-  const edit = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(e.target.value);
+  const edit: OnChange = (value: string | undefined) => {
+    setValue(value || '');
   };
 
   return (
@@ -72,7 +74,7 @@ const ModelEditor: React.FC<ModelEditor> = ({ targetFormat }) => {
         </Button>
       </label>
 
-      {/* Textarea mit dem konvertierten Inhalt */}
+      {/* Textarea mit dem konvertierten Inhalt
       <TextareaAutosize
         minRows={30}
         maxRows={30}
@@ -84,8 +86,13 @@ const ModelEditor: React.FC<ModelEditor> = ({ targetFormat }) => {
         }}
         value={value || ""}
         onChange={edit} // Aktualisiere den State bei Änderungen
-        placeholder={`${targetFormat} Model...`}
-      />
+        placeholder={`${format} Model...`}
+      /> */}
+      <TextEditor
+        value={value}
+        edit={edit} 
+        format={format} 
+        theme={useTheme().palette.mode === 'dark' ? 'dark' : 'light'}/>
     </div>
   );
 };
