@@ -1,11 +1,13 @@
 import React from 'react';
 import ModelEditor from '../Editor/ModelEditor';
 import { FileFormat } from '../Converter/FileFormat';
+import Textfield from '../Editor/Editor';
 
 const MpsInput: React.FC = () => {
     return (
         <div>
-            <ModelEditor targetFormat={FileFormat.MPS} />
+            <ModelEditor format={FileFormat.MPS} />
+            {/* <Textfield value={''} edit={() => {}} /> */}
         </div>
     );
 };
