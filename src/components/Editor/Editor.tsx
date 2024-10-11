@@ -20,7 +20,7 @@ const TextEditor = ({ value, edit, format, theme}: {
         ignoreCase:false,
         tokenizer: {
           root: [
-            [/\b(var|maximize|minimize|solve|display|end|param|set|dimen|setofbinary|sum|in|printf|data)\b|s\.t\./, 'keyword'],
+            [/\b(var|maximize|minimize|solve|display|end|param|set|dimen|setofbinary|sum|in|printf|data|and|else|mod|union|by|if|not|within|cross|in|or||diff|inter|symdiff|div|less|then)\b|s\.t\./, 'keyword'],
             [/\+|\-|\=|\<=|\>=|\<|\>|\:|\,|\:\=|\=\=|(?<!\/)\*(?!\*)|(?<!\*)\/(?!\*)/, 'operator'],
             [/(?<!in.*)(\w+)\s*:(?!\=)/, 'name'],
             [/[a-zA-Z_]\w*/, 'identifier'],
