@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Variable } from "@/lib/types/Variable";
 import { setVariableValue } from "@/store/slices/Variables";
 import { Box, Chip, styled, Typography } from "@mui/material";
@@ -19,11 +19,15 @@ export default function ItemsChipArray({
 
   const onClickDelete = (value: string) => {
     return () => {
-      if (variable?.dataValue instanceof Set) {
-        const newSet = new Set(variable.dataValue);
-        newSet.delete(value);
-
-        dispatch(setVariableValue({ _id: variable._id, value: newSet }));
+      if (Array.isArray(variable?.dataValue)) {
+        dispatch(
+          setVariableValue({
+            _id: variable._id,
+            value: variable.dataValue
+              .filter((k) => k !== value)
+              .map((k) => k as string),
+          })
+        );
       }
     };
   };

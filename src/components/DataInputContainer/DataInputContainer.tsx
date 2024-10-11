@@ -86,6 +86,10 @@ export default function DataInputContainer() {
     }
   }
 
+  const variableErrorString = variableError?.message
+    ? variableError.message.split(":")[3].trim()
+    : "";
+
   return (
     <Grid2 container spacing={3} sx={{ m: 2 }}>
       {orderedVariables.map((variable) => {
@@ -93,12 +97,11 @@ export default function DataInputContainer() {
           <>
             {renderInput(variable)}
 
-            {variableError &&
-              variableError.message.indexOf(variable.name) !== -1 && (
-                <Typography variant="body2" color="error">
-                  {variableError.message}
-                </Typography>
-              )}
+            {variableErrorString.startsWith(variable.name) && (
+              <Typography variant="body2" color="error">
+                {variableErrorString}
+              </Typography>
+            )}
           </>
         );
       })}

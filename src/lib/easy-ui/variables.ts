@@ -78,9 +78,9 @@ export function parameterSetVariableDefinitions(variables: Variable[]) {
     .map((variable) => {
       const prefix = `set\t${variable.name}`;
 
-      const setValues = variable.dataValue as Set<string>;
+      const setValues = variable.dataValue as string[];
 
-      return [prefix, prefix + " :=\t" + Array.from(setValues).join("\t")];
+      return [prefix, prefix + " :=\t" + setValues.join("\t")];
     });
 }
 
@@ -116,10 +116,10 @@ export function parameterArrayVariableDefinitions(variables: Variable[]) {
         // 1D Array
         const indexValues = variables.find(
           (v) => v.name === variable.dimList[0]
-        )?.dataValue as Set<string>;
+        )?.dataValue as string[];
         if (
           indexValues === undefined ||
-          indexValues.size !== dataValues.length
+          indexValues.length > dataValues.length
         ) {
           throw new ConvertError("NO_DIMENSION", variable);
         }
@@ -133,20 +133,20 @@ export function parameterArrayVariableDefinitions(variables: Variable[]) {
         // 2D Array
         const indexValuesASet = variables.find(
           (v) => v.name === variable.dimList[1]
-        )?.dataValue as Set<string>;
+        )?.dataValue as string[];
         const indexValuesBSet = variables.find(
           (v) => v.name === variable.dimList[0]
-        )?.dataValue as Set<string>;
+        )?.dataValue as string[];
         if (
           indexValuesASet === undefined ||
           indexValuesBSet === undefined ||
-          indexValuesASet.size * indexValuesBSet.size !== dataValues.length
+          indexValuesASet.length * indexValuesBSet.length > dataValues.length
         ) {
           throw new ConvertError("NO_DIMENSION", variable);
         }
 
-        const indexValuesA = Array.from(indexValuesASet);
-        const indexValuesB = Array.from(indexValuesBSet);
+        const indexValuesA = indexValuesASet;
+        const indexValuesB = indexValuesBSet;
 
         // First row is index A
         gmplDataValues += "\t\t\t\t" + indexValuesA.join("\t") + "\t:=\n";
