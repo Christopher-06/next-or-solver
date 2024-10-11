@@ -5,8 +5,9 @@ import { Variable } from "../types/Variable";
 
 import highsLoader from "highs";
 import ConvertToGMPL from "./converter";
-import convertLP from "@/components/File/Converter";
-import { FileFormat } from "@/components/File/FileFormat";
+import convertLP from "@/components/Converter/Converter";
+import { FileFormat } from "@/components/Converter/FileFormat";
+import solveGLPK from "../glpk_solver";
 
 describe("easy-ui/converter", () => {
   it("should convert TRANSPORT_PROBLEM to GMPL", async () => {
@@ -30,7 +31,85 @@ describe("easy-ui/converter", () => {
     expect(solution.Status).toBe("Optimal");
     expect(solution.ObjectiveValue).toBe(156.375);
   });
+
+  it("should convert SIMPLE_PROBLEM to GMPL", () => {
+    const gmpl_problem = ConvertToGMPL(
+      SIMPLE_PROBLEM.modell,
+      SIMPLE_PROBLEM.variables
+    );
+    expect(gmpl_problem).toBeDefined();
+
+    const solution = solveGLPK(gmpl_problem, FileFormat.GMPL);
+    expect(solution).toBeDefined();
+    expect(solution.Status).toBe("Optimal");
+    expect(solution.ObjectiveValue).toBe(211);
+  });
 });
+
+const SIMPLE_PROBLEM: {
+  modell: Modell;
+  variables: Variable[];
+} = {
+  modell: {
+    objective_formular: "3*x + 4*y",
+    sense: "MAX",
+    constraints: [
+      {
+        _id: "sh2uk1atwtn03n5fd",
+        name: "c1",
+        formular: "2*x+y <= f",
+        for_all: [],
+      },
+      {
+        _id: "8exsrixsbu1llhw2gh",
+        name: "c2",
+        formular: "x+ 2.5*y <= f",
+        for_all: [],
+      },
+      { _id: "lmpj7cvmlgh54tyngk", name: "c3", formular: "", for_all: [] },
+    ],
+  },
+  variables: [
+    {
+      _id: "n3v2ilkkp2cl22otg7",
+      name: "x",
+      lowerBound: 0,
+      valueType: "INTEGER",
+      propertyType: "DECISION",
+      dimensionType: "SKALAR",
+      dimList: [],
+      dataValue: 0,
+    },
+    {
+      _id: "x8baaqaauxqvtwuhsc",
+      name: "y",
+      lowerBound: 0,
+      valueType: "INTEGER",
+      propertyType: "DECISION",
+      dimensionType: "SKALAR",
+      dimList: [],
+      dataValue: 0,
+    },
+    {
+      _id: "236brbv8y2r5thvwu",
+      name: "f",
+      valueType: "CONTINUOUS",
+      propertyType: "PARAMETER",
+      dimensionType: "SKALAR",
+      dimList: [],
+      dataValue: 100,
+    },
+    {
+      _id: "ebbrzmdhdz76atw2pe",
+      name: "",
+      valueType: "CONTINUOUS",
+      propertyType: "DECISION",
+      dimensionType: "SKALAR",
+      dimList: [],
+      dataValue: 0,
+    },
+  ],
+};
 
 const TRANSPORT_PROBLEM: {
   modell: Modell;

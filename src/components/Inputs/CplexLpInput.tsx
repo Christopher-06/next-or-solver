@@ -1,12 +1,12 @@
 import React from 'react';
-import ModelEditor from '../File/ModelEditor';
-import { FileFormat } from '../File/FileFormat';
+import ModelEditor from '../Editor/ModelEditor';
+import { FileFormat } from '../Converter/FileFormat';
 
 const CplexLpInput: React.FC = () => {
 
     return (
         <div>
-            <ModelEditor targetFormat={FileFormat.CPLEX_LP} />
+            <ModelEditor format={FileFormat.CPLEX_LP} />
         </div>
     );
 };

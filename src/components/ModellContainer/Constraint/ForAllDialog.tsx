@@ -19,6 +19,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { useTranslations } from "next-intl";
 
 function PaperComponent(props: PaperProps) {
   return (
@@ -42,6 +43,7 @@ export default function ForAllDialog({
   open: boolean;
   handleClose: () => void;
 }) {
+  const t = useTranslations();
   const all_users_set_variable_names = useSelector((state: RootState) =>
     state.variables
       .filter(
@@ -94,7 +96,7 @@ export default function ForAllDialog({
         }}
       >
         <TextField
-          label="Index"
+          label={t("modell_container.constraint.index_label")}
           variant="outlined"
           error={index_name.trim() === ""}
           value={index_name}

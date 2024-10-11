@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <StoreProvider>
       <html lang={locale} suppressHydrationWarning>
-        <body >
+        <body style={{minWidth : "1000px"}}>
           <NextIntlClientProvider messages={messages}>
             <InitColorSchemeScript attribute="class" />
 

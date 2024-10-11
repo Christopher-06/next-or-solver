@@ -1,11 +1,11 @@
 import React from 'react';
-import ModelEditor from '../File/ModelEditor';
-import { FileFormat } from '../File/FileFormat';
+import ModelEditor from '../Editor/ModelEditor';
+import { FileFormat } from '../Converter/FileFormat';
 
 const GmplInput: React.FC = () => {
     return (
         <div>
-            <ModelEditor targetFormat={FileFormat.GMPL} />
+            <ModelEditor format={FileFormat.GMPL} />
         </div>
     );
 };

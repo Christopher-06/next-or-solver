@@ -6,11 +6,13 @@ export default function FormularTextField({
   setText,
   label = "",
   centered = true,
+  error = false,
 }: {
   text: string;
   setText: (text: string) => void;
   label?: string;
   centered?: boolean;
+  error?: boolean;
 }) {
   const { isInside } = useMouseContext();
 
@@ -22,7 +24,7 @@ export default function FormularTextField({
         justifyContent="center"
         display="flex"
         alignItems="center"
-        sx={{ flex: 1, minWidth: "150px" }}
+        sx={{ flex: 1, minWidth: "150px", color: error ? "red" : "textPrimary" }}
       >
         {text.replace("<=", " ≤ ").replace(">=", " ≥ ")}
       </Typography>
@@ -35,6 +37,7 @@ export default function FormularTextField({
       label={label}
       variant="outlined"
       sx={{ flex: 1, minWidth: "150px" }}
+      error={error}
       size="small"
       slotProps={{
         htmlInput: {

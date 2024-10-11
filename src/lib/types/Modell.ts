@@ -1,3 +1,5 @@
+import { Variable } from "./Variable";
+
 export type Sense = "MAX" | "MIN";
 
 export type ForAllType = {
@@ -17,3 +19,8 @@ export type Modell = {
   sense: Sense;
   constraints: Constraint[];
 };
+
+export type Easy_UI = {
+  model : Modell;
+  variables : Variable[]
+}
