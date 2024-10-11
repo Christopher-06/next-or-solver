@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setInputError } from "@/store/slices/TextFieldInputs";
 import { RootState } from "@/store/store";
 import ValidateEditor from "./ValidateEditor";
-import { Alert } from "@mui/material";
+import { Alert, Skeleton } from "@mui/material";
 
 const TextEditor = ({
   value,
@@ -371,7 +371,7 @@ const TextEditor = ({
     }
   };
 
-  if (monaco == null) return null;
+  if (monaco == null) return <Skeleton variant="rectangular" height="70vh" />;
   return (
     <div
       style={{

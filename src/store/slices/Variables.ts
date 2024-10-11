@@ -9,7 +9,6 @@
 * GNU General Public License for more details.
 */
 
-import { createUniqueID } from "@/lib/helper";
 import {
   GetDefaultVariable,
   Variable,
@@ -21,77 +20,7 @@ import {
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: Variable[] = [
-  {
-    _id: createUniqueID(),
-    name: "x",
-    lowerBound: 0,
-    valueType: "INTEGER",
-    propertyType: "DECISION",
-    dimensionType: "ARRAY",
-    dimList: ["I", "J"],
-    dataValue: []
-  },
-  {
-    _id: createUniqueID(),
-    name: "I",
-    valueType: "CONTINUOUS",
-    propertyType: "PARAMETER",
-    dimensionType: "SET",
-    dimList: [],
-    dataValue: [
-      "Seattle",
-      "San-Diego",
-    ],
-  },
-  {
-    _id: createUniqueID(),
-    name: "J",
-    valueType: "CONTINUOUS",
-    propertyType: "PARAMETER",
-    dimensionType: "SET",
-    dimList: [],
-    dataValue: 
-      ["New-York", "Chicago", "Topeka"]
-    ,
-  },
-  {
-    _id: createUniqueID(),
-    name: "a",
-    valueType: "CONTINUOUS",
-    propertyType: "PARAMETER",
-    dimensionType: "ARRAY",
-    dimList: ["I"],
-    dataValue: [350, 600]
-  },
-  {
-    _id: createUniqueID(),
-    name: "b",
-    valueType: "CONTINUOUS",
-    propertyType: "PARAMETER",
-    dimensionType: "ARRAY",
-    dimList: ["J"],
-    dataValue: [325, 300, 275]
-  },
-  {
-    _id: createUniqueID(),
-    name: "d",
-    valueType: "CONTINUOUS",
-    propertyType: "PARAMETER",
-    dimensionType: "ARRAY",
-    dimList: ["I", "J"],
-    dataValue: [2.5, 1.8, 1.8, 2.5, 1.8, 1.4]
-  },
-  {
-    _id: createUniqueID(),
-    name: "f",
-    valueType: "CONTINUOUS",
-    propertyType: "PARAMETER",
-    dimensionType: "SKALAR",
-    dimList: [],
-    dataValue: 90
-  }
-];
+const initialState: Variable[] = [];
 
 export const variablesSlice = createSlice({
   name: "variables",
