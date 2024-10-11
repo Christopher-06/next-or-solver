@@ -1,15 +1,87 @@
 {
+  "actions_bar": {
+    "actions_bar": {
+      "btn_solve": "Lösen mit",
+      "btn_delete_all": "Alles Löschen"
+    }
+  },
+  "data_input_container": {
+    "array_input": {
+      "max_2d_arrays": "Max. 2D Arrays werden unterstützt"
+    },
+    "nummeric_input":{
+      "value": "Wert",
+      "type_in_value": "Bitte geben Sie einen Wert ein",
+      "number_requiered": "Es wird ein Zahl erwartet",
+      "value_greater_then_UP": "Der Wert ist größer als die obere Grenze",
+      "value_lower_then_LB": "Der Wert ist kleiner als die untere Grenze",
+      "integer_required": "Es wird eine ganze Zahl erwartet"
+    },
+    "set_input": {
+      "no_spaces": "Keine Leerschritte erlaubt",
+      "only_letters_numbers_underscores": "Nur Buchstaben, Nummern und Leerschritte erlaubt",
+      "new_value": "Neuer Wert"
+    }
+  },
+  "easy_input": {
+    "easy_input": {
+      "variables": "Variablen",
+      "modell": "Modell",
+      "data": "Daten"
+    }
+  },
   "navbar": {
     "title": "Next OR Solver",
     "description": "Ein Online-Tool zur Lösung von Operation Research Problemen",
-    "theme_toggle" : "Wechsle Farbmodus",
-    "locale_switch" : "Wähle Sprache"
+    "theme_toggle": "Wechsle Farbmodus",
+    "locale_switch": "Wähle Sprache"
+  },
+  "solution_paper": {
+    "solution_paper": {
+      "no_solution": "Keine optimale Lösung gefunden",
+      "solution_found": "Optimaler Zielfunktionswert",
+      "not_solvable": "Problem ist nicht lösbar",
+      "unrestricted": "Problem ist unbeschränkt",
+      "primal_unlimited_or_unsolvable": "Problem ist primal unbeschränkt oder nicht lösbar",
+      "error": "Es ist ein Fehler aufgetreten",
+      "calculation_running": "Berechnung läuft seit",
+      "Decision_Variables": "Entscheidungsvariablen",
+      "Constraints": "Restrikionen",
+      "Solver_Output": "Solver Ausgabe",
+      "Solver_Logs": "Solver Protokoll",
+      "solution": "Lösung"
+    },  
+    "basis_table": {
+      "upper": "Obere Grenze",
+      "lower": "Untere Grenze",
+      "type": "Typ",
+      "primal": "Primal",
+      "dual": "Dual",
+      "name": "Name",
+      "solution": "Lösung"
+    }
   },
   "colormode_selection": {
     "tooltip": "Ändere Farbmodus",
     "system": "System",
     "light": "Hell",
     "dark": "Dunkel"
+  },
+  "footer":{
+    "footer":{
+      "about": "Information",
+      "dialog_title": "Über Next OR Solver",
+      "about_nors": "Über Next OR Solver",
+      "about_nors_text": "Der Next OR Solver bietet eine benutzerfreundliche Plattform zur Lösung von Optimierungsproblemen. Mithilfe der Solver HiGHS und GLPK lassen sich sowohl spezifische als auch allgemeine Modelle effizient lösen. Zur Eingabe der Optimierungsprobleme stehen die Formate GMPL, CPLEX LP und unsere intuitive EASY UI zur Verfügung. Die Modelle können in den verschiedenen Formaten exportiert und importiert werden. Das Projekt wurde im Rahmen des Moduls Programmierprojekt an der Hochschule Osnabrück von vier Studenten entwickelt, mit dem Ziel, eine einfache Möglichkeit zur Lösung von komplexen Optimierungsproblemen zu schaffen.",
+      "license": "Lizenz",
+      "license_text_1": "Diese Webseite verwendet Software, die unter der GNU General Public License Version 2 (GPLv2) lizenziert ist. Der Quellcode dieser Software ist verfügbar unter: ",
+      "license_text_2": "Next OR Solver",
+      "license_text_3": "Weitere Informationen zur Lizenz finden Sie auf der Webseite der Free Software Foundation: ",
+      "license_text_4": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "disclaimer": "Haftungsausschluss",
+      "disclaimer_text": "Diese Software wird unter der GNU General Public License Version 2 (GPL v2) bereitgestellt. Sie wird ohne Gewährleistung jeglicher Art, weder ausdrücklich noch stillschweigend, zur Verfügung gestellt. Die Autoren übernehmen keine Haftung für Schäden, die direkt oder indirekt aus der Nutzung dieser Software entstehen.",
+      "close": "Schließen"
+    }
   },
   "input": {
     "function_type": {
@@ -19,18 +91,38 @@
     },
     "function": "Zielfunktion"
   },
+  "modell_container": {
+    "modell_container": {
+      "label": "Zielfunktion"
+    },
+    "constraint":{
+      "formular_label": "Formular",
+      "delete_btn": "Löschen",
+      "index_label": "Index",
+      "choose_allQuantor": "Wähle AllQuantor Operationen"
+    }
+  },
   "variable": {
-    "name" : {
-      "label" : "Name"
+    "name": {
+      "label": "Name"
     },
     "type": {
-      "system" : "System",
+      "system": "System",
       "decision": "Entscheidung",
       "label": "Typ",
-      "helper" : "Wähle den Typen der Variable",
+      "helper": "Wähle den Typen der Variable",
       "continuous": "Kontinuierlich",
       "integer": "Ganzzahlig",
-      "binary": "Binär"      
+      "binary": "Binär"
+    },
+    "arraydimension": {
+      "label": "Dimension"
+    },
+    "var_name": {
+      "helper1": "Mengen sollten mit einem Großbuchstaben beginnen",
+      "helper2": "Variablennamen müssen eindeutig sein",
+      "helper3": "Variablennamen müssen mit einem Buchstaben beginnen und dürfen nur Buchstaben, Zahlen und Unterstriche enthalten"
+
     }
   }
 }

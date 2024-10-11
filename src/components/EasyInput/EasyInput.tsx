@@ -3,15 +3,24 @@ import Paper from "@mui/material/Paper";
 import React from "react";
 import VariableContainer from "@/components/VariableContainer/VariableContainer";
 import ModellContainer from "@/components/ModellContainer/ModellContainer";
+import { useTranslations } from "next-intl";
 import DataInputContainer from "@/components/DataInputContainer/DataInputContainer";
+import ExportButton from "./ExportButton";
+import ImportButton from "./ImportButton";
+import ValidateSometimes from "./ValidateSometimes";
 
 export default function EasyInput() {
+  const t = useTranslations();
   return (
     <>
+      {/* Import/Export Buttons} */}
+      <ExportButton />
+      <ImportButton />
+
       {/* Variablen Feld */}
       <Paper sx={{ my: 3, p: 3 }}>
         <Typography variant="h5" sx={{ mb: 3 }}>
-          Variablen
+          {t("easy_input.easy_input.variables")}
         </Typography>
         <VariableContainer />
       </Paper>
@@ -19,17 +28,20 @@ export default function EasyInput() {
       {/* Modell Feld */}
       <Paper sx={{ my: 3, p: 3 }}>
         <Typography variant="h5" sx={{ mb: 3 }}>
-          Modell
+          {t("easy_input.easy_input.modell")}
         </Typography>
         <ModellContainer />
       </Paper>
 
       {/* Daten Feld */}
       <Paper sx={{ my: 3, p: 3 }}>
-        <Typography variant="h5">Daten</Typography>
+        <Typography variant="h5">{t("easy_input.easy_input.data")}</Typography>
 
         <DataInputContainer />
       </Paper>
+
+      {/* Validation Service */}
+      <ValidateSometimes />
     </>
   );
 }

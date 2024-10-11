@@ -111,13 +111,13 @@ export default function TwoDimension({ variable }: { variable: Variable }) {
           const data_idx = row_idx * col_index_values.length + col_idx;
 
           return (
-            <TableCell key={col_idx} sx={{ minWidth: "150px" }}>
+            <TableCell key={col_idx} sx={{ minWidth: "150px" }} align="center">
               <NumericInput
                 label=""
                 showHelperTextInTooltip={true}
                 showHelperText={false}
                 value={
-                  dataArray.length < data_idx ? dataArray[data_idx] : undefined
+                  data_idx < dataArray.length ? dataArray[data_idx] : undefined
                 }
                 valueType={variable.valueType}
                 setValue={valueSetter(data_idx)}
@@ -130,9 +130,10 @@ export default function TwoDimension({ variable }: { variable: Variable }) {
   };
 
   const rows = row_index_values;
+  const height = 60 + Math.min(300, rows.length * 73);
 
   return (
-    <Paper style={{ height: 400, maxHeight: "65vh", width: "100%" }}>
+    <Paper sx={{ height, minWidth: "800px" }}>
       <TableVirtuoso
         data={rows}
         components={VirtuosoTableComponents}

@@ -8,7 +8,6 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import MouseProvider from "../MouseProvider/MouseProvider";
-import NameInput from "./NameInput";
 import BoundInput from "./BoundInput";
 import ClearIcon from "@mui/icons-material/Clear";
 import ValueTypeSelector from "./ValueTypeSelector";
@@ -26,13 +25,14 @@ import { RootState } from "@/store/store";
 import {
   setValueType,
   setDimensionType,
-  setDimList,
   setLowerBound,
   setPropertyType,
   setUpperBound,
-  setName,
   removeVariable,
 } from "@/store/slices/Variables";
+import VariableName from "./VarName";
+import { EasyUIVariableDeclarationError } from "@/lib/easy-ui/validation";
+import { ConvertError } from "@/lib/easy-ui/converter";
 
 export default function VariableComponent({
   var_idx,
@@ -48,6 +48,25 @@ export default function VariableComponent({
   const variable: Variable = useSelector(
     (state: RootState) => state.variables[var_idx]
   );
+  const variableError = useSelector((state: RootState) => {
+    // GMPL Validate Errors
+    const errGMPL = state.textFieldInputs.EASY_UI.currentError;
+    if (errGMPL instanceof EasyUIVariableDeclarationError) {
+      if (errGMPL.message.indexOf(variable.name) !== -1) {
+        return errGMPL;
+      }
+    }
+
+    // Convert Erros
+    const errConvert = state.textFieldInputs.EASY_UI.currentError;
+    if (errConvert instanceof ConvertError) {
+      if (errConvert.variable.name === variable.name) {
+        return errConvert;
+      }
+    }
+
+    return null;
+  });
 
   const {
     name,
@@ -56,12 +75,7 @@ export default function VariableComponent({
     valueType,
     propertyType,
     dimensionType,
-    dimList,
   } = variable;
-
-  const setNameDispatched = (name: string) => {
-    dispatch(setName({ index: var_idx, name }));
-  };
 
   const setLowerBoundDispatched = (lowerBound: number | undefined) => {
     dispatch(setLowerBound({ index: var_idx, lowerBound }));
@@ -81,10 +95,6 @@ export default function VariableComponent({
 
   const setDimensionTypeDispatched = (dimensionType: VarDimensionType) => {
     dispatch(setDimensionType({ index: var_idx, dimensionType }));
-  };
-
-  const setDimListDispatched = (dimList: string[]) => {
-    dispatch(setDimList({ index: var_idx, dimList }));
   };
 
   const removeVariableDispatched = () => {
@@ -142,14 +152,9 @@ export default function VariableComponent({
           }}
         >
           {dimensionType === "SKALAR" || dimensionType === "SET" ? (
-            <NameInput name={name} setName={setNameDispatched} />
+            <VariableName var_idx={var_idx} />
           ) : (
-            <ArrayDimensionsInput
-              name={name}
-              setName={setNameDispatched}
-              dimList={dimList}
-              setDimList={setDimListDispatched}
-            />
+            <ArrayDimensionsInput var_idx={var_idx} />
           )}
         </Grid2>
 
@@ -207,6 +212,15 @@ export default function VariableComponent({
                 <ClearIcon fontSize="small" />
               </Button>
             </Tooltip>
+          )}
+        </Grid2>
+
+        {/* Error Viewer */}
+        <Grid2 size={{ xs: 12, sm: 12, md: 12 }}>
+          {variableError && (
+            <Typography variant="body2" color="error">
+              {variableError.message}
+            </Typography>
           )}
         </Grid2>
       </Grid2>

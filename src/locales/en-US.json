@@ -1,18 +1,128 @@
 {
+  "actions_bar": {
+    "actions_bar": {
+      "btn_solve": "Solve with",
+      "btn_delete_all": "Clear all"
+    }
+  },
+  "data_input_container": {
+    "array_input": {
+      "max_2d_arrays": "Max. 2D Arrays are supported"
+    },
+    "nummeric_input": {
+      "value": "Value",
+      "type_in_value": "Please enter a value",
+      "number_requiered": "A number is required",
+      "value_greater_then_UP": "The value is greater than the upper limit",
+      "value_lower_then_LB": "The value is less than the lower limit",
+      "integer_required": "An integer is required"
+    },
+    "set_input": {
+      "no_spaces": "No spaces allowed",
+      "only_letters_numbers_underscores": "Only letters, numbers, and underscores are allowed",
+      "new_value": "New value"
+    }
+
+  },
+  "easy_input": {
+    "easy_input": {
+      "variables": "Variables",
+      "modell": "Modell",
+      "data": "Data"
+    }
+  },
   "navbar": {
     "title": "Next OR Solver",
     "description": "An online tool for solving operations research problems",
-    "settings": {
-      "tooltip": "Open Settings"
-    }
+    "theme_toggle": "Change Color Mode",
+    "locale_switch": "Select Language"
   },
-  "locale_switch": {
-    "helptext": "Choose Language"
+  "solution_paper": {
+    "solution_paper": {
+      "no_solution": "No optimal solution found",
+      "solution_found": "Optimal objective function value",
+      "not_solvable": "Problem is not solvable",
+      "unrestricted": "Problem is unrestricted",
+      "primal_unlimited_or_unsolvable": "Problem is primal unlimited or not solvable",
+      "error": "An error has occurred",
+      "calculation_running": "Calculation running since",
+      "Decision_Variables": "Decision variables",
+      "Constraints": "Constraints",
+      "Solver_Output": "Solver Output",
+      "Solver_Logs": "Solver Log",
+      "solution": "Solution"
+    },
+    "basis_table": {
+      "upper": "Upper Bound",
+      "lower": "Lower Bound",
+      "type": "Type",
+      "primal": "Primal",
+      "dual": "Dual",
+      "name": "Name",
+      "solution": "Solution"
+    }
   },
   "colormode_selection": {
     "tooltip": "Change Color Mode",
     "system": "System",
     "light": "Light",
     "dark": "Dark"
+  },
+  "footer": {
+      "footer": {
+        "about": "Information",
+        "dialog_title": "About Next OR Solver",
+        "about_nors": "About Next OR Solver",
+        "about_nors_text": "The Next OR Solver provides a user-friendly platform for solving optimization problems. With the help of the HiGHS and GLPK solvers, both specific and general models can be solved efficiently. The formats GMPL, CPLEX LP, and our intuitive EASY UI are available for inputting optimization problems. Models can be exported and imported in various formats. This project was developed by four students at the Osnabrück University of Applied Sciences as part of the Programming Project module, with the aim of creating an easy way to solve complex optimization problems.",
+        "license": "License",
+        "license_text_1": "This website uses software licensed under the GNU General Public License Version 2 (GPLv2). The source code for this software is available at: ",
+        "license_text_2": "Next OR Solver",
+        "license_text_3": "For more information about the license, please visit the Free Software Foundation's website: ",
+        "license_text_4": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+        "disclaimer": "Disclaimer",
+        "disclaimer_text": "This software is provided under the GNU General Public License Version 2 (GPL v2). It is provided without any warranty, either express or implied. The authors accept no liability for damages, whether direct or indirect, arising from the use of this software.",
+        "close": "Close"
+      }
+    },
+  "input": {
+    "function_type": {
+      "name": "Type",
+      "min": "min",
+      "max": "max"
+    },
+    "function": "Objective Function"
+  },
+  "modell_container": {
+    "modell_container": {
+      "label": "Objective Function"
+    },
+    "constraint":{
+      "formular_label": "Form",
+      "delete_btn": "Delete",
+      "index_label": "Index",
+      "choose_allQuantor": "Choose AllQuantor operations"
+    }
+  },
+  "variable": {
+    "name": {
+      "label": "Name"
+    },
+    "type": {
+      "system": "System",
+      "decision": "Decision",
+      "label": "Typ",
+      "helper": "Choose the type of variable",
+      "continuous": "Continous",
+      "integer": "Integer",
+      "binary": "Binary"
+    },
+    "arraydimension": {
+      "label": "Dimension"
+    },
+    "var_name": {
+      "helper1": "Sets should start with an uppercase letter",
+      "helper2": "Variable names must be unique",
+      "helper3": "Variable names must start with a letter and only contain letters, numbers and underscores"
+    }
   }
 }
