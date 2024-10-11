@@ -39,7 +39,7 @@ export default function NumericInput({
     if (value === undefined) {
       setHelperText(value ? "" : t("data_input_container.nummeric_input.type_in_value"));
     }
-  }, [value]);
+  }, [value,t]);
 
   const validateInput = () => {
     const newValue = parseFloat(text);
