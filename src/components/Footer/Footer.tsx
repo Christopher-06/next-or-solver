@@ -24,40 +24,56 @@ const Footer: FC = () => {
   return (
     <>
       <AppBar position="static" component="footer" color="primary" sx={{ top: 'auto', bottom: 0 }}>
-        <Container maxWidth="md">
-          <Toolbar>
+        <Container maxWidth="md"   >
+          <Toolbar sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Typography variant="body2" color="inherit" align="center" sx={{ flexGrow: 1 }}>
-              {'Next OR Solver........Copyright © '}
+              {'Github'}
               <Link color="inherit" href="https://github.com/Christopher-06/next-or-solver">
-                <GitHubIcon style={{ fontSize: 40 }} />
-              </Link>{' '}
-              <Link color="inherit" href="#" onClick={handleClickOpen}>
-                Lizenz
-              </Link>{' '}
-              {/*new Date().getFullYear()*/}
-              {'.'}
+                <GitHubIcon style={{ fontSize: 40 , marginRight: '200px' }} />
+                
+              </Link>
+              <Link color="inherit" href="#" onClick={handleClickOpen} style={{ fontSize: 15 , marginLeft: '200px' }}>
+              Über Next OR Solver
+              </Link>
+              {/*"    "+new Date().getFullYear()*/}
+              
             </Typography>
           </Toolbar>
         </Container>
       </AppBar>
 
       <Dialog open={open} onClose={handleClose} scroll="paper" aria-labelledby="scroll-dialog-title" aria-describedby="scroll-dialog-description">
-        <DialogTitle id="scroll-dialog-title">Lizenz</DialogTitle>
+        <DialogTitle id="scroll-dialog-title">Über uns</DialogTitle>
         <DialogContent dividers>
           <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
             {/* Hier können die Lizenzinformationen eingefügt werden. Inhalt ist scrollbar, wenn er länger wird. */}
-            <h1>Über next-or-solver</h1>
-            Das Projekt „next-or-solver“ ist eine Next.js-basierte Webanwendung, die in TypeScript entwickelt wurde. 
-            Es enthält verschiedene Komponenten, darunter NavBar und Theme, und nutzt Material-UI für das Styling. 
-            Die Anwendung scheint sich mit der Lösung von Optimierungsproblemen zu befassen. Um das Projekt zu starten, 
-            müssen die Abhängigkeiten mit npm install installiert und der Entwicklungsserver mit npm run dev gestartet werden.
-            Weitere Informationen zur Installation, Nutzung und zur Dokumentation von Next.js finden sich im Repository.
-            
+            <h1>Über Next OR Solver</h1>
+            Der Next OR Solver bietet eine benutzerfreundliche Plattform zur Lösung von Optimierungsproblemen.
+             Mithilfe der Solver HiGHS und GLPK lassen sich sowohl spezifische als auch allgemeine Modelle effizient lösen.
+              Zur Eingabe der Optimierungsprobleme stehen die Formate GMPL, CPLEX LP, MPS und unsere intuitive EASY UI zur Verfügung. 
+              Die Modelle können in den verschiedenen Formaten exportiert und importiert werden.
+Das Projekt wurde im Rahmen des Moduls Programmierprojekt an der Hochschule Osnabrück von vier Studenten entwickelt, 
+mit dem Ziel, eine einfache Möglichkeit zur Lösung von komplexen Optimierungsproblemen zu schaffen.
             <br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-           Mehr TExt
-            <br /><br />
-           Noch Mehr TExt-----------------------------------------------------------------------------------------------------
+            <h1>Lizenz</h1>
+            Diese Webseite verwendet Software, die unter der GNU General Public License Version 2 (GPLv2) lizenziert ist. Der Quellcode dieser Software ist verfügbar unter: {" "}   
+            <Link color="inherit" href="https://github.com/Christopher-06/next-or-solver">
+              Next OR Solver
+              </Link>
+               <br /><br/> 
+              Weitere Informationen zur Lizenz finden Sie auf der Webseite der Free Software Foundation: {" "}
+              <Link color="inherit" href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html">
+              https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+              </Link>
+           <br /><br />
+          <h1>Haftungsausschluss: </h1> 
+          Diese Software wird unter der GNU General Public License Version 2 (GPL v2) bereitgestellt. Sie wird ohne Gewährleistung jeglicher Art, 
+          weder ausdrücklich noch stillschweigend, zur Verfügung gestellt. 
+          Der Autor übernimmt keine Haftung für Schäden, die direkt oder indirekt aus der Nutzung dieser Software entstehen.
+           <br /><br />
+           <br /><br />
+
+
           </DialogContentText>
         </DialogContent>
         <DialogActions>
