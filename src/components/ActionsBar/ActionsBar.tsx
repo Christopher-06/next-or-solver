@@ -24,7 +24,6 @@ import { clearAllModell } from "@/store/slices/Modell";
 import ConvertToGMPL from "@/lib/easy-ui/converter";
 import { Modell } from "@/lib/types/Modell";
 import { Variable } from "@/lib/types/Variable";
-import { EasyUIConstraintError } from "@/lib/easy-ui/validation";
 
 const FILEFORMAT_MAP: { [key in InputType]: FileFormat } = {
   GMPL: FileFormat.GMPL,
