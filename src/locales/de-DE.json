@@ -6,6 +6,7 @@
     }
   },
   "data_input_container": {
+    "no_parameters": "Keine Parameter vorhanden",
     "array_input": {
       "max_2d_arrays": "Max. 2D Arrays werden unterstützt"
     },
