@@ -51,6 +51,8 @@
       "Constraints": "Constraints",
       "Solver_Output": "Solver Output",
       "Solver_Logs": "Solver Log",
+      "no_solver_logs" : "No solver logs available",
+      "no_solver_outputs" : "No solver outputs available",
       "solution": "Solution"
     },
     "basis_table": {

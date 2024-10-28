@@ -1,13 +1,13 @@
 /*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*/
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ */
 
 "use client";
 import {
@@ -99,7 +99,8 @@ export default function SolutionContainer() {
       return (
         <Alert severity="success" sx={{ pt: 2 }}>
           <AlertTitle>
-          {t("solution_paper.solution_paper.solution_found")} ({wallTimeDisplay})
+            {t("solution_paper.solution_paper.solution_found")} (
+            {wallTimeDisplay})
           </AlertTitle>
 
           <Typography variant="h3">{solution.ObjectiveValue}</Typography>
@@ -108,13 +109,19 @@ export default function SolutionContainer() {
     } else if (solution.Status === "Infeasible") {
       return (
         <Alert severity="error" sx={{ pt: 2 }}>
-          <AlertTitle>{t("solution_paper.solution_paper.not_solvable")} ({wallTimeDisplay})</AlertTitle>
+          <AlertTitle>
+            {t("solution_paper.solution_paper.not_solvable")} ({wallTimeDisplay}
+            )
+          </AlertTitle>
         </Alert>
       );
     } else if (solution.Status === "Unbounded") {
       return (
         <Alert severity="error" sx={{ pt: 2 }}>
-          <AlertTitle>{t("solution_paper.solution_paper.unrestricted")} ({wallTimeDisplay})</AlertTitle>
+          <AlertTitle>
+            {t("solution_paper.solution_paper.unrestricted")} ({wallTimeDisplay}
+            )
+          </AlertTitle>
         </Alert>
       );
     } else if (
@@ -124,8 +131,8 @@ export default function SolutionContainer() {
       return (
         <Alert severity="error" sx={{ pt: 2 }}>
           <AlertTitle>
-          {t("solution_paper.solution_paper.primal_unlimited_or_unsolvable")} ({wallTimeDisplay}
-            )
+            {t("solution_paper.solution_paper.primal_unlimited_or_unsolvable")}{" "}
+            ({wallTimeDisplay})
           </AlertTitle>
         </Alert>
       );
@@ -133,7 +140,7 @@ export default function SolutionContainer() {
       return (
         <Alert severity="error" sx={{ pt: 2 }}>
           <AlertTitle>
-          {t("solution_paper.solution_paper.no_solution")} ({wallTimeDisplay})
+            {t("solution_paper.solution_paper.no_solution")} ({wallTimeDisplay})
           </AlertTitle>
           <Typography variant="caption">{solution.Status}</Typography>
 
@@ -147,7 +154,7 @@ export default function SolutionContainer() {
     return (
       <Paper sx={{ m: 3, p: 3 }}>
         <Typography variant="h5" sx={{ mb: 1 }}>
-        {t("solution_paper.solution_paper.solution")}
+          {t("solution_paper.solution_paper.solution")}
         </Typography>
         {children}
       </Paper>
@@ -212,14 +219,14 @@ export default function SolutionContainer() {
         <>
           <LinearProgress />
           <Alert severity="info">
-          {t("solution_paper.solution_paper.calculation_running")}
+            {t("solution_paper.solution_paper.calculation_running")}
             <Typography variant="h3">{renderTimeDelta(timeDelta)}</Typography>
           </Alert>
 
           {/* Show Log while solving */}
           {result.solverLog.length > 0 ? (
             <Box sx={{ my: 3 }}>
-              <LogViewer logs={result.solverLog} />
+              <LogViewer logs={result.solverLog} exportFileNamePrefix="Solver-Log" />
             </Box>
           ) : null}
         </>
@@ -246,7 +253,7 @@ export default function SolutionContainer() {
           {/* Show Decision Variables  */}
           <Accordion elevation={3} defaultExpanded>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            {t("solution_paper.solution_paper.Decision_Variables")}
+              {t("solution_paper.solution_paper.Decision_Variables")}
             </AccordionSummary>
             <AccordionDetails>
               <BasisTable dataRows={VariableColumns} />
@@ -256,7 +263,7 @@ export default function SolutionContainer() {
           {/* Show Constraints  */}
           <Accordion elevation={3}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            {t("solution_paper.solution_paper.Constraints")}
+              {t("solution_paper.solution_paper.Constraints")}
             </AccordionSummary>
             <AccordionDetails>
               <BasisTable dataRows={constraintRows} />
@@ -266,7 +273,9 @@ export default function SolutionContainer() {
           {/* Solver Output View  */}
           <Tooltip
             title={
-              result.solverOutput.length === 0 ? "No output available" : ""
+              result.solverOutput.length === 0
+                ? t("solution_paper.solution_paper.no_solver_outputs")
+                : ""
             }
           >
             <Accordion
@@ -274,24 +283,28 @@ export default function SolutionContainer() {
               disabled={result.solverOutput.length === 0}
             >
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              {t("solution_paper.solution_paper.Solver_Output")}
+                {t("solution_paper.solution_paper.Solver_Output")}
               </AccordionSummary>
               <AccordionDetails>
-                <LogViewer logs={result.solverOutput} />
+                <LogViewer logs={result.solverOutput} exportFileNamePrefix="Solver-Output" />
               </AccordionDetails>
             </Accordion>
           </Tooltip>
 
           {/* Solver Logs View  */}
           <Tooltip
-            title={result.solverLog.length === 0 ? "No logs available" : ""}
+            title={
+              result.solverLog.length === 0
+                ? t("solution_paper.solution_paper.no_solver_logs")
+                : ""
+            }
           >
             <Accordion elevation={3} disabled={result.solverLog.length === 0}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              {t("solution_paper.solution_paper.Solver_Logs")}
+                {t("solution_paper.solution_paper.Solver_Logs")}
               </AccordionSummary>
               <AccordionDetails>
-                <LogViewer logs={result.solverLog} />
+                <LogViewer logs={result.solverLog} exportFileNamePrefix="Solver-Logs"/>
               </AccordionDetails>
             </Accordion>
           </Tooltip>
