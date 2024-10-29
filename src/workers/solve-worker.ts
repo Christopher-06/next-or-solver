@@ -24,7 +24,6 @@ function solverLogCallback(msg: string) {
 }
 
 addEventListener("message", (event) => {
-  console.log("Solver Worker: Received message", event.data);
   // Solve Message
   switch (event.data.solver) {
     case "GLPK":
@@ -39,9 +38,7 @@ addEventListener("message", (event) => {
       });
       break;
     case "HIGHS":
-      console.log("Solver Worker: Solving with HIGHS");
       solveHighs(event.data.problem, event.data.format).then((solution) => {
-        console.log("Solver Worker: HIGHS solution", solution);
         postMessage({ _id: event.data._id, solution });
       });
       break;

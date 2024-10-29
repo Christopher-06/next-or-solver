@@ -7,7 +7,7 @@ import { HighsSolution } from "highs";
 import { useEffect, useRef } from "react";
 import { createUniqueID } from "../helper";
 
-async function workerResponseWaiter(
+function workerResponseWaiter(
   workerRef: React.MutableRefObject<Worker | undefined>,
   _id?: string
 ) {
@@ -22,7 +22,7 @@ async function workerResponseWaiter(
 
     // Listen on error event
     workerRef.current?.addEventListener("error", (event) => {
-      reject(event);
+      reject(new Error(event.message));
     });
   });
 }
@@ -43,8 +43,8 @@ export default function useSolveWorker(
   const workerRef = useRef<Worker>();
 
   // Solver Functions
-  const withGLPK = (problem: string, format: FileFormat) => {
-    return sendAndWaitWorker(
+  const withGLPK = async (problem: string, format: FileFormat) => {
+    return await sendAndWaitWorker(
       {
         solver: "GLPK",
         problem,
@@ -54,8 +54,8 @@ export default function useSolveWorker(
       workerRef
     );
   };
-  const withHIGHS = (problem: string, format: FileFormat) => {
-    return sendAndWaitWorker(
+  const withHIGHS = async (problem: string, format: FileFormat) => {
+    return await sendAndWaitWorker(
       {
         solver: "HIGHS",
         problem,
@@ -68,14 +68,15 @@ export default function useSolveWorker(
 
   // Worker Control
   const startWorker = () => {
-    console.log("Solver Worker: Started");
-
+    console.log("Starting Worker");
     workerRef.current = new Worker(
       new URL("../../workers/solve-worker.ts", import.meta.url)
     );
+
+    // TODO: Wait for worker to be ready
   };
   const terminateWorker = () => {
-    console.log("Solver Worker: Terminated");
+    console.log("Terminating Worker");
     workerRef.current?.terminate();
   };
   const restartWorker = () => {

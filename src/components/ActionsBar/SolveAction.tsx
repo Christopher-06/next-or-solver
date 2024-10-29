@@ -11,7 +11,13 @@
 
 "use client";
 import { useTranslations } from "next-intl";
-import { Button, CircularProgress, Tooltip } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { Select, MenuItem } from "@mui/material";
 import React from "react";
 import {
@@ -20,6 +26,7 @@ import {
   setSolution,
   setSolutionError,
   startSolving,
+  SolvingAbortByUserError,
 } from "@/store/slices/SolveResults";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
@@ -104,9 +111,20 @@ export default function SolveAction() {
     setSolveWorkerRunning(false);
   };
 
+  const handleAbortSolverClick = () => {
+    solveWorker.worker.restart();
+    setSolveWorkerRunning(false);
+    dispatch(
+      setSolutionError({ key: inputType, error: new SolvingAbortByUserError() })
+    );
+  };
+
+  const optionalCircularProgress = solveWorkerRunning ? (
+    <CircularProgress size={20} sx={{ mr: 1 }} />
+  ) : null;
+
   return (
     <>
-      {/* Solve Button */}
       <Button
         variant="contained"
         color="primary"
@@ -119,7 +137,23 @@ export default function SolveAction() {
       {/* Solver Select */}
       <Tooltip
         title={
-          solveWorkerRunning ? t("actions_bar.actions_bar.tooltip_solve") : ""
+          solveWorkerRunning ? (
+            <Box sx={{ display: "flex", flexDirection: "column", p: 1 }}>
+              <Typography sx={{ mb: 1 }} textAlign="center">
+                {t("actions_bar.actions_bar.tooltip_solve")}
+              </Typography>
+
+              <Button
+                variant="contained"
+                color="error"
+                onClick={handleAbortSolverClick}
+              >
+                {t("actions_bar.actions_bar.btn_solve_abort")}
+              </Button>
+            </Box>
+          ) : (
+            ""
+          )
         }
       >
         <Select
@@ -129,15 +163,11 @@ export default function SolveAction() {
           disabled={solveWorkerRunning}
         >
           <MenuItem color="primary" value="HIGHS">
-            {solveWorkerRunning ? (
-              <CircularProgress size={20} sx={{ mr: 1 }} />
-            ) : null}
+            {optionalCircularProgress}
             HIGHS Solver
           </MenuItem>
           <MenuItem value="GLPK">
-            {solveWorkerRunning ? (
-              <CircularProgress size={20} sx={{ mr: 1 }} />
-            ) : null}
+            {optionalCircularProgress}
             GLPK Solver
           </MenuItem>
         </Select>

@@ -2,6 +2,7 @@
   "actions_bar": {
     "actions_bar": {
       "btn_solve": "Solve with",
+      "btn_solve_abort": "Solver Abort",
       "btn_delete_all": "Clear all",
       "tooltip_solve": "Model get solved"
     }

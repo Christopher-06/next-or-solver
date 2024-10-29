@@ -2,6 +2,7 @@
   "actions_bar": {
     "actions_bar": {
       "btn_solve": "Lösen mit",
+      "btn_solve_abort": "Solver Unterbrechen",
       "btn_delete_all": "Alles Löschen",
       "tooltip_solve": "Modell wird gelöst"
     }
