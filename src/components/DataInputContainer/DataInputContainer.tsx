@@ -1,13 +1,13 @@
 /*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*/
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ */
 
 import { RootState } from "@/store/store";
 import { Grid2, Typography } from "@mui/material";
@@ -21,23 +21,19 @@ import { EasyUIVariableDefineError } from "@/lib/easy-ui/validation";
 import { useTranslations } from "next-intl";
 
 export default function DataInputContainer() {
-  const variables = useSelector((state: RootState) =>
-    state.variables.filter(
-      (variable) =>
-        variable.propertyType === "PARAMETER" && variable.name !== ""
-    )
+  const t = useTranslations();
+  const allVariables = useSelector((state: RootState) => state.variables);
+  const variables = allVariables.filter(
+    (variable) => variable.propertyType === "PARAMETER" && variable.name !== ""
   );
 
-  const variableError = useSelector((state: RootState) => {
-    const err = state.textFieldInputs.EASY_UI.currentError;
-    if (err instanceof EasyUIVariableDefineError) {
-      return err;
-    }
-
-    return null;
-  });
-
-  const t = useTranslations();
+  const variableError = useSelector(
+    (state: RootState) => state.textFieldInputs.EASY_UI.currentError
+  );
+  const variableErrorString =
+    variableError instanceof EasyUIVariableDefineError
+      ? variableError.message.split(":")[3].trim()
+      : "";
 
   // No Variables
   if (variables.length === 0) {
@@ -48,7 +44,7 @@ export default function DataInputContainer() {
         alignItems="center"
         textAlign="center"
       >
-        {t("easy_input.easy_input.no_data")}
+        {t("data_input_container.no_parameters")}
       </Typography>
     );
   }
@@ -99,10 +95,6 @@ export default function DataInputContainer() {
       orderedVariables.push(SetSingles.shift()!);
     }
   }
-
-  const variableErrorString = variableError?.message
-    ? variableError.message.split(":")[3].trim()
-    : "";
 
   return (
     <Grid2 container spacing={3} sx={{ m: 2 }}>
