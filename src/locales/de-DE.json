@@ -124,5 +124,6 @@
       "helper3": "Variablennamen müssen mit einem Buchstaben beginnen und dürfen nur Buchstaben, Zahlen und Unterstriche enthalten"
 
     }
-  }
+  },
+  "error": "Fehler"
 }
