@@ -42,6 +42,7 @@ const ModelEditor: React.FC<ModelEditor> = ({ format }) => {
   // Bestimme das Format basierend auf der Dateiendung
   const getFileFormat = (fileName: string | null): FileFormat | null => {
     if (fileName) {
+      if (fileName.endsWith(".gmpl")) return FileFormat.GMPL;
       if (fileName.endsWith(".mod")) return FileFormat.GMPL;
       if (fileName.endsWith(".lp")) return FileFormat.CPLEX_LP;
       if (fileName.endsWith(".mps")) return FileFormat.MPS;
@@ -84,7 +85,7 @@ const ModelEditor: React.FC<ModelEditor> = ({ format }) => {
       {/* TODO: Import outsourcen */}
       <input
         type="file"
-        accept=".mod,.lp,.mps" // Unterstützte Formate
+        accept=".gmpl,.mod,.lp,.mps" // Unterstützte Formate
         style={{ display: "none" }}
         id="file-upload"
         onChange={handleFileChange}

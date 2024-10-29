@@ -21,6 +21,8 @@ import { RootState } from "@/store/store";
 import ValidateEditor from "./ValidateEditor";
 import { Alert, Skeleton } from "@mui/material";
 
+let first = true;
+
 const TextEditor = ({
   value,
   edit,
@@ -42,7 +44,8 @@ const TextEditor = ({
   });
 
   useEffect(() => {
-    if (monaco) {
+    if (monaco && first) {
+      first = false;
       const config = {
         surroundingPairs: [
           { open: "{", close: "}" },
