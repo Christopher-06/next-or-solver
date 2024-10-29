@@ -2,7 +2,8 @@
   "actions_bar": {
     "actions_bar": {
       "btn_solve": "Solve with",
-      "btn_delete_all": "Clear all"
+      "btn_delete_all": "Clear all",
+      "tooltip_solve": "Model get solved"
     }
   },
   "data_input_container": {
