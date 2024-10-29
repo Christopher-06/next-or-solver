@@ -20,6 +20,7 @@ import { setInputError } from "@/store/slices/TextFieldInputs";
 import { RootState } from "@/store/store";
 import ValidateEditor from "./ValidateEditor";
 import { Alert, Skeleton } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 let first = true;
 
@@ -42,6 +43,7 @@ const TextEditor = ({
     const solutionError = state.textFieldInputs[inputType].currentError;
     return solutionError;
   });
+  const t = useTranslations();
 
   useEffect(() => {
     if (monaco && first) {
@@ -341,12 +343,23 @@ const TextEditor = ({
     }
   }, [monaco]);
 
-  const markLineAsError = (error: Error) => {
+  const markLineAsError = (error: Error, format: FileFormat) => {
+    let trail = "";
     if (editorRef.current && monaco) {
       const model = editorRef.current.getModel();
       const parts = error.toString().split(":");
-      const lineNumber = parseInt(parts[2]);
-      const message = parts.length > 2 ? parts.slice(3).join(":").trim() : "";
+      let lineNumber = NaN;
+      let message = error.toString();
+      if (format == FileFormat.GMPL) {
+        lineNumber = parseInt(parts[2]);
+        message = parts.length > 2 ? parts.slice(3).join(":").trim() : "";
+        console.log(message);
+        trail = parts.slice(0, 3).join(":") + ":";
+      } else if (format == FileFormat.CPLEX_LP) {
+        lineNumber = parseInt(parts[1]);
+        message = parts.length > 1 ? parts.slice(2).join(":").trim() : "";
+        trail = parts.slice(0, 2).join(":") + ":";
+      }
       if (!isNaN(lineNumber)) {
         const markers = [
           {
@@ -364,7 +377,7 @@ const TextEditor = ({
     dispatch(
       setInputError({
         key: inputType,
-        error: new Error(error.toString().replace("Error: ", "")),
+        error: new Error(error.toString().replace(trail, "").trim()),
       })
     );
   };
@@ -388,7 +401,7 @@ const TextEditor = ({
         marginBottom: "1px",
       }}
     >
-      {glpkError && <Alert severity="error">{glpkError.toString()}</Alert>}
+      {glpkError && <Alert severity="error">{glpkError.toString().replace("Error", t("error"))}</Alert>}
       <Editor
         height="70vh"
         defaultLanguage={format}

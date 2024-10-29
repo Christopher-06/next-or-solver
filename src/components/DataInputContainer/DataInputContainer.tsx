@@ -18,6 +18,7 @@ import { Variable } from "@/lib/types/Variable";
 import React from "react";
 import ArrayInput from "./ArrayInput/ArrayInput";
 import { EasyUIVariableDefineError } from "@/lib/easy-ui/validation";
+import { useTranslations } from "next-intl";
 
 export default function DataInputContainer() {
   const variables = useSelector((state: RootState) =>
@@ -36,6 +37,8 @@ export default function DataInputContainer() {
     return null;
   });
 
+  const t = useTranslations();
+
   // No Variables
   if (variables.length === 0) {
     return (
@@ -45,7 +48,7 @@ export default function DataInputContainer() {
         alignItems="center"
         textAlign="center"
       >
-        Keine Parameter vorhanden
+        {t("easy_input.easy_input.no_data")}
       </Typography>
     );
   }
