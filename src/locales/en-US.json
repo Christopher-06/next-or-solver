@@ -8,8 +8,10 @@
     }
   },
   "data_input_container": {
+    "no_parameters": "No parameters available",
     "array_input": {
-      "max_2d_arrays": "Max. 2D Arrays are supported"
+      "max_2d_arrays": "Max. 2D Arrays are supported",
+      "no_index_value" : "The set '{index_name}' has no index values"
     },
     "nummeric_input": {
       "value": "Value",
@@ -30,7 +32,8 @@
     "easy_input": {
       "variables": "Variables",
       "modell": "Modell",
-      "data": "Data"
+      "data": "Data",
+      "no_data": "No parameters available"
     }
   },
   "navbar": {
@@ -52,6 +55,8 @@
       "Constraints": "Constraints",
       "Solver_Output": "Solver Output",
       "Solver_Logs": "Solver Log",
+      "no_solver_logs" : "No solver logs available",
+      "no_solver_outputs" : "No solver outputs available",
       "solution": "Solution"
     },
     "basis_table": {
@@ -126,5 +131,6 @@
       "helper2": "Variable names must be unique",
       "helper3": "Variable names must start with a letter and only contain letters, numbers and underscores"
     }
-  }
+  },
+  "error": "Error"
 }

@@ -1,13 +1,13 @@
 /*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*/
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ */
 
 /* eslint-disable react/display-name */
 import { Variable } from "@/lib/types/Variable";
@@ -20,12 +20,14 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NumericInput from "../../NumericInput/NumericInput";
 import { setVariableValue } from "@/store/slices/Variables";
 import { TableComponents, TableVirtuoso } from "react-virtuoso";
+import { useTranslations } from "next-intl";
 
 const VirtuosoTableComponents: TableComponents<string> = {
   Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
@@ -47,6 +49,7 @@ const VirtuosoTableComponents: TableComponents<string> = {
 };
 
 export default function TwoDimension({ variable }: { variable: Variable }) {
+  const t = useTranslations();
   const dispatch = useDispatch();
 
   const dataArray = variable.dataValue as (number | undefined)[];
@@ -58,7 +61,9 @@ export default function TwoDimension({ variable }: { variable: Variable }) {
       (v) => v.name === col_index_name && v.dimensionType === "SET"
     )
   );
-  const col_index_values = col_index_var?.dataValue as string[];
+  const col_index_values = col_index_var?.dataValue
+    ? (col_index_var.dataValue as string[])
+    : [];
 
   // Get row index variable
   const row_index_name = variable.dimList[1];
@@ -67,7 +72,9 @@ export default function TwoDimension({ variable }: { variable: Variable }) {
       (v) => v.name === row_index_name && v.dimensionType === "SET"
     )
   );
-  const row_index_values = row_index_var?.dataValue as string[];
+  const row_index_values = row_index_var?.dataValue
+    ? (row_index_var.dataValue as string[])
+    : [];
 
   const DATA_ARRAY_LENGTH = col_index_values.length * row_index_values.length;
 
@@ -90,20 +97,34 @@ export default function TwoDimension({ variable }: { variable: Variable }) {
   };
 
   const fixedHeaderContent = () => {
+    const emptyIndexSet = (
+      <TableCell align="center" sx={{ backgroundColor: "background.paper" }}>
+        <Typography variant="body1" color="error">
+          {t("data_input_container.array_input.no_index_value").replace(
+            "{index_name}",
+            col_index_values.length === 0 ? col_index_name : row_index_name
+          )}
+        </Typography>
+      </TableCell>
+    );
+
+    const goodHeaders = col_index_values.map((col_name, col_idx) => (
+      <TableCell
+        align="center"
+        sx={{ backgroundColor: "background.paper" }}
+        key={col_idx}
+      >
+        {col_name}
+      </TableCell>
+    ));
+
     return (
       <TableRow>
         <TableCell align="center" sx={{ backgroundColor: "background.paper" }}>
           {variable.name}
         </TableCell>
-        {col_index_values.map((col_name, col_idx) => (
-          <TableCell
-            align="center"
-            sx={{ backgroundColor: "background.paper" }}
-            key={col_idx}
-          >
-            {col_name}
-          </TableCell>
-        ))}
+        {/* Show Error when no Column / Row Index Values are found */}
+        {DATA_ARRAY_LENGTH === 0 ? emptyIndexSet : goodHeaders}
       </TableRow>
     );
   };

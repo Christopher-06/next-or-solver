@@ -242,7 +242,9 @@ export default function SolutionContainer() {
           {/* Solver Output View  */}
           <Tooltip
             title={
-              result.solverOutput.length === 0 ? "No output available" : ""
+              result.solverOutput.length === 0
+                ? t("solution_paper.solution_paper.no_solver_outputs")
+                : ""
             }
           >
             <Accordion
@@ -253,21 +255,25 @@ export default function SolutionContainer() {
                 {t("solution_paper.solution_paper.Solver_Output")}
               </AccordionSummary>
               <AccordionDetails>
-                <LogViewer logs={result.solverOutput} />
+                <LogViewer logs={result.solverOutput} exportFileNamePrefix="Solver-Output" />
               </AccordionDetails>
             </Accordion>
           </Tooltip>
 
           {/* Solver Logs View  */}
           <Tooltip
-            title={result.solverLog.length === 0 ? "No logs available" : ""}
+            title={
+              result.solverLog.length === 0
+                ? t("solution_paper.solution_paper.no_solver_logs")
+                : ""
+            }
           >
             <Accordion elevation={3} disabled={result.solverLog.length === 0}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 {t("solution_paper.solution_paper.Solver_Logs")}
               </AccordionSummary>
               <AccordionDetails>
-                <LogViewer logs={result.solverLog} />
+                <LogViewer logs={result.solverLog} exportFileNamePrefix="Solver-Logs"/>
               </AccordionDetails>
             </Accordion>
           </Tooltip>
@@ -283,10 +289,10 @@ export default function SolutionContainer() {
           <Typography>{result.error.message}</Typography>
         </Alert>
 
-        {/* Show Log while solving */}
+        {/* Show Log on error */}
         {result.solverLog.length > 0 ? (
           <Box sx={{ my: 3 }}>
-            <LogViewer logs={result.solverLog} />
+            <LogViewer logs={result.solverLog} exportFileNamePrefix="Solver-Log with Errors" />
           </Box>
         ) : null}
       </>
@@ -304,7 +310,7 @@ export default function SolutionContainer() {
         {/* Show Log while solving */}
         {result.solverLog.length > 0 ? (
           <Box sx={{ my: 3 }}>
-            <LogViewer logs={result.solverLog} />
+            <LogViewer logs={result.solverLog} exportFileNamePrefix="Solver-Log Loading" />
           </Box>
         ) : null}
       </>
