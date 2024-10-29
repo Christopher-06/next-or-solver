@@ -27,7 +27,8 @@
     "easy_input": {
       "variables": "Variablen",
       "modell": "Modell",
-      "data": "Daten"
+      "data": "Daten",
+      "no_data": "Keine Parameter vorhanden"
     }
   },
   "navbar": {

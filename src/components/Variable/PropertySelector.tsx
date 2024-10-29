@@ -29,8 +29,8 @@ const PROPERTY_COLOR: { [key in VarPropertyType]: "success" | "secondary" } = {
 };
 
 const PROPERTY_LABEL_KEYS : { [key in VarPropertyType]: string} = {
-  DECISION: "variable.type.system",
-  PARAMETER: "variable.type.decision"
+  DECISION: "variable.type.decision",
+  PARAMETER: "variable.type.system"
 };
 
 export default function PropertySelector({

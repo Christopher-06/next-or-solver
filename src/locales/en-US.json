@@ -28,7 +28,8 @@
     "easy_input": {
       "variables": "Variables",
       "modell": "Modell",
-      "data": "Data"
+      "data": "Data",
+      "no_data": "No parameters available"
     }
   },
   "navbar": {
