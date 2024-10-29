@@ -35,8 +35,6 @@ export default function DataInputContainer() {
       ? variableError.message.split(":")[3].trim()
       : "";
 
-  const t = useTranslations();
-
   // No Variables
   if (variables.length === 0) {
     return (
