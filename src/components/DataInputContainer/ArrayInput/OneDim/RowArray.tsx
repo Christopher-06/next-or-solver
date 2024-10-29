@@ -1,21 +1,22 @@
 /*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*/
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ */
 
 "use client";
 import { Variable } from "@/lib/types/Variable";
 import { setVariableValue } from "@/store/slices/Variables";
 import { RootState } from "@/store/store";
-import { Box, styled } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import NumericInput from "../../NumericInput/NumericInput";
+import { useTranslations } from "next-intl";
 
 const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
@@ -23,6 +24,7 @@ const ListItem = styled("li")(({ theme }) => ({
 
 export default function ItemsChipArray({ variable }: { variable: Variable }) {
   const dispatch = useDispatch();
+  const t = useTranslations();
 
   const dataArray = variable.dataValue as (number | undefined)[];
 
@@ -32,7 +34,9 @@ export default function ItemsChipArray({ variable }: { variable: Variable }) {
       (v) => v.name === col_index_name && v.dimensionType === "SET"
     )
   );
-  const col_index_values = col_index_var?.dataValue as string[];
+  const col_index_values = col_index_var?.dataValue
+    ? (col_index_var.dataValue as string[])
+    : [];
 
   const valueSetter = (index: number) => {
     return (value: number | undefined) => {
@@ -67,6 +71,17 @@ export default function ItemsChipArray({ variable }: { variable: Variable }) {
       }}
       component="ul"
     >
+      {/* Show no index value error message */}
+      {col_index_values.length === 0 ? (
+        <Typography variant="body1" color="error">
+          {t("data_input_container.array_input.no_index_value").replace(
+            "{index_name}",
+            col_index_name
+          )}
+        </Typography>
+      ) : null}
+
+      {/* Build up the array input */}
       {col_index_values.map((col_name, idx) => {
         return (
           <ListItem key={variable._id + col_name}>

@@ -8,7 +8,8 @@
   "data_input_container": {
     "no_parameters": "Keine Parameter vorhanden",
     "array_input": {
-      "max_2d_arrays": "Max. 2D Arrays werden unterstützt"
+      "max_2d_arrays": "Max. 2D Arrays werden unterstützt",
+      "no_index_value" : "Das Set '{index_name}' hat keine Indexwerte"
     },
     "nummeric_input":{
       "value": "Wert",
@@ -51,6 +52,8 @@
       "Constraints": "Restriktionen",
       "Solver_Output": "Solver Ausgabe",
       "Solver_Logs": "Solver Protokoll",
+      "no_solver_logs" : "Keine Solver Logs verfügbar",
+      "no_solver_outputs" : "Keine Solver Ausgaben verfügbar",
       "solution": "Lösung"
     },  
     "basis_table": {

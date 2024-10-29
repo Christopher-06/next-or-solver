@@ -1,13 +1,13 @@
 /*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*/
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ */
 
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useTranslations } from "next-intl"; //Sprache
@@ -25,14 +25,14 @@ export default function ArrayDimensionsInput({ var_idx }: { var_idx: number }) {
   const t = useTranslations(); //Sprache
 
   const dispatch = useDispatch();
-  const variable = useSelector((state: RootState) => state.variables[var_idx]);
+  const allVariables = useSelector((state: RootState) => state.variables);
+  const variable = allVariables[var_idx];
 
   // validate form
-  const okayDimIndices = useSelector((state: RootState) =>
-    state.variables
-      .filter((v) => variable.dimList.includes(v.name))
-      .map((v) => v.name)
-  );
+  const okayDimIndices = allVariables
+    .filter((v) => variable.dimList.includes(v.name))
+    .map((v) => v.name);
+
   const badDimIndices = variable.dimList.filter(
     (d) => !okayDimIndices.includes(d)
   );

@@ -1,13 +1,13 @@
 /*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*/
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ */
 
 import { ForAllType } from "@/lib/types/Modell";
 import { Button, Tooltip } from "@mui/material";
@@ -30,13 +30,12 @@ export default function ForAllView({
   const { isInside, setIsInside, setKeepInside } = useMouseContext();
   const [openModal, setOpenModal] = React.useState(false);
 
-  const all_users_set_variable_names = useSelector((state: RootState) =>
-    state.variables
-      .filter(
-        (variable) => variable.dimensionType === "SET" && variable.name !== ""
-      )
-      .map((variable) => variable.name)
-  );
+  const all_user_variables = useSelector((state: RootState) => state.variables);
+  const all_users_set_variable_names = all_user_variables
+    .filter(
+      (variable) => variable.dimensionType === "SET" && variable.name !== ""
+    )
+    .map((variable) => variable.name);
 
   // validation
   const helperText = "";
