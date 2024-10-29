@@ -44,7 +44,7 @@ const ExportButton: React.FC<ExportButtonProps> = ({
 
   // Bestimme das Format basierend auf der Dateiendung
   const getFileExtension = (format: FileFormat): string | null => {
-    if (format === FileFormat.GMPL) return ".mod";
+    if (format === FileFormat.GMPL) return ".gmpl";
     if (format === FileFormat.CPLEX_LP) return ".lp";
     if (format === FileFormat.MPS) return ".mps";
     return null;

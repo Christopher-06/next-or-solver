@@ -29,7 +29,8 @@
     "easy_input": {
       "variables": "Variables",
       "modell": "Modell",
-      "data": "Data"
+      "data": "Data",
+      "no_data": "No parameters available"
     }
   },
   "navbar": {
@@ -125,5 +126,6 @@
       "helper2": "Variable names must be unique",
       "helper3": "Variable names must start with a letter and only contain letters, numbers and underscores"
     }
-  }
+  },
+  "error": "Error"
 }

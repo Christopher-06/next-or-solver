@@ -18,7 +18,7 @@ import { readGMPLintoGLPK } from "@/lib/easy-ui/validation";
 import glpk from "glpk.js";
 import { setInputError } from "@/store/slices/TextFieldInputs";
 
-export default function ValidateEditor({setMarker, deleteMarker, format}: {setMarker: ((error: Error) => void), deleteMarker: (() => void), format: FileFormat}) {
+export default function ValidateEditor({setMarker, deleteMarker, format}: {setMarker: ((error: Error, format: FileFormat) => void), deleteMarker: (() => void), format: FileFormat}) {
   const inputType = useSelector((state: RootState) => state.inputType);
   const textFieldInputs = useSelector(
     (state: RootState) => state.textFieldInputs
@@ -27,7 +27,6 @@ export default function ValidateEditor({setMarker, deleteMarker, format}: {setMa
   const value = textFieldInputs[inputType].textFieldValue;
 
   const validateEditor = useCallback(() => {
-    console.log("validate");
     try {
         validateInput(value, format);
     } catch (err) {
@@ -69,7 +68,7 @@ export default function ValidateEditor({setMarker, deleteMarker, format}: {setMa
         } 
     } catch (error) {
         if (error instanceof Error) {
-            setMarker(error);
+            setMarker(error, format);
         } else {
             deleteMarker();
             dispatch(

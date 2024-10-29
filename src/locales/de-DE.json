@@ -28,7 +28,8 @@
     "easy_input": {
       "variables": "Variablen",
       "modell": "Modell",
-      "data": "Daten"
+      "data": "Daten",
+      "no_data": "Keine Parameter vorhanden"
     }
   },
   "navbar": {
@@ -125,5 +126,6 @@
       "helper3": "Variablennamen müssen mit einem Buchstaben beginnen und dürfen nur Buchstaben, Zahlen und Unterstriche enthalten"
 
     }
-  }
+  },
+  "error": "Fehler"
 }
