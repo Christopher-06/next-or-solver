@@ -393,7 +393,7 @@ const TextEditor = ({
   return (
     <div
       style={{
-        height: "70vh",
+        height: "auto",
         outline: "1px solid #888888",
         marginTop: "20px",
         marginLeft: "1px",
@@ -413,6 +413,9 @@ const TextEditor = ({
           autoSurround: "languageDefined",
           autoIndent: "advanced",
           formatOnType: true,
+          scrollbar: {
+            alwaysConsumeMouseWheel: false
+          },
         }}
         value={value}
         onChange={edit}
