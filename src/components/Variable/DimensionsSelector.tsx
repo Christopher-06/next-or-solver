@@ -16,6 +16,7 @@ import LooksOneIcon from "@mui/icons-material/LooksOne";
 import CategoryIcon from "@mui/icons-material/Category";
 import { VarDimensionType } from "@/lib/types/Variable";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 const ALL_DIMENSION_TYPES: VarDimensionType[] = ["SKALAR", "ARRAY", "SET"];
 
@@ -23,6 +24,12 @@ const DIMENSION_ICON: { [key in VarDimensionType]: JSX.Element } = {
   SKALAR: <LooksOneIcon />,
   ARRAY: <BackupTableIcon />,
   SET: <CategoryIcon />,
+};
+
+const DIMENSION_TYPES_KEYS : { [key in VarDimensionType]: string} = {
+  SKALAR: "dimension.type.skalar",
+  ARRAY: "dimension.type.array",
+  SET: "dimension.type.set"
 };
 
 export default function DataTypeSelector({
@@ -37,6 +44,7 @@ export default function DataTypeSelector({
   allowSet?: boolean;
 }) {
   const { isInside, setIsInside } = useMouseContext();
+  const t = useTranslations();
 
   const onChange = (e: { target: { value: string } }) => {
     setDimensionType(ALL_DIMENSION_TYPES[parseInt(e.target.value)]);
@@ -83,7 +91,7 @@ export default function DataTypeSelector({
         .filter((type) => allowSet || type !== "SET")
         .map((dimensionType, index) => (
           <MenuItem key={index} value={index}>
-            {dimensionType}
+            {t(DIMENSION_TYPES_KEYS[dimensionType])}
           </MenuItem>
         ))}
       </Select>

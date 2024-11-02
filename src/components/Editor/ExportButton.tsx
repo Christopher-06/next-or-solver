@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux";
 import { setInputError } from "@/store/slices/TextFieldInputs";
 import { InputType } from "@/store/slices/InputType";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface ExportButtonProps {
   content: string;
@@ -39,8 +40,8 @@ const ExportButton: React.FC<ExportButtonProps> = ({
   easyUiVariables = null,
 }) => {
   const dispatch = useDispatch();
-
   const [errorSnackbar, setErrorSnackbar] = useState<null | string>(null);
+  const t = useTranslations();
 
   // Bestimme das Format basierend auf der Dateiendung
   const getFileExtension = (format: FileFormat): string | null => {
@@ -119,7 +120,7 @@ const ExportButton: React.FC<ExportButtonProps> = ({
         }}
       >
         <FileDownloadIcon sx={{ mr: 1 }} />
-        Export {targetFormat}
+        {t("buttons.export")} {targetFormat}
       </Button>
 
       <Snackbar

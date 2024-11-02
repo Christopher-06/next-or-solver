@@ -47,7 +47,7 @@ export default function SolveAction() {
   );
   let textFieldValue = textFieldInputs[inputType].textFieldValue;
   let currentFormat = FILEFORMAT_MAP[inputType];
-  const [selectedSolver, setSelectedSolver] = React.useState("GLPK");
+  const [selectedSolver, setSelectedSolver] = React.useState("HIGHS");
   const easyUiModell: Modell = useSelector((state: RootState) => state.modell);
   const easyUiVariables: Variable[] = useSelector(
     (state: RootState) => state.variables
@@ -164,11 +164,11 @@ export default function SolveAction() {
         >
           <MenuItem color="primary" value="HIGHS">
             {optionalCircularProgress}
-            HIGHS Solver
+            {t("buttons.solver.highs")}
           </MenuItem>
           <MenuItem value="GLPK">
             {optionalCircularProgress}
-            GLPK Solver
+            {t("buttons.solver.glpk")}
           </MenuItem>
         </Select>
       </Tooltip>

@@ -57,7 +57,8 @@
       "Solver_Logs": "Solver Log",
       "no_solver_logs" : "No solver logs available",
       "no_solver_outputs" : "No solver outputs available",
-      "solution": "Solution"
+      "solution": "Solution",
+      "messages": "Messages"
     },
     "basis_table": {
       "upper": "Upper Bound",
@@ -88,7 +89,8 @@
         "license_text_4": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
         "disclaimer": "Disclaimer",
         "disclaimer_text": "This software is provided under the GNU General Public License Version 2 (GPL v2). It is provided without any warranty, either express or implied. The authors accept no liability for damages, whether direct or indirect, arising from the use of this software.",
-        "close": "Close"
+        "close": "Close",
+        "imprint": "Imprint"
       }
     },
   "input": {
@@ -104,10 +106,12 @@
       "label": "Objective Function"
     },
     "constraint":{
-      "formular_label": "Form",
+      "formular_label": "Constraint",
       "delete_btn": "Delete",
       "index_label": "Index",
-      "choose_allQuantor": "Choose AllQuantor operations"
+      "choose_allQuantor": "Choose AllQuantor operations",
+      "close": "Close",
+      "all_quantor_dialog": "AllQuantor Dialog"
     }
   },
   "variable": {
@@ -115,9 +119,9 @@
       "label": "Name"
     },
     "type": {
-      "system": "System",
-      "decision": "Decision",
-      "label": "Typ",
+      "system": "Parameter",
+      "decision": "Variable",
+      "label": "Type",
       "helper": "Choose the type of variable",
       "continuous": "Continous",
       "integer": "Integer",
@@ -132,5 +136,20 @@
       "helper3": "Variable names must start with a letter and only contain letters, numbers and underscores"
     }
   },
-  "error": "Error"
+  "dimension": {
+    "type": {
+      "skalar": "Scalar",
+      "array": "Vector",
+      "set": "Set"
+    }
+  },
+  "error": "Error",
+  "buttons": {
+    "export": "Export",
+    "import": "Import",
+    "solver": {
+      "glpk": "GLPK Solver",
+      "highs": "HiGHS Solver"
+    }
+  }
 }

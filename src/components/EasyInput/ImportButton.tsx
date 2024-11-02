@@ -17,10 +17,12 @@ import { Easy_UI } from "@/lib/types/Modell";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { setWholeModellState } from "@/store/slices/Modell";
 import { setWholeVariableList } from "@/store/slices/Variables";
+import { useTranslations } from "next-intl";
 
 export default function EASYUI_Export_Button() {
   const dispatch = useDispatch();
   const [errorSnackbar, setErrorSnackbar] = React.useState<string | null>(null);
+  const t = useTranslations();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -60,7 +62,7 @@ export default function EASYUI_Export_Button() {
           style={{ marginTop: "10px", marginRight: 3, marginLeft: 3 }}
         >
           <FileUploadIcon sx={{ mr: 1 }} />
-          Import
+          {t("buttons.import")}
         </Button>
       </label>
 

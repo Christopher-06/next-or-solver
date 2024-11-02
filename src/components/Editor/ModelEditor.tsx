@@ -22,6 +22,7 @@ import { setTextFieldValue } from "@/store/slices/TextFieldInputs";
 import TextEditor from "./Editor";
 import { OnChange } from "@monaco-editor/react";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface ModelEditor {
   format: FileFormat;
@@ -38,6 +39,7 @@ const ModelEditor: React.FC<ModelEditor> = ({ format }) => {
     dispatch(setTextFieldValue({ value, key: inputType }));
   };
   const [errorSnackbar, setErrorSnackbar] = useState<null | string>(null);
+  const t = useTranslations();
 
   // Bestimme das Format basierend auf der Dateiendung
   const getFileFormat = (fileName: string | null): FileFormat | null => {
@@ -80,8 +82,7 @@ const ModelEditor: React.FC<ModelEditor> = ({ format }) => {
   };
 
   return (
-    <div style={{ overflow: "auto" }}>
-      {/* Datei hochladen */}
+    <>
       {/* TODO: Import outsourcen */}
       <input
         type="file"
@@ -91,9 +92,9 @@ const ModelEditor: React.FC<ModelEditor> = ({ format }) => {
         onChange={handleFileChange}
       />
       <label htmlFor="file-upload">
-        <Button variant="contained" component="span">
+        <Button variant="contained" component="span" style={{ marginTop: "10px", marginRight: 3, marginLeft: 3 }} >
           <FileUploadIcon sx={{ mr: 1 }} />
-          Import
+          {t("buttons.import")}
         </Button>
       </label>
 
@@ -111,7 +112,7 @@ const ModelEditor: React.FC<ModelEditor> = ({ format }) => {
         onClose={() => setErrorSnackbar(null)}
         message={"[Convert Error] " + errorSnackbar}
       />
-    </div>
+    </>
   );
 };
 
