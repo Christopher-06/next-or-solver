@@ -164,7 +164,7 @@ export default function ForAllDialog({
       aria-labelledby="draggable-dialog-title"
     >
       <DialogTitle style={{ cursor: "move" }} id="draggable-dialog-title">
-        AllQuantor Dialog
+        {t("modell_container.constraint.all_quantor_dialog")}
       </DialogTitle>
       <DialogContent>
         <Stack direction="column" spacing={1} sx={{ p: 3 }}>
@@ -177,7 +177,7 @@ export default function ForAllDialog({
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleClose}>
-          Close
+          {t("modell_container.constraint.close")}
         </Button>
       </DialogActions>
     </Dialog>

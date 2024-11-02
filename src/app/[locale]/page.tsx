@@ -11,7 +11,7 @@
 
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Tab, Tabs } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 import GmplInput from "@/components/Inputs/GmplInput";
@@ -31,6 +31,21 @@ export default function Home() {
   const handleChange = (event: React.ChangeEvent<object>, newValue: string) => {
     dispatch(changeInputType(newValue as InputType));
   };
+
+  useEffect(() => {
+    const handleScroll = (event: WheelEvent) => {
+      if (event.shiftKey) {
+        event.preventDefault();
+        window.scrollBy(0, event.deltaY);
+      }
+    };
+
+    window.addEventListener('wheel', handleScroll);
+
+    return () => {
+      window.removeEventListener('wheel', handleScroll);
+    };
+  })
 
   return (
     <Container sx={{minHeight:"100vh"}} maxWidth={false}>

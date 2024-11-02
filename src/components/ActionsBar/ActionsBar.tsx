@@ -1,42 +1,32 @@
 /*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, version 2 of the License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*/
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ */
 
 "use client";
 import { useTranslations } from "next-intl";
 import { Button, Grid2, Stack } from "@mui/material";
-import { Select, MenuItem } from "@mui/material";
 import React from "react";
-import {
-  appendSolutionSolverOutput,
-  appendSolutionSolverLog,
-  clearSolution,
-  setSolution,
-  setSolutionError,
-  startSolving,
-} from "@/store/slices/SolveResults";
+import { clearSolution } from "@/store/slices/SolveResults";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAllVariables } from "@/store/slices/Variables";
 import { RootState } from "@/store/store";
-import solveHIGHS from "@/lib/highs";
-import solveGLPK from "@/lib/glpk_solver";
 import ExportButton from "../Editor/ExportButton";
 import { FileFormat } from "../Converter/FileFormat";
 import { InputType } from "@/store/slices/InputType";
-import { setInputError, setTextFieldValue } from "@/store/slices/TextFieldInputs";
+import { setTextFieldValue } from "@/store/slices/TextFieldInputs";
 import { clearAllModell } from "@/store/slices/Modell";
-import ConvertToGMPL from "@/lib/easy-ui/converter";
 import { Modell } from "@/lib/types/Modell";
 import { Variable } from "@/lib/types/Variable";
+import SolveAction from "./SolveAction";
 
-const FILEFORMAT_MAP: { [key in InputType]: FileFormat } = {
+export const FILEFORMAT_MAP: { [key in InputType]: FileFormat } = {
   GMPL: FileFormat.GMPL,
   CPLEX_LP: FileFormat.CPLEX_LP,
   MPS: FileFormat.MPS,
@@ -50,9 +40,8 @@ export default function ActionsBar() {
   const textFieldInputs = useSelector(
     (state: RootState) => state.textFieldInputs
   );
-  let textFieldValue = textFieldInputs[inputType].textFieldValue;
-  let currentFormat = FILEFORMAT_MAP[inputType];
-  const [selectedSolver, setSelectedSolver] = React.useState("GLPK");
+  const textFieldValue = textFieldInputs[inputType].textFieldValue;
+  const currentFormat = FILEFORMAT_MAP[inputType];
   const easyUiModell: Modell = useSelector((state: RootState) => state.modell);
   const easyUiVariables: Variable[] = useSelector(
     (state: RootState) => state.variables
@@ -71,55 +60,6 @@ export default function ActionsBar() {
           value: "",
         })
       );
-    }
-  };
-
-  const handleSolveClick = async () => {
-    dispatch(startSolving(inputType));
-
-    try {
-      // inject conversion from EASY UI to GMPL
-      if (inputType == "EASY_UI") {
-        console.log("Converting EASY UI to GMPL");
-        textFieldValue = ConvertToGMPL(easyUiModell, easyUiVariables, true);
-        currentFormat = FileFormat.GMPL;
-      }
-
-      if (selectedSolver === "HIGHS") {
-        // Run HIGHs solver
-        const solution = await solveHIGHS(textFieldValue, currentFormat);
-        dispatch(setSolution({ key: inputType, solution }));
-      } else if (selectedSolver === "GLPK") {
-        // Run GLPK solver
-        const solution = solveGLPK(
-          textFieldValue,
-          currentFormat,
-          // Logging function
-          (msg) => {
-            dispatch(appendSolutionSolverLog({ key: inputType, log: msg }));
-          },
-          // Output function
-          (msg: string) => {
-            dispatch(appendSolutionSolverOutput({ key: inputType, out: msg }));
-          }
-        );
-        dispatch(setSolution({ key: inputType, solution }));
-      } else {
-        // No solver found
-        setSolutionError({
-          key: inputType,
-          error: new Error("Solver nicht gefunden"),
-        });
-      }
-
-      // clear input error
-      dispatch(setInputError({ key: inputType, error: null }));
-    } catch (error) {
-      console.log("Error while solving", error);
-      if (error instanceof Error) {
-        dispatch(setSolutionError({ key: inputType, error }));
-        dispatch(setInputError({ key: inputType, error }));
-      }
     }
   };
 
@@ -165,24 +105,8 @@ export default function ActionsBar() {
             >
               {t("actions_bar.actions_bar.btn_delete_all")}
             </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleSolveClick}
-            >
-              {t("actions_bar.actions_bar.btn_solve")}
-            </Button>
 
-            <Select
-              value={selectedSolver}
-              onChange={(e) => setSelectedSolver(e.target.value)}
-              sx={{ ml: 3 }}
-            >
-              <MenuItem color="primary" value="HIGHS">
-                HIGHS Solver
-              </MenuItem>
-              <MenuItem value="GLPK">GLPK Solver</MenuItem>
-            </Select>
+            <SolveAction />
           </Stack>
         </Grid2>
       </Grid2>

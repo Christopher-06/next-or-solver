@@ -16,10 +16,12 @@ import { useSelector } from "react-redux";
 import { Easy_UI } from "@/lib/types/Modell";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { RootState } from "@/store/store";
+import { useTranslations } from "next-intl";
 
 export default function EASYUI_Export_Button() {
   const model = useSelector((state: RootState) => state.modell);
   const variables = useSelector((state: RootState) => state.variables);
+  const t = useTranslations();
 
   const saveFile = () => {
     const easy_ui: Easy_UI = { model: model, variables: variables };
@@ -44,7 +46,7 @@ export default function EASYUI_Export_Button() {
         style={{ marginTop: "10px", marginRight: 3, marginLeft: 3 }}
       >
         <FileDownloadIcon sx={{ mr: 1 }} />
-        Export
+        {t("buttons.export")}
       </Button>
     </>
   );

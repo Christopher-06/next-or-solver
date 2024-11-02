@@ -22,6 +22,7 @@ import { TableVirtuoso, TableComponents } from "react-virtuoso";
 import { Pair } from "@/lib/helper";
 import { Button } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import { useTranslations } from "next-intl";
 
 
 const VirtuosoTableComponents: TableComponents<Pair<string, number>> = {
@@ -56,6 +57,7 @@ export default function LogViewer({
   exportFileNamePrefix: string;
 }) {
   const height = 100 + Math.min(300, logs.length * 40);
+  const t = useTranslations();
 
   const onClickExport = () => {
     // Create Export File
@@ -80,7 +82,7 @@ export default function LogViewer({
       <TableRow sx={{ backgroundColor: "background.paper" }}>
         <TableCell></TableCell>
         <TableCell sx={{ w: 1 }} colSpan={8}>
-          Messages
+        {t("solution_paper.solution_paper.messages")}
           {/* Export Button at the top right corner */}
           <Button
             variant="contained"
@@ -89,7 +91,7 @@ export default function LogViewer({
             onClick={onClickExport}
           >
             <FileDownloadIcon sx={{ mr: 1 }} />
-            Export
+            {t("buttons.export")}
           </Button>
         </TableCell>
       </TableRow>
@@ -123,6 +125,7 @@ export default function LogViewer({
         components={VirtuosoTableComponents}
         fixedHeaderContent={fixedHeaderContent}
         itemContent={rowContent}
+        followOutput="smooth"
       />
     </Paper>
   );

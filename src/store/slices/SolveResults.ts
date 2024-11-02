@@ -15,6 +15,13 @@ import { InputType } from "./InputType";
 import { HighsSolution } from "highs";
 import { Pair } from "@/lib/helper";
 
+export class SolvingAbortByUserError extends Error {
+  constructor() {
+    super("Solving aborted by User");
+    this.name = "SolvingAbortError";
+  }
+}
+
 const initialState: {
   [key in InputType]: {
     solution: HighsSolution | undefined;

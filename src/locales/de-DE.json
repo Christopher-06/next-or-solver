@@ -2,7 +2,9 @@
   "actions_bar": {
     "actions_bar": {
       "btn_solve": "Lösen mit",
-      "btn_delete_all": "Alles Löschen"
+      "btn_solve_abort": "Solver Unterbrechen",
+      "btn_delete_all": "Alles Löschen",
+      "tooltip_solve": "Modell wird gelöst"
     }
   },
   "data_input_container": {
@@ -54,7 +56,8 @@
       "Solver_Logs": "Solver Protokoll",
       "no_solver_logs" : "Keine Solver Logs verfügbar",
       "no_solver_outputs" : "Keine Solver Ausgaben verfügbar",
-      "solution": "Lösung"
+      "solution": "Lösung",
+      "messages": "Nachrichten"
     },  
     "basis_table": {
       "upper": "Obere Grenze",
@@ -85,12 +88,13 @@
       "license_text_4": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
       "disclaimer": "Haftungsausschluss",
       "disclaimer_text": "Diese Software wird unter der GNU General Public License Version 2 (GPL v2) bereitgestellt. Sie wird ohne Gewährleistung jeglicher Art, weder ausdrücklich noch stillschweigend, zur Verfügung gestellt. Die Autoren übernehmen keine Haftung für Schäden, die direkt oder indirekt aus der Nutzung dieser Software entstehen.",
-      "close": "Schließen"
+      "close": "Schließen",
+      "imprint": "Impressum"
     }
   },
   "input": {
     "function_type": {
-      "name": "Type",
+      "name": "Typ",
       "min": "min",
       "max": "max"
     },
@@ -101,10 +105,12 @@
       "label": "Zielfunktion"
     },
     "constraint":{
-      "formular_label": "Formular",
+      "formular_label": "Restriktion",
       "delete_btn": "Löschen",
       "index_label": "Index",
-      "choose_allQuantor": "Wähle AllQuantor Operationen"
+      "choose_allQuantor": "Wähle AllQuantor Operationen",
+      "close": "Schließen",
+      "all_quantor_dialog": "AllQuantor Dialog"
     }
   },
   "variable": {
@@ -112,11 +118,11 @@
       "label": "Name"
     },
     "type": {
-      "system": "System",
-      "decision": "Entscheidung",
+      "system": "Parameter",
+      "decision": "Variable",
       "label": "Typ",
       "helper": "Wähle den Typen der Variable",
-      "continuous": "Kontinuierlich",
+      "continuous": "Reell",
       "integer": "Ganzzahlig",
       "binary": "Binär"
     },
@@ -130,5 +136,20 @@
 
     }
   },
-  "error": "Fehler"
+  "dimension": {
+    "type": {
+      "skalar": "Skalar",
+      "array": "Vector",
+      "set": "Menge"
+    }
+  },
+  "error": "Fehler",
+  "buttons": {
+    "export": "Export",
+    "import": "Import",
+    "solver": {
+      "glpk": "GLPK Solver",
+      "highs": "HiGHS Solver"
+    }
+  }
 }

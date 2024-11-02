@@ -203,39 +203,7 @@ export default function SolutionContainer() {
     };
   }, [result, timeDelta]);
 
-  if (result.error !== undefined) {
-    return renderinPaper(
-      <Alert severity="error">
-        <AlertTitle>{t("solution_paper.solution_paper.error")}</AlertTitle>
-        <Typography>{result.error.message}</Typography>
-      </Alert>
-    );
-  }
-
-  if (result.solution === undefined) {
-    // Show loading message
-    if (result.startTime !== undefined) {
-      return renderinPaper(
-        <>
-          <LinearProgress />
-          <Alert severity="info">
-            {t("solution_paper.solution_paper.calculation_running")}
-            <Typography variant="h3">{renderTimeDelta(timeDelta)}</Typography>
-          </Alert>
-
-          {/* Show Log while solving */}
-          {result.solverLog.length > 0 ? (
-            <Box sx={{ my: 3 }}>
-              <LogViewer logs={result.solverLog} exportFileNamePrefix="Solver-Log" />
-            </Box>
-          ) : null}
-        </>
-      );
-    }
-
-    // No solution available
-    return <></>;
-  } else {
+  if (result.solution !== undefined) {
     // prepare data for tables
     const constraintRows: SolutionTableDataRow[] = [];
     for (const constraint of Object.values(result.solution.Rows)) {
@@ -245,6 +213,7 @@ export default function SolutionContainer() {
       result.solution.Columns
     );
 
+    // show solution
     return renderinPaper(
       <>
         {renderAlert(result.solution, result.startTime, result.endTime)}
@@ -311,5 +280,43 @@ export default function SolutionContainer() {
         </Box>
       </>
     );
+  } else if (result.error !== undefined) {
+    // show error message
+    return renderinPaper(
+      <>
+        <Alert severity="error">
+          <AlertTitle>{t("solution_paper.solution_paper.error")}</AlertTitle>
+          <Typography>{result.error.message}</Typography>
+        </Alert>
+
+        {/* Show Log on error */}
+        {result.solverLog.length > 0 ? (
+          <Box sx={{ my: 3 }}>
+            <LogViewer logs={result.solverLog} exportFileNamePrefix="Solver-Log with Errors" />
+          </Box>
+        ) : null}
+      </>
+    );
+  } else if (result.startTime !== undefined) {
+    // Show loading message
+    return renderinPaper(
+      <>
+        <LinearProgress />
+        <Alert severity="info">
+          {t("solution_paper.solution_paper.calculation_running")}
+          <Typography variant="h3">{renderTimeDelta(timeDelta)}</Typography>
+        </Alert>
+
+        {/* Show Log while solving */}
+        {result.solverLog.length > 0 ? (
+          <Box sx={{ my: 3 }}>
+            <LogViewer logs={result.solverLog} exportFileNamePrefix="Solver-Log Loading" />
+          </Box>
+        ) : null}
+      </>
+    );
   }
+
+  // No solution available
+  return <></>;
 }

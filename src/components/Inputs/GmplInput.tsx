@@ -15,9 +15,9 @@ import { FileFormat } from '../Converter/FileFormat';
 
 const GmplInput: React.FC = () => {
     return (
-        <div>
+        <>
             <ModelEditor format={FileFormat.GMPL} />
-        </div>
+        </>
     );
 };
 
