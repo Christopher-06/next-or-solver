@@ -227,6 +227,7 @@ const TextEditor = ({
         "Subject To",
         "Bounds",
         "General",
+        "Generals",
         "Binaries",
         "Semi-Continuous",
         "SOS",
@@ -240,7 +241,7 @@ const TextEditor = ({
           tokenizer: {
             root: [
               [
-                /\b(Maximize|Minimize|Subject To|Bounds|General|Binaries|Semi-Continuous|SOS|END)\b/,
+                /\b(Maximize|Minimize|Subject To|Bounds|General|Generals|Binaries|Semi-Continuous|SOS|END)\b/,
                 "keyword",
               ],
               [/\+|\-|\*|\/|\=|\<=|\>=|\<|\>|\:/, "operator"],
