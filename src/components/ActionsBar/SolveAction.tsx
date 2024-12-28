@@ -149,7 +149,7 @@ export default function SolveAction() {
         variant="contained"
         color="primary"
         onClick={handleSolveClick}
-        disabled={solveWorkerRunningWith}
+        disabled={solveWorkerRunningWith !== null}
       >
         {t("actions_bar.actions_bar.btn_solve")}
       </Button>
@@ -157,7 +157,7 @@ export default function SolveAction() {
       {/* Solver Select */}
       <Tooltip
         title={
-          solveWorkerRunningWith ? (
+          solveWorkerRunningWith !== null ? (
             <Box sx={{ display: "flex", flexDirection: "column", p: 1 }}>
               <Typography sx={{ mb: 1 }} textAlign="center">
                 {t("actions_bar.actions_bar.tooltip_solve")}
@@ -180,7 +180,7 @@ export default function SolveAction() {
           value={selectedSolver}
           onChange={(e) => setSelectedSolver(e.target.value)}
           sx={{ ml: 1 }}
-          disabled={solveWorkerRunningWith}
+          disabled={solveWorkerRunningWith !== null}
         >
           <MenuItem color="primary" value="HIGHS">
             {optionalCircularProgress}
