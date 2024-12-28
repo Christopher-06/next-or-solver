@@ -37,6 +37,7 @@ import { Modell } from "@/lib/types/Modell";
 import { Variable } from "@/lib/types/Variable";
 import { FILEFORMAT_MAP } from "./ActionsBar";
 import useSolveWorker from "@/lib/hooks/useSolveWorker";
+import { InputType } from "@/store/slices/InputType";
 
 export default function SolveAction() {
   const t = useTranslations();
@@ -53,12 +54,25 @@ export default function SolveAction() {
     (state: RootState) => state.variables
   );
 
-  const onLogCallback = (msg: string) =>
-    dispatch(appendSolutionSolverLog({ key: inputType, log: msg }));
-  const onOutputCallback = (msg: string) =>
-    dispatch(appendSolutionSolverOutput({ key: inputType, out: msg }));
+  // name of the solver currently running or NULL if no solver is running
+  const [solveWorkerRunningWith, setSolveWorkerRunningWith] =
+    React.useState<null | InputType>(null);
 
-  const [solveWorkerRunning, setSolveWorkerRunning] = React.useState(false);
+  // get apropriate Log and Output Callbacks
+  const onLogCallback = (msg: string) =>
+    dispatch(
+      appendSolutionSolverLog({
+        key: solveWorkerRunningWith || inputType,
+        log: msg,
+      })
+    );
+  const onOutputCallback = (msg: string) =>
+    dispatch(
+      appendSolutionSolverOutput({
+        key: solveWorkerRunningWith || inputType,
+        out: msg,
+      })
+    );
   const solveWorker = useSolveWorker(
     (msg) => onLogCallback(msg),
     (msg) => onOutputCallback(msg)
@@ -66,7 +80,7 @@ export default function SolveAction() {
 
   const handleSolveClick = async () => {
     dispatch(startSolving(inputType));
-    setSolveWorkerRunning(true);
+    setSolveWorkerRunningWith(inputType);
 
     try {
       // inject conversion from EASY UI to GMPL
@@ -108,18 +122,24 @@ export default function SolveAction() {
       }
     }
 
-    setSolveWorkerRunning(false);
+    setSolveWorkerRunningWith(null);
   };
 
   const handleAbortSolverClick = () => {
     solveWorker.worker.restart();
-    setSolveWorkerRunning(false);
-    dispatch(
-      setSolutionError({ key: inputType, error: new SolvingAbortByUserError() })
-    );
+
+    if (solveWorkerRunningWith !== null) {
+      dispatch(
+        setSolutionError({
+          key: solveWorkerRunningWith,
+          error: new SolvingAbortByUserError(),
+        })
+      );
+    }
+    setSolveWorkerRunningWith(null);
   };
 
-  const optionalCircularProgress = solveWorkerRunning ? (
+  const optionalCircularProgress = solveWorkerRunningWith ? (
     <CircularProgress size={20} sx={{ mr: 1 }} />
   ) : null;
 
@@ -129,7 +149,7 @@ export default function SolveAction() {
         variant="contained"
         color="primary"
         onClick={handleSolveClick}
-        disabled={solveWorkerRunning}
+        disabled={solveWorkerRunningWith !== null}
       >
         {t("actions_bar.actions_bar.btn_solve")}
       </Button>
@@ -137,7 +157,7 @@ export default function SolveAction() {
       {/* Solver Select */}
       <Tooltip
         title={
-          solveWorkerRunning ? (
+          solveWorkerRunningWith !== null ? (
             <Box sx={{ display: "flex", flexDirection: "column", p: 1 }}>
               <Typography sx={{ mb: 1 }} textAlign="center">
                 {t("actions_bar.actions_bar.tooltip_solve")}
@@ -160,7 +180,7 @@ export default function SolveAction() {
           value={selectedSolver}
           onChange={(e) => setSelectedSolver(e.target.value)}
           sx={{ ml: 1 }}
-          disabled={solveWorkerRunning}
+          disabled={solveWorkerRunningWith !== null}
         >
           <MenuItem color="primary" value="HIGHS">
             {optionalCircularProgress}
