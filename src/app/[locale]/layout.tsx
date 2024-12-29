@@ -22,7 +22,6 @@ import NavBar from "@/components/NavBar/NavBar";
 import Theme from "@/components/Theme/Theme";
 import StoreProvider from "@/store/StoreProvider";
 import Footer from "@/components/Footer/Footer";
-import { Container } from "@mui/material";
 
 export default function RootLayout({
   children,
@@ -65,9 +64,7 @@ export default function RootLayout({
                 <NavBar />
 
                 {children}
-                <Container>
-                  <br></br>
-                </Container>
+
                 <Footer />
               </Theme>
             </main>

@@ -12,7 +12,6 @@
 import {
   AppBar,
   Toolbar,
-  Typography,
   Link,
   Container,
   Grid2,
@@ -29,20 +28,24 @@ export default function Footer() {
       position="static"
       component="footer"
       color="primary"
-      sx={{ top: "auto", bottom: 0 }}
+      sx={{ top: "auto", bottom: 0, mt: 3 }}
     >
       <Container>
         <Toolbar sx={{ justifyContent: "center" }}>
-          <Typography variant="body2" color="inherit">
-            <Grid2
-              container
-              spacing={20}
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Grid2>
-                <Tooltip
-                  title={
+          <Grid2
+            container
+            spacing={20}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid2>
+              <Tooltip
+                title={
+                  <Link
+                    color="inherit"
+                    href="https://github.com/Christopher-06/next-or-solver"
+                    target="_blank"
+                  >
                     <Box
                       display="flex"
                       alignItems="center"
@@ -53,29 +56,16 @@ export default function Footer() {
                     >
                       Source Code <OpenInNewIcon sx={{ ml: 1 }} />
                     </Box>
-                  }
-                >
-                  <Link
-                    color="inherit"
-                    href="https://github.com/Christopher-06/next-or-solver"
-                    target="_blank"
-                  >
-                    <GitHubIcon style={{ fontSize: 40, margin: "6px" }} />
                   </Link>
-                </Tooltip>
-              </Grid2>
-              <Grid2>
-                <AbourUsDialog />
-              </Grid2>
-              {/* 
-                      TODO: Remove Impressum complete or create a real dialog
-                    <Grid2>
-                      <Link color="inherit" href="#" sx={{ fontSize: 15 }}>
-                        {t("footer.footer.imprint")}
-                      </Link>
-                    </Grid2> */}
+                }
+              >
+                <GitHubIcon style={{ fontSize: 40, margin: "6px" }} />
+              </Tooltip>
             </Grid2>
-          </Typography>
+            <Grid2>
+              <AbourUsDialog />
+            </Grid2>
+          </Grid2>
         </Toolbar>
       </Container>
     </AppBar>
